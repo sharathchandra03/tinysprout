@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RTBW — Everything for Babies, Kids &amp; Moms</title>
+  <meta name="description" content="RTBW stocks newborn clothes, kids party and daily wear, toys, school bags, water bottles, stationery, maternity wear, night suits, baby carriers, tricycles and walkers. Quality products at friendly prices." />
+  <meta name="theme-color" content="#FF6612" />
+
+  <!-- ==========================================================
+       FAVICON — replace assets/logo.png with your logo file
+  ========================================================== -->
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="apple-touch-icon" href="assets/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Baloo 2 = rounded, playful letterforms that match the RTBW logo -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Poppins:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* =========================================================
+       DESIGN SYSTEM — RTBW
+       Brand: Primary Orange + White. Grays for structure.
+       -------------------------------------------------------
+       --orange is sampled directly from the RTBW logo (#FF6612).
+       --orange-deep / --orange-text are darker steps used for
+       hover states and small text so they stay readable (WCAG).
+    ========================================================= */
+    :root {
+      /* --- Brand: Orange (from logo) --- */
+      --orange:       #FF6612;  /* primary: buttons, icons, highlights */
+      --orange-light: #FF9457;  /* soft fills, borders */
+      --orange-pale:  #FFF1E8;  /* tinted section backgrounds */
+      --orange-deep:  #DD5000;  /* hover / pressed */
+      --orange-text:  #A83C00;  /* small text + links on white */
+
+      /* --- Warm accent, used sparingly for playfulness --- */
+      --sun:      #FFC145;
+      --sun-pale: #FFF4D9;
+
+      /* --- Neutrals --- */
+      --white:    #FFFFFF;      /* page background */
+      --gray-50:  #FAFAFA;      /* section background */
+      --gray-100: #F4F5F7;      /* section background, alt */
+      --gray-200: #E7E9EE;      /* borders, dividers */
+      --gray-600: #5B6472;      /* muted / secondary text */
+      --gray-900: #1F2530;      /* primary text */
+
+      /* --- Radii --- */
+      --radius-sm:   10px;
+      --radius-md:   18px;
+      --radius-lg:   28px;
+      --radius-xl:   40px;
+
+      /* --- Elevation --- */
+      --shadow-sm:     0 2px 12px rgba(31,37,48,.06);
+      --shadow-md:     0 6px 28px rgba(31,37,48,.10);
+      --shadow-lg:     0 16px 48px rgba(31,37,48,.14);
+      --shadow-orange: 0 6px 20px rgba(255,102,18,.32);
+
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+      --header-h:   70px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    /* Keeps anchor targets clear of the sticky header */
+    section[id] { scroll-margin-top: calc(var(--header-h) + 12px); }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--white);
+      color: var(--gray-900);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; letter-spacing: -.01em; }
+    :focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; border-radius: 4px; }
+    img { display: block; max-width: 100%; }
+    a  { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ---- UTILITIES ---- */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      display: inline-block; font-size: .75rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--orange-text); background: var(--orange-pale);
+      padding: 5px 15px; border-radius: 20px; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700;
+      line-height: 1.2; color: var(--gray-900);
+    }
+    .section-title span { color: var(--orange-deep); }
+    .section-sub {
+      font-size: 1rem; color: var(--gray-600); margin-top: 10px;
+      max-width: 560px; line-height: 1.65;
+    }
+    .section-head { text-align: center; margin-bottom: 48px; }
+    .section-head .section-sub { margin-left: auto; margin-right: auto; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      border: none; cursor: pointer; transition: var(--transition);
+      border-radius: var(--radius-xl); font-size: .95rem;
+      text-align: center; line-height: 1.2;
+    }
+    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+    /* Primary — solid orange, main conversion action */
+    .btn-primary {
+      background: var(--orange); color: var(--white);
+      padding: 14px 32px; box-shadow: var(--shadow-orange);
+    }
+    .btn-primary:hover { background: var(--orange-deep); transform: translateY(-2px); box-shadow: 0 10px 26px rgba(255,102,18,.42); }
+    /* Secondary — white surface with an orange edge */
+    .btn-secondary {
+      background: var(--white); color: var(--orange-text);
+      border: 2px solid var(--orange-light);
+      padding: 12px 30px; box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover { border-color: var(--orange); background: var(--orange-pale); transform: translateY(-2px); }
+    /* Outline — quiet tertiary action */
+    .btn-outline {
+      background: transparent; color: var(--orange-text);
+      border: 2px solid var(--gray-200); padding: 12px 28px;
+    }
+    .btn-outline:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
+    /* Dark — for use over light photography */
+    .btn-dark {
+      background: var(--gray-900); color: var(--white); padding: 14px 32px;
+    }
+    .btn-dark:hover { background: #000; transform: translateY(-2px); }
+    .btn-sm { padding: 9px 20px; font-size: .85rem; }
+
+    /* Button ripple (JS injects .ripple) */
+    .btn { position: relative; overflow: hidden; }
+    .ripple {
+      position: absolute; border-radius: 50%; transform: scale(0);
+      background: rgba(255,255,255,.55); pointer-events: none;
+      animation: rippleOut .6s ease-out forwards;
+    }
+    .btn-secondary .ripple, .btn-outline .ripple { background: rgba(255,102,18,.35); }
+    @keyframes rippleOut { to { transform: scale(2.6); opacity: 0; } }
+    .tag {
+      display: inline-block; font-size: .72rem; font-weight: 800;
+      padding: 3px 10px; border-radius: 20px;
+      background: var(--orange-deep); color: var(--white);
+    }
+    .tag-amber { background: var(--sun); color: var(--gray-900); }
+    .tag-soft  { background: var(--white); color: var(--orange-text); }
+
+    /* ---- REVEAL ANIMATIONS ---- */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-left  { opacity: 0; transform: translateX(-40px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal-right { opacity: 0; transform: translateX(40px);  transition: opacity .6s ease, transform .6s ease; }
+    .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: none; }
+
+    /* =========================================
+       TOPBAR
+    ========================================= */
+    .topbar {
+      background: var(--orange); color: var(--white);
+      font-size: .8rem; font-weight: 700; text-align: center;
+      padding: 8px 24px; letter-spacing: .04em;
+    }
+    .topbar span { color: var(--sun); }
+
+    /* =========================================
+       NAVBAR
+    ========================================= */
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 24px;
+    }
+    .navbar-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; gap: 24px; height: 70px;
+    }
+    /* ---- LOGO ----
+       Uses assets/logo.png. Height is fixed, width auto, so the
+       logo never distorts whatever its aspect ratio. */
+    /* ---- BRAND LOCKUP ----
+       The logo image is the wordmark and reads "RTBW" on its own.
+       .logo-text is the text equivalent in a matching rounded font:
+       it is the accessible name and the fallback if the file is
+       missing. To run a TEXT-ONLY wordmark instead of the image,
+       delete the <img> from the .logo blocks in the markup — the
+       text is already styled to match.                            */
+    .logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; padding: 6px 0; }
+    /* Fixed height + auto width = the logo is never distorted */
+    .logo-img { height: 40px; width: auto; object-fit: contain; display: block; }
+    .logo-text {
+      display: none;
+      font-family: 'Baloo 2', 'Nunito', sans-serif;
+      font-size: 1.65rem; font-weight: 800; line-height: 1;
+      color: var(--orange); letter-spacing: .01em;
+    }
+    /* JS adds .logo-fallback if assets/logo.png fails to load */
+    .logo-fallback .logo-img  { display: none; }
+    .logo-fallback .logo-text { display: block; }
+    .logo-tag {
+      font-size: .66rem; font-weight: 800; letter-spacing: .13em;
+      text-transform: uppercase; color: var(--gray-600);
+      padding-left: 12px; border-left: 1.5px solid var(--gray-200);
+      line-height: 1.35; max-width: 92px;
+    }
+    .footer .logo-img { height: 36px; }
+    .footer .logo-text { color: var(--orange-light); }
+    .footer .logo-tag { color: rgba(255,255,255,.6); border-left-color: rgba(255,255,255,.2); }
+    /* Screen-reader-only helper */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 6px; flex: 1; justify-content: center;
+    }
+    .nav-links a {
+      font-size: .9rem; font-weight: 700; color: var(--gray-900);
+      padding: 8px 14px; border-radius: var(--radius-sm);
+      transition: var(--transition); position: relative;
+    }
+    .nav-links a:hover { color: var(--orange-text); background: var(--orange-pale); }
+    .nav-links a.active { color: var(--orange-text); background: var(--orange-pale); }
+    .nav-links a.active::after {
+      content: ''; position: absolute; left: 14px; right: 14px; bottom: 2px;
+      height: 2px; border-radius: 2px; background: var(--orange);
+    }
+
+    /* ---- HAMBURGER + MOBILE DRAWER ---- */
+    .nav-toggle {
+      display: none; width: 42px; height: 42px; border: none;
+      background: transparent; cursor: pointer; border-radius: var(--radius-sm);
+      padding: 10px; flex-direction: column; justify-content: space-between;
+      transition: var(--transition);
+    }
+    .nav-toggle:hover { background: var(--orange-pale); }
+    .nav-toggle span {
+      display: block; height: 2.5px; width: 100%; border-radius: 2px;
+      background: var(--gray-900); transition: var(--transition);
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(.3); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+    .nav-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: min(320px, 84vw);
+      background: var(--white); z-index: 1200;
+      box-shadow: -8px 0 40px rgba(31,37,48,.18);
+      transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column; padding: 24px;
+      overflow-y: auto;
+    }
+    .nav-drawer.open { transform: translateX(0); }
+    .nav-drawer-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .nav-drawer-close {
+      width: 40px; height: 40px; border: none; background: var(--gray-100);
+      border-radius: 50%; cursor: pointer; font-size: 1.1rem; color: var(--gray-900);
+      transition: var(--transition);
+    }
+    .nav-drawer-close:hover { background: var(--orange); color: var(--white); }
+    .nav-drawer nav a {
+      display: block; padding: 15px 16px; border-radius: var(--radius-sm);
+      font-size: 1rem; font-weight: 700; color: var(--gray-900);
+      transition: var(--transition); margin-bottom: 4px;
+    }
+    .nav-drawer nav a:hover, .nav-drawer nav a.active { background: var(--orange-pale); color: var(--orange-text); }
+    .nav-drawer-cta { margin-top: 24px; }
+    .nav-drawer-cta .btn { width: 100%; justify-content: center; }
+    .nav-drawer-contact {
+      margin-top: auto; padding-top: 24px; border-top: 1px solid var(--gray-200);
+      font-size: .85rem; color: var(--gray-600);
+    }
+    .nav-drawer-contact a { color: var(--orange-text); font-weight: 700; }
+    .nav-overlay {
+      position: fixed; inset: 0; background: rgba(31,37,48,.5);
+      z-index: 1100; opacity: 0; visibility: hidden; transition: var(--transition);
+    }
+    .nav-overlay.open { opacity: 1; visibility: visible; }
+    body.nav-open { overflow: hidden; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+    /* =========================================
+       HERO SECTION
+    ========================================= */
+    .hero {
+      background: var(--orange-pale);
+      padding: 60px 0 0; overflow: hidden; position: relative;
+    }
+    /* Soft decorative blob — keeps it bright without a heavy gradient */
+    .hero::before {
+      content: ''; position: absolute; top: -120px; right: -80px;
+      width: 460px; height: 460px; border-radius: 50%;
+      background: rgba(255,193,69,.20); pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 24px;
+      display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 40px;
+    }
+    .hero-content { padding-bottom: 80px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); border-radius: 20px;
+      padding: 6px 16px 6px 8px; margin-bottom: 24px;
+      box-shadow: var(--shadow-sm); font-size: .8rem; font-weight: 800;
+    }
+    .hero-eyebrow .dot { width: 8px; height: 8px; background: var(--orange-light); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: .7; } }
+    .hero-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700;
+      line-height: 1.15; color: var(--gray-900); margin-bottom: 20px;
+    }
+    .hero-title .accent { color: var(--orange-deep); display: block; }
+    .hero-desc { font-size: 1.05rem; color: var(--gray-600); margin-bottom: 36px; max-width: 460px; line-height: 1.7; }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+    .hero-stats { display: flex; gap: 32px; }
+    .hero-stat-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--orange-text); white-space: nowrap;
+    }
+    .hero-stat-label { font-size: .75rem; color: var(--gray-600); font-weight: 600; }
+    .hero-images {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      align-items: end; padding-bottom: 0;
+    }
+    .hero-img-main {
+      grid-column: 1 / -1; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      overflow: hidden; height: 360px; position: relative;
+    }
+    .hero-img-main img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-img-side {
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden; height: 220px;
+    }
+    .hero-img-side img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-badge-float {
+      position: absolute; background: var(--white);
+      border-radius: var(--radius-md); padding: 10px 16px;
+      box-shadow: var(--shadow-md); font-weight: 800; font-size: .85rem;
+    }
+    .hero-badge-float.top-right { top: 20px; right: 20px; display: flex; align-items: center; gap: 8px; }
+    .hero-badge-float.bottom-left { bottom: 20px; left: 20px; display: flex; flex-direction: column; gap: 2px; }
+    .badge-icon { font-size: 1.3rem; }
+    .badge-text-sm { font-size: .7rem; color: var(--gray-600); font-weight: 600; }
+
+    /* =========================================
+       SHOP CAROUSEL
+       Fluid: slide height comes from aspect-ratio,
+       never from hardcoded pixel image dimensions.
+    ========================================= */
+    .shopcar { padding: 72px 0; background: var(--white); }
+    .carousel {
+      position: relative; border-radius: var(--radius-lg);
+      overflow: hidden; background: var(--gray-100);
+      box-shadow: var(--shadow-md);
+    }
+    .carousel-viewport { overflow: hidden; }
+    .carousel-track {
+      display: flex; will-change: transform;
+      transition: transform .6s cubic-bezier(.4,0,.2,1);
+    }
+    .carousel-slide {
+      position: relative; flex: 0 0 100%; min-width: 100%;
+      aspect-ratio: 16 / 7;
+    }
+    .carousel-slide img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+    }
+    .carousel-caption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 44px 40px 32px;
+      background: linear-gradient(to top, rgba(31,37,48,.82) 0%, rgba(31,37,48,.1) 70%, transparent 100%);
+      color: var(--white);
+    }
+    .carousel-caption h3 {
+      font-size: clamp(1.05rem, 2.2vw, 1.5rem); font-weight: 700; margin-bottom: 4px;
+    }
+    .carousel-caption p { font-size: .875rem; color: rgba(255,255,255,.82); }
+
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,.92); color: var(--gray-900);
+      cursor: pointer; z-index: 2; display: flex;
+      align-items: center; justify-content: center;
+      box-shadow: var(--shadow-md); transition: var(--transition);
+    }
+    .carousel-btn:hover { background: var(--orange); color: var(--white); }
+    .carousel-btn.prev { left: 18px; }
+    .carousel-btn.next { right: 18px; }
+    .carousel-btn svg { width: 20px; height: 20px; }
+
+    .carousel-dots {
+      position: absolute; bottom: 16px; left: 0; right: 0; z-index: 2;
+      display: flex; justify-content: center; gap: 8px;
+    }
+    .carousel-dot {
+      width: 9px; height: 9px; border-radius: 50%; border: none; padding: 0;
+      background: rgba(255,255,255,.5); cursor: pointer; transition: var(--transition);
+    }
+    .carousel-dot:hover { background: rgba(255,255,255,.85); }
+    .carousel-dot.active { background: var(--orange); width: 28px; border-radius: 5px; }
+
+    /* =========================================
+       CATEGORY SHORTCUTS
+    ========================================= */
+    .categories { padding: 80px 0; background: var(--gray-50); }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .cat-card {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 22px 20px; border-radius: var(--radius-md);
+      background: var(--white); cursor: pointer; transition: var(--transition);
+      border: 1.5px solid var(--gray-200); position: relative; overflow: hidden;
+    }
+    .cat-card:hover {
+      border-color: var(--orange-light);
+      transform: translateY(-5px); box-shadow: var(--shadow-md);
+    }
+    /* Orange wash slides in on hover */
+    .cat-card::before {
+      content: ''; position: absolute; inset: 0; background: var(--orange-pale);
+      opacity: 0; transition: var(--transition); z-index: 0;
+    }
+    .cat-card:hover::before { opacity: 1; }
+    .cat-card > * { position: relative; z-index: 1; }
+    .cat-icon {
+      width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+      background: var(--orange-pale); color: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+    }
+    .cat-card:hover .cat-icon { background: var(--orange); color: var(--white); transform: scale(1.06) rotate(-4deg); }
+    .cat-icon svg { width: 26px; height: 26px; }
+    .cat-name {
+      display: block; font-family: 'Poppins', sans-serif;
+      font-size: .95rem; font-weight: 700; color: var(--gray-900);
+      margin-bottom: 3px; line-height: 1.3;
+    }
+    .cat-desc { display: block; font-size: .8rem; color: var(--gray-600); line-height: 1.5; }
+    .cat-arrow {
+      margin-left: auto; align-self: center; color: var(--orange);
+      opacity: 0; transform: translateX(-6px); transition: var(--transition);
+      font-weight: 900; flex-shrink: 0;
+    }
+    .cat-card:hover .cat-arrow { opacity: 1; transform: translateX(0); }
+
+    /* =========================================
+       BEST SELLERS
+    ========================================= */
+    .bestsellers { padding: 80px 0; background: var(--white); }
+    .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .product-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      overflow: hidden; box-shadow: var(--shadow-sm);
+      transition: var(--transition); cursor: pointer; position: relative;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .product-card { border: 1.5px solid var(--gray-200); }
+    .product-img {
+      aspect-ratio: 4 / 3; overflow: hidden; background: var(--gray-100);
+      position: relative;
+    }
+    .product-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .product-card:hover .product-img img { transform: scale(1.06); }
+    .product-actions {
+      position: absolute; top: 12px; right: 12px;
+      display: flex; flex-direction: column; gap: 6px;
+      opacity: 0; transition: var(--transition);
+    }
+    .product-card:hover .product-actions { opacity: 1; }
+    .action-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--white); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .action-btn:hover { background: var(--orange); color: var(--white); }
+    .action-btn svg { width: 17px; height: 17px; }
+    /* Filter tabs above the product grid */
+    .product-tabs {
+      display: flex; gap: 10px; justify-content: center;
+      margin-bottom: 40px; flex-wrap: wrap;
+    }
+    .product-badges { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 4px; z-index: 1; }
+    .product-body { padding: 20px; display: flex; flex-direction: column; }
+    .product-brand { font-size: .7rem; font-weight: 800; color: var(--orange-text); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+    .product-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 700; color: var(--gray-900);
+      margin-bottom: 8px; line-height: 1.35;
+    }
+    .product-desc {
+      font-size: .84rem; color: var(--gray-600); line-height: 1.6;
+      margin-bottom: 18px; flex: 1;
+    }
+    /* View Details — full-width card action */
+    .btn-details {
+      width: 100%; padding: 11px; background: var(--white);
+      color: var(--orange-text); border: 1.5px solid var(--orange-light);
+      border-radius: var(--radius-xl); font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: .85rem; cursor: pointer;
+      transition: var(--transition); display: flex;
+      align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn-details:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
+
+    /* Empty-state note shown when a filter has no products yet */
+    .product-empty {
+      grid-column: 1 / -1; text-align: center; padding: 48px 24px;
+      border: 2px dashed var(--gray-200); border-radius: var(--radius-lg);
+      color: var(--gray-600); font-size: .95rem;
+    }
+
+    /* =========================================
+       FEATURED COLLECTIONS
+    ========================================= */
+    .collections { padding: 80px 0; background: var(--white); }
+    .collections-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: 280px 280px;
+      gap: 18px;
+    }
+    .coll-card {
+      border-radius: var(--radius-lg); overflow: hidden;
+      position: relative; cursor: pointer;
+    }
+    .coll-card:first-child { grid-row: 1 / 3; }
+    .coll-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .coll-card:hover img { transform: scale(1.06); }
+    .coll-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(31,37,48,.78) 0%, rgba(31,37,48,.12) 55%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 28px;
+    }
+    .coll-tag { font-size: .72rem; font-weight: 800; text-transform: uppercase; color: var(--sun); letter-spacing: .1em; margin-bottom: 6px; }
+    .coll-title { font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .coll-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--white); color: var(--gray-900);
+      padding: 7px 16px; border-radius: 20px;
+      font-size: .8rem; font-weight: 800; width: fit-content;
+      transition: var(--transition);
+    }
+    .coll-link:hover { background: var(--orange-deep); color: var(--white); }
+
+    /* =========================================
+       TRUST BADGES
+    ========================================= */
+    .trust { padding: 80px 0; background: var(--orange-pale); }
+    .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .trust-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 26px 24px; text-align: left;
+      background: var(--white); border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm); transition: var(--transition);
+    }
+    .trust-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .trust-icon {
+      width: 48px; height: 48px; border-radius: 14px; flex-shrink: 0;
+      background: var(--orange-pale); color: var(--orange); display: flex;
+      align-items: center; justify-content: center;
+    }
+    .trust-icon svg { width: 24px; height: 24px; }
+    .trust-item:hover .trust-icon { background: var(--orange); color: var(--white); }
+    .trust-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 5px;
+    }
+    .trust-desc { font-size: .85rem; color: var(--gray-600); line-height: 1.6; }
+
+    /* =========================================
+       BRAND STRIP
+    ========================================= */
+    .brands { padding: 48px 0; background: var(--white); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
+    .brands-label { text-align: center; font-size: .8rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-600); margin-bottom: 32px; }
+    .brands-track-wrap { overflow: hidden; }
+    .brands-track {
+      display: flex; gap: 40px; align-items: center;
+      animation: brandScroll 20s linear infinite;
+      width: max-content;
+    }
+    .brands-track:hover { animation-play-state: paused; }
+    @keyframes brandScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .brand-pill {
+      display: flex; align-items: center; gap: 9px;
+      background: var(--gray-50); border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-xl);
+      padding: 11px 24px;
+      font-weight: 700; font-size: .88rem; color: var(--gray-900);
+      white-space: nowrap; flex-shrink: 0; transition: var(--transition);
+    }
+    .brand-pill:hover { border-color: var(--orange-light); background: var(--orange-pale); }
+    .brand-pill svg { width: 18px; height: 18px; color: var(--orange); flex-shrink: 0; }
+
+    /* =========================================
+       PROMO BANNER
+    ========================================= */
+    .promo { padding: 80px 0; background: var(--white); }
+    /* Solid-orange promo variant — the page's main brand moment */
+    .promo-card.brand { background: var(--orange); }
+    .promo-card.brand .promo-card-overlay { background: none; }
+    .promo-card.brand .promo-eyebrow { color: var(--sun-pale); }
+    .promo-card.brand .promo-title { color: var(--white); }
+    .promo-card.brand .promo-subtitle { color: rgba(255,255,255,.9); }
+    .promo-card.brand .promo-deco {
+      position: absolute; right: -60px; bottom: -60px;
+      width: 230px; height: 230px; border-radius: 50%;
+      background: rgba(255,255,255,.13); pointer-events: none;
+    }
+    .promo-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch;
+    }
+    .promo-card {
+      border-radius: var(--radius-lg); overflow: hidden;
+      position: relative; min-height: 320px; cursor: pointer;
+    }
+    .promo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .promo-card:hover img { transform: scale(1.04); }
+    .promo-card-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 40px;
+    }
+    .promo-card.dark .promo-card-overlay {
+      background: linear-gradient(to right, rgba(31,37,48,.88) 42%, rgba(31,37,48,.15) 100%);
+    }
+    .promo-card.light .promo-card-overlay {
+      background: linear-gradient(to right, rgba(255,255,255,.94) 42%, rgba(255,255,255,.2) 100%);
+    }
+    .promo-eyebrow { font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 10px; }
+    .promo-card.dark .promo-eyebrow { color: var(--sun); }
+    .promo-card.light .promo-eyebrow { color: var(--orange); }
+    .promo-title { font-family: 'Poppins', sans-serif; font-size: 1.7rem; font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
+    .promo-card.dark .promo-title { color: var(--white); }
+    .promo-card.light .promo-title { color: var(--gray-900); }
+    .promo-subtitle { font-size: .9rem; margin-bottom: 24px; }
+    .promo-card.dark .promo-subtitle { color: rgba(255,255,255,.75); }
+    .promo-card.light .promo-subtitle { color: var(--gray-600); }
+
+    /* =========================================
+       TESTIMONIALS
+    ========================================= */
+    .testimonials { padding: 80px 0; background: var(--gray-50); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testi-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      padding: 28px; box-shadow: var(--shadow-sm); transition: var(--transition);
+    }
+    .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .testi-card { border: 1.5px solid var(--gray-200); }
+    .testi-quote { font-family: 'Poppins', sans-serif; font-size: 2.6rem; color: var(--orange-light); line-height: 1; margin-bottom: 8px; }
+    .testi-text { font-size: .92rem; color: var(--gray-900); line-height: 1.7; margin-bottom: 20px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%; overflow: hidden;
+      background: var(--orange-pale); flex-shrink: 0;
+    }
+    .testi-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .testi-name { font-size: .875rem; font-weight: 800; color: var(--gray-900); }
+    .testi-role { font-size: .75rem; color: var(--gray-600); }
+    .testi-rating { color: var(--sun); font-size: .85rem; margin-bottom: 4px; }
+
+    /* =========================================
+       LOCATIONS
+    ========================================= */
+    .locations { padding: 80px 0; background: var(--white); }
+    .locations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .loc-card {
+      border-radius: var(--radius-lg); overflow: hidden;
+      position: relative; height: 280px; cursor: pointer;
+    }
+    .loc-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .loc-card:hover img { transform: scale(1.06); }
+    .loc-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(31,37,48,.80) 0%, rgba(31,37,48,.10) 60%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
+    }
+    .loc-name { font-size: 1.1rem; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+    .loc-addr { font-size: .8rem; color: rgba(255,255,255,.85); }
+
+    /* =========================================
+       INSTAGRAM GALLERY
+    ========================================= */
+    .instagram { padding: 80px 0; background: var(--white); }
+    .insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+    .insta-tile {
+      aspect-ratio: 1; border-radius: var(--radius-sm);
+      overflow: hidden; cursor: pointer; position: relative;
+    }
+    .insta-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+    .insta-tile:hover img { transform: scale(1.1); }
+    .insta-hover {
+      position: absolute; inset: 0;
+      background: rgba(255,102,18,.62); opacity: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; color: var(--white);
+      transition: var(--transition);
+    }
+    .insta-tile:hover .insta-hover { opacity: 1; }
+    .insta-handle {
+      text-align: center; margin-top: 28px;
+      font-size: 1rem; color: var(--gray-600); font-weight: 700;
+    }
+    .insta-handle a { color: var(--orange-text); font-weight: 800; }
+
+    /* =========================================
+       CONTACT
+    ========================================= */
+    .contact { padding: 80px 0; background: var(--gray-50); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: start;
+    }
+    .contact-cards { display: grid; gap: 14px; }
+    .contact-card {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--white); border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-md); padding: 22px;
+      transition: var(--transition);
+    }
+    .contact-card:hover { border-color: var(--orange-light); box-shadow: var(--shadow-sm); }
+    .contact-icon {
+      width: 46px; height: 46px; border-radius: 14px; flex-shrink: 0;
+      background: var(--orange-pale); color: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-icon svg { width: 22px; height: 22px; }
+    .contact-label {
+      font-size: .72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--gray-600); margin-bottom: 5px;
+    }
+    .contact-value {
+      font-family: 'Poppins', sans-serif; font-size: .98rem;
+      font-weight: 600; color: var(--gray-900); line-height: 1.5; word-break: break-word;
+    }
+    .contact-value a { color: var(--orange-text); }
+    .contact-value a:hover { text-decoration: underline; }
+    .contact-note { font-size: .8rem; color: var(--gray-600); margin-top: 4px; }
+    .contact-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+
+    /* Google Maps slot — drop your embed iframe inside .map-frame */
+    .map-frame {
+      border-radius: var(--radius-lg); overflow: hidden;
+      background: var(--gray-100); border: 1.5px solid var(--gray-200);
+      aspect-ratio: 4 / 3; position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .map-placeholder {
+      text-align: center; padding: 32px; color: var(--gray-600);
+    }
+    .map-placeholder svg { width: 46px; height: 46px; color: var(--orange); margin-bottom: 14px; }
+    .map-placeholder strong {
+      display: block; font-family: 'Poppins', sans-serif;
+      color: var(--gray-900); font-size: 1rem; margin-bottom: 6px;
+    }
+    .map-placeholder span { font-size: .84rem; line-height: 1.6; display: block; max-width: 300px; margin: 0 auto; }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+    .footer { background: var(--gray-900); color: rgba(255,255,255,.75); }
+    .footer-main {
+      max-width: 1280px; margin: 0 auto; padding: 64px 24px 48px;
+      display: grid; grid-template-columns: 1.7fr 1fr 1.2fr 1.4fr; gap: 40px;
+    }
+    .footer-brand .logo { margin-bottom: 18px; }
+    .footer-brand p { font-size: .875rem; line-height: 1.7; max-width: 280px; margin-bottom: 24px; }
+    .social-links { display: flex; gap: 10px; }
+    .social-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,255,255,.1); display: flex;
+      align-items: center; justify-content: center;
+      font-size: .9rem; transition: var(--transition);
+    }
+    .social-btn:hover { background: var(--orange); color: var(--white); transform: translateY(-2px); }
+    .social-btn svg { width: 17px; height: 17px; }
+    .footer-col h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: .82rem; font-weight: 700; color: var(--white);
+      margin-bottom: 20px; text-transform: uppercase; letter-spacing: .1em;
+    }
+    /* Footer contact list */
+    .footer-contact li {
+      display: flex; gap: 11px; margin-bottom: 15px;
+      font-size: .875rem; line-height: 1.6; align-items: flex-start;
+    }
+    .footer-contact svg { width: 16px; height: 16px; color: var(--orange-light); flex-shrink: 0; margin-top: 3px; }
+    .footer-contact a { color: rgba(255,255,255,.8); word-break: break-word; }
+    .footer-contact a:hover { color: var(--orange-light); }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: .875rem; color: rgba(255,255,255,.6); transition: var(--transition); }
+    .footer-col ul li a:hover { color: var(--orange-light); padding-left: 4px; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 20px 24px;
+    }
+    .footer-bottom-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: .8rem; gap: 16px; flex-wrap: wrap;
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+    /* ---- Laptop ---- */
+    @media (max-width: 1100px) {
+      .cat-grid { grid-template-columns: repeat(3, 1fr); }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-main { grid-template-columns: 1fr 1fr; }
+      .nav-links a { padding: 8px 10px; font-size: .85rem; }
+    }
+    /* ---- Tablet ---- */
+    @media (max-width: 900px) {
+      .hero { padding-top: 44px; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-images { display: none; }
+      .hero-content { padding-bottom: 56px; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .collections-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .collections-grid .coll-card { height: 240px; }
+      .collections-grid .coll-card:first-child { grid-column: 1 / -1; grid-row: auto; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .locations-grid { grid-template-columns: repeat(2, 1fr); }
+      .insta-grid { grid-template-columns: repeat(3, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .carousel-slide { aspect-ratio: 16 / 10; }
+      .carousel-caption { padding: 32px 24px 26px; }
+      /* Swap desktop nav for the hamburger */
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .navbar-inner { justify-content: space-between; gap: 12px; }
+    }
+    /* ---- Mobile ---- */
+    @media (max-width: 600px) {
+      .topbar { font-size: .72rem; padding: 7px 14px; }
+      .container { padding: 0 18px; }
+      .categories, .bestsellers, .trust, .collections,
+      .promo, .testimonials, .locations, .instagram,
+      .contact, .shopcar { padding: 56px 0; }
+      .section-head { margin-bottom: 34px; }
+      .cat-grid { grid-template-columns: 1fr; }
+      .product-grid { grid-template-columns: 1fr; }
+      .promo-inner { grid-template-columns: 1fr; }
+      .promo-card-overlay { padding: 30px 26px; }
+      .collections-grid { grid-template-columns: 1fr; }
+      .locations-grid { grid-template-columns: 1fr; }
+      .insta-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-main { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom-inner { flex-direction: column; text-align: center; gap: 14px; }
+      .trust-grid { grid-template-columns: 1fr; }
+      .hero-ctas .btn { width: 100%; justify-content: center; }
+      .hero-stats { gap: 20px; }
+      .carousel { border-radius: var(--radius-md); }
+      .carousel-slide { aspect-ratio: 4 / 3; }
+      .carousel-btn { width: 38px; height: 38px; }
+      .carousel-btn.prev { left: 10px; }
+      .carousel-btn.next { right: 10px; }
+      .carousel-caption { padding: 26px 18px 22px; }
+      .carousel-caption p { display: none; }
+      .logo-img { height: 38px; }
+      .logo-text { font-size: 1.1rem; }
+    }
+
+    /* ---- Respect reduced-motion preferences ---- */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      html { scroll-behavior: auto; }
+      .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; }
+      .brands-track { animation: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==========================================================
+       ICON SPRITE
+       One definition per icon, referenced via a use element.
+       Keeps markup light and every icon inherits currentColor.
+  ========================================================== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Categories -->
+      <symbol id="i-onesie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 3h6l3 2.5-1.5 3L15 8v5.5c0 2-1.3 3.5-3 3.5s-3-1.5-3-3.5V8l-1.5.5L6 5.5 9 3z"/><path d="M9 3c0 1.7 1.3 2.5 3 2.5S15 4.7 15 3"/><path d="M10 17v3.5M14 17v3.5"/>
+      </symbol>
+      <symbol id="i-dress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9.5 3h5l-.7 4.2 4.2 12a1 1 0 0 1-.95 1.3H6.95A1 1 0 0 1 6 19.2l4.2-12L9.5 3z"/><path d="M10.2 7.2h3.6"/>
+      </symbol>
+      <symbol id="i-tshirt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8.5 3 5 4.8 3.2 9l2.8 1.2V21h12V10.2L20.8 9 19 4.8 15.5 3"/><path d="M8.5 3a3.5 3.5 0 0 0 7 0"/>
+      </symbol>
+      <symbol id="i-toy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="13.5" r="6"/><circle cx="6.2" cy="6.6" r="2.6"/><circle cx="17.8" cy="6.6" r="2.6"/><circle cx="10" cy="12.5" r=".9" fill="currentColor" stroke="none"/><circle cx="14" cy="12.5" r=".9" fill="currentColor" stroke="none"/><path d="M10.4 16a2.4 2.4 0 0 0 3.2 0"/>
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/><path d="M17 4.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z"/>
+      </symbol>
+      <symbol id="i-maternity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="4.6" r="2.4"/><path d="M11 7.5c-2 0-3 1.5-3.2 3.3L7 21"/><path d="M15 21l.6-5.2c1.6-.4 2.6-1.8 2.6-3.4 0-2.1-1.7-3.6-4-3.8"/><path d="M11 10.5v4"/>
+      </symbol>
+      <symbol id="i-backpack" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 10a7 7 0 0 1 14 0v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-9z"/><path d="M9 6.5V5a3 3 0 0 1 6 0v1.5"/><path d="M9 14h6v4H9z"/>
+      </symbol>
+      <symbol id="i-bottle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 2h4v3h-4z"/><path d="M9 5h6a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z"/><path d="M6 12h12"/>
+      </symbol>
+      <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5z"/><path d="M14.5 5.5l3 3"/><path d="M4 21h16"/>
+      </symbol>
+      <symbol id="i-carrier" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="8.5" cy="4.8" r="2.5"/><path d="M8.5 7.6c-2.3 0-3.6 1.6-3.8 3.6L4 21"/><circle cx="14.5" cy="12" r="3"/><path d="M6 10.5c1.5 3.5 4.5 5.5 8.5 5.5"/><path d="M11 21l1-3.5"/>
+      </symbol>
+      <symbol id="i-tricycle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="5.5" cy="17.5" r="3"/><circle cx="18.5" cy="17.5" r="2.4"/><path d="M5.5 17.5 10 8h5"/><path d="M10 8 8 5.5"/><path d="M15 8l3.5 9.5"/><path d="M10.5 12.5H16"/>
+      </symbol>
+      <symbol id="i-walker" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7h16l-1.5 6h-13L4 7z"/><path d="M6 13l-1.5 5h15L18 13"/><circle cx="6" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M9.5 7v6M14.5 7v6"/>
+      </symbol>
+
+      <!-- Why choose us -->
+      <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.5 4.5 5.5V12c0 4.6 3.1 8.4 7.5 9.5 4.4-1.1 7.5-4.9 7.5-9.5V5.5L12 2.5z"/><path d="M9 12l2.2 2.2L15.2 10"/>
+      </symbol>
+      <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.5 12.9 12.9 20.5a2 2 0 0 1-2.8 0L3.5 13.9V3.5h10.4l6.6 6.6a2 2 0 0 1 0 2.8z"/><circle cx="8.2" cy="8.2" r="1.6"/>
+      </symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>
+      </symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20s-7.5-4.6-7.5-9.6a4.2 4.2 0 0 1 7.5-2.6 4.2 4.2 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/>
+      </symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.5 12c0 4.1-3.8 7.4-8.5 7.4-1 0-2-.15-2.9-.42L4.5 20.5l1.3-3.7A7 7 0 0 1 3.5 12c0-4.1 3.8-7.4 8.5-7.4s8.5 3.3 8.5 7.4z"/><path d="M8.8 12h.01M12 12h.01M15.2 12h.01"/>
+      </symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2.5 3.5h2.2l2.4 10.4h10.6l2.3-7.6H6.2"/><circle cx="9.2" cy="19" r="1.7"/><circle cx="16.8" cy="19" r="1.7"/>
+      </symbol>
+
+      <!-- Contact / UI -->
+      <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3.5 6.5 8.5 6 8.5-6"/>
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/>
+      </symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21.5s7-5.9 7-11a7 7 0 1 0-14 0c0 5.1 7 11 7 11z"/><circle cx="12" cy="10.2" r="2.7"/>
+      </symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7.5 3.5h-3a1.5 1.5 0 0 0-1.5 1.6c.5 8.1 6.8 14.4 14.9 14.9a1.5 1.5 0 0 0 1.6-1.5v-3a1.5 1.5 0 0 0-1.2-1.5l-2.6-.5a1.5 1.5 0 0 0-1.5.6l-.9 1.2a13 13 0 0 1-5.1-5.1l1.2-.9a1.5 1.5 0 0 0 .6-1.5L9 4.7a1.5 1.5 0 0 0-1.5-1.2z"/>
+      </symbol>
+      <symbol id="i-chev-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 8 12l7 7"/></symbol>
+      <symbol id="i-chev-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+
+      <!-- Social -->
+      <symbol id="i-facebook" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5h1.65V4.6c-.3-.04-1.35-.13-2.55-.13-2.5 0-4.25 1.55-4.25 4.4v2.02H7.35V14h2.55v8h3.6z"/></symbol>
+      <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="3.9"/><circle cx="17.1" cy="6.9" r="1.15" fill="currentColor" stroke="none"/>
+      </symbol>
+      <symbol id="i-whatsapp" viewBox="0 0 24 24">
+        <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.2 20.8l4.4-1.2A8.8 8.8 0 1 0 12 3.2z"/>
+        <path fill="currentColor" d="M9.4 8.5c.3-.1.6 0 .78.3l.66 1.06c.18.3.1.6-.12.8l-.4.36c.48.96 1.24 1.72 2.2 2.2l.36-.4c.2-.22.5-.3.8-.12l1.06.66c.3.18.4.48.3.78-.28.78-1.14 1.2-1.94.98-2.5-.68-4.32-2.5-5-5-.22-.8.2-1.66.98-1.94z"/>
+      </symbol>
+      <symbol id="i-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.5" y="5.8" width="19" height="12.4" rx="3.6"/><path fill="currentColor" stroke="none" d="M10.8 9.4 15 12l-4.2 2.6z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    Newborn to 12 years &nbsp;•&nbsp; <span>New arrivals every week</span> &nbsp;•&nbsp; Visit our store or write to us any time
+  </div>
+
+  <!-- ==========================================================
+       HEADER / NAVBAR
+       Logo: drop your file at assets/logo.png. Height is capped
+       and width is auto, so the logo is never stretched.
+  ========================================================== -->
+  <header class="navbar" id="top">
+    <div class="navbar-inner">
+      <a href="#top" class="logo" aria-label="RTBW — home">
+        <img class="logo-img" src="assets/logo.png" alt="RTBW" />
+        <span class="logo-text">RTBW</span>
+        <span class="logo-tag">Babies &middot; Kids &middot; Moms</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#top" class="active">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#about">About</a>
+        <a href="/blog">Blog</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-primary btn-sm">
+          <svg aria-hidden="true"><use href="#i-mail"/></svg> Enquire Now
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu"
+                aria-expanded="false" aria-controls="navDrawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="nav-overlay" id="navOverlay" hidden></div>
+  <aside class="nav-drawer" id="navDrawer" aria-label="Mobile navigation" aria-hidden="true">
+    <div class="nav-drawer-head">
+      <span class="logo">
+        <img class="logo-img" src="assets/logo.png" alt="RTBW" style="height:32px;" />
+        <span class="logo-text" style="font-size:1.3rem;">RTBW</span>
+      </span>
+      <button class="nav-drawer-close" id="navClose" aria-label="Close menu">&times;</button>
+    </div>
+    <nav>
+      <a href="#top" class="active">Home</a>
+      <a href="#categories">Categories</a>
+      <a href="#about">About</a>
+      <a href="/blog">Blog</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-drawer-cta">
+      <a href="#contact" class="btn btn-primary">Enquire Now</a>
+    </div>
+    <div class="nav-drawer-contact">
+      Questions? Write to us<br />
+      <a href="mailto:rtbw2016@gmail.com">rtbw2016@gmail.com</a>
+    </div>
+  </aside>
+
+  <!-- =============================================
+       SECTION 1 — HERO
+  ============================================= -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-inner">
+      <div class="hero-content reveal-left">
+        <div class="hero-eyebrow">
+          <span class="dot" aria-hidden="true"></span>
+          Newborn to 12 years — all under one roof
+        </div>
+        <h1 class="hero-title" id="hero-heading">
+          Everything for Your
+          <span class="accent">Little Ones</span>
+        </h1>
+        <p class="hero-desc">
+          Newborn clothing, party and daily wear, toys, school essentials,
+          maternity and nightwear — quality picks at prices that stay friendly.
+        </p>
+        <div class="hero-ctas">
+          <a href="#featured" class="btn btn-primary">Shop Now</a>
+          <a href="#gallery" class="btn btn-secondary">Explore Collection</a>
+          <a href="#categories" class="btn btn-outline">View Categories</a>
+        </div>
+        <div class="hero-stats" role="list">
+          <div role="listitem">
+            <div class="hero-stat-num">12</div>
+            <div class="hero-stat-label">Categories</div>
+          </div>
+          <div role="listitem">
+            <div class="hero-stat-num">Newborn–12y</div>
+            <div class="hero-stat-label">Every Age</div>
+          </div>
+          <div role="listitem">
+            <div class="hero-stat-num">In-Store</div>
+            <div class="hero-stat-label">Try Before You Buy</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-images reveal-right" aria-hidden="true">
+        <div class="hero-img-main" style="position:relative;">
+          <img data-slot="hero_main" src="image assets/imgi_123_b1-400.jpg" alt="Baby and kids products display" loading="eager" />
+          <div class="hero-badge-float top-right">
+            <span class="badge-icon" style="color:var(--orange);display:flex;">
+              <svg style="width:22px;height:22px;" aria-hidden="true"><use href="#i-shield"/></svg>
+            </span>
+            <div>
+              <div style="font-size:.8rem;font-weight:900;color:var(--orange-text);">Parent Approved</div>
+              <div class="badge-text-sm">Quality checked</div>
+            </div>
+          </div>
+          <div class="hero-badge-float bottom-left">
+            <div style="font-size:.72rem;color:var(--gray-600);font-weight:700;">Trusted by families</div>
+            <div style="font-size:.82rem;font-weight:900;">"Great range, fair prices."</div>
+            <div class="badge-text-sm">— Meera R., regular customer</div>
+          </div>
+        </div>
+        <div class="hero-img-side">
+          <img data-slot="hero_side_1" src="image assets/imgi_124_b2_04b6be89-d906-4fff-b3ff-5698cbdd05e0.jpg" alt="Kids essentials range" loading="eager" />
+        </div>
+        <div class="hero-img-side">
+          <img data-slot="hero_side_2" src="image assets/imgi_125_b3.jpg" alt="Toys and play items on display" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 2 — SHOP CAROUSEL
+       ---------------------------------------------
+       TO USE YOUR OWN SHOP PHOTOS:
+       1. Put your photos in  assets/shop/
+       2. Point each slide image at assets/shop/your-photo.jpg
+       3. Update the alt text and caption for each slide
+       Add or remove .carousel-slide blocks freely — the dots and
+       the auto-slide loop are generated from whatever is present.
+  ============================================= -->
+  <section class="shopcar" id="about" aria-labelledby="shop-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">Inside Our Store</span>
+        <h2 class="section-title" id="shop-heading">A Store Built for <span>Families</span></h2>
+        <p class="section-sub">Wide aisles, organised shelves and staff who actually know the products. Come browse in person.</p>
+      </div>
+
+      <div class="carousel reveal" id="shopCarousel" aria-roledescription="carousel" aria-label="Photos of our store">
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="carouselTrack">
+
+            <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="1 of 5">
+              <img data-slot="carousel_1" src="image assets/imgi_108_budhigere-shop-image-compressed.jpg"
+                   alt="Storefront entrance with product displays" loading="eager" decoding="async" />
+              <div class="carousel-caption">
+                <h3>Walk In, Browse Freely</h3>
+                <p>Every category laid out clearly so you find things fast.</p>
+              </div>
+            </div>
+
+            <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="2 of 5">
+              <img data-slot="carousel_2" src="image assets/imgi_110_Kadugodi.jpg"
+                   alt="Store interior showing shelves of kids products" loading="lazy" decoding="async" />
+              <div class="carousel-caption">
+                <h3>Stocked Floor to Ceiling</h3>
+                <p>Clothing, toys, school gear and nursery essentials in one trip.</p>
+              </div>
+            </div>
+
+            <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 of 5">
+              <img data-slot="carousel_3" src="image assets/imgi_5_25926.jpg"
+                   alt="Display of toys and baby products in store" loading="lazy" decoding="async" />
+              <div class="carousel-caption">
+                <h3>See It Before You Buy</h3>
+                <p>Check the fabric, test the toy, compare sizes on the spot.</p>
+              </div>
+            </div>
+
+            <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 of 5">
+              <img data-slot="carousel_4" src="image assets/imgi_10_1705643989.jpg"
+                   alt="Kids clothing section inside the store" loading="lazy" decoding="async" />
+              <div class="carousel-caption">
+                <h3>Party Wear &amp; Daily Wear</h3>
+                <p>Fresh styles arriving through the season, every size covered.</p>
+              </div>
+            </div>
+
+            <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="5 of 5">
+              <img data-slot="carousel_5" src="image assets/imgi_11_1705737547_5565a58b-27d2-4e7b-b950-f29cdd5531de.jpg"
+                   alt="Baby gear and accessories aisle" loading="lazy" decoding="async" />
+              <div class="carousel-caption">
+                <h3>Gear That Lasts</h3>
+                <p>Carriers, walkers and tricycles picked for safety and durability.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="carousel-btn prev" id="carPrev" aria-label="Previous slide">
+          <svg aria-hidden="true"><use href="#i-chev-left"/></svg>
+        </button>
+        <button class="carousel-btn next" id="carNext" aria-label="Next slide">
+          <svg aria-hidden="true"><use href="#i-chev-right"/></svg>
+        </button>
+        <div class="carousel-dots" id="carDots" role="tablist" aria-label="Choose slide"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 3 — CATEGORIES
+  ============================================= -->
+  <section class="categories" id="categories" aria-labelledby="cat-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">Shop by Category</span>
+        <h2 class="section-title" id="cat-heading">Everything You Need, <span>Neatly Sorted</span></h2>
+        <p class="section-sub">Twelve categories covering babies, growing kids and mums-to-be.</p>
+      </div>
+      <div class="cat-grid">
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.04s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-onesie"/></svg></span>
+          <span>
+            <span class="cat-name">Newborn Clothes &amp; Accessories</span>
+            <span class="cat-desc">Soft cottons, mittens, caps and first-size sets.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.08s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-dress"/></svg></span>
+          <span>
+            <span class="cat-name">Kids Party Wear</span>
+            <span class="cat-desc">Frocks, ethnic sets and occasion outfits.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.12s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-tshirt"/></svg></span>
+          <span>
+            <span class="cat-name">Daily Wear for Kids</span>
+            <span class="cat-desc">Everyday tees, shorts and comfy playsets.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.16s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-toy"/></svg></span>
+          <span>
+            <span class="cat-name">Toys</span>
+            <span class="cat-desc">Learning toys, ride-ons, puzzles and soft toys.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.2s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-moon"/></svg></span>
+          <span>
+            <span class="cat-name">Women's Night Suits</span>
+            <span class="cat-desc">Breathable, easy-fit sleepwear sets.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.24s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-maternity"/></svg></span>
+          <span>
+            <span class="cat-name">Maternity Wear</span>
+            <span class="cat-desc">Comfortable pre and post-natal essentials.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.28s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-backpack"/></svg></span>
+          <span>
+            <span class="cat-name">School Bags</span>
+            <span class="cat-desc">Padded straps, roomy compartments, all sizes.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.32s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-bottle"/></svg></span>
+          <span>
+            <span class="cat-name">Water Bottles</span>
+            <span class="cat-desc">Leak-proof, food-grade, school friendly.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.36s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-pencil"/></svg></span>
+          <span>
+            <span class="cat-name">Stationery</span>
+            <span class="cat-desc">Notebooks, colours, geometry and art supplies.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.4s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-carrier"/></svg></span>
+          <span>
+            <span class="cat-name">Baby Carriers</span>
+            <span class="cat-desc">Ergonomic support for you and your baby.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.44s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-tricycle"/></svg></span>
+          <span>
+            <span class="cat-name">Tricycles</span>
+            <span class="cat-desc">Sturdy frames and safe grips for first rides.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a href="#featured" class="cat-card reveal" style="transition-delay:.48s">
+          <span class="cat-icon"><svg aria-hidden="true"><use href="#i-walker"/></svg></span>
+          <span>
+            <span class="cat-name">Baby Walkers</span>
+            <span class="cat-desc">Stable, height-adjustable, with play trays.</span>
+          </span>
+          <span class="cat-arrow" aria-hidden="true">›</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 3 — BEST SELLERS
+  ============================================= -->
+  <section class="bestsellers" id="featured" aria-labelledby="bs-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">Featured Products</span>
+        <h2 class="section-title" id="bs-heading">Picked Out <span>For You</span></h2>
+        <p class="section-sub">A small sample of what's on our shelves. Ask us about sizes, colours and stock.</p>
+      </div>
+      <!-- Tab filter -->
+      <div class="product-tabs" role="tablist" aria-label="Filter products by type">
+        <button class="btn btn-primary btn-sm" role="tab" aria-selected="true"  data-filter="all">All</button>
+        <button class="btn btn-outline btn-sm" role="tab" aria-selected="false" data-filter="toys">Toys</button>
+        <button class="btn btn-outline btn-sm" role="tab" aria-selected="false" data-filter="learning">Learning</button>
+        <button class="btn btn-outline btn-sm" role="tab" aria-selected="false" data-filter="craft">Art &amp; Craft</button>
+        <button class="btn btn-outline btn-sm" role="tab" aria-selected="false" data-filter="gear">Baby Gear</button>
+      </div>
+      <div class="product-grid" id="product-grid">
+        <!-- ===== PRODUCT CARD TEMPLATE =====
+             Copy one <article> block to add a product.
+             data-category must match a tab's data-filter value
+             (toys | learning | craft | gear).
+        ================================== -->
+
+        <!-- Product 1 -->
+        <article class="product-card reveal" data-category="toys" style="transition-delay:.05s">
+          <div class="product-img">
+            <div class="product-badges">
+              <span class="tag">Popular</span>
+            </div>
+            <img src="image assets/imgi_19_HolaShapeSortingBus1.webp" alt="Shape sorting bus toy with coloured blocks" loading="lazy" decoding="async" />
+            <div class="product-actions">
+              <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-brand">Toys</div>
+            <h3 class="product-name">Shape Sorting Bus</h3>
+            <p class="product-desc">Colour and shape recognition play for toddlers, with chunky easy-grip blocks.</p>
+            <a href="#contact" class="btn-details">View Details</a>
+          </div>
+        </article>
+        <!-- Product 2 -->
+        <article class="product-card reveal" data-category="toys" style="transition-delay:.1s">
+          <div class="product-img">
+            <div class="product-badges">
+              <span class="tag tag-amber">New In</span>
+            </div>
+            <img src="image assets/imgi_15_34.webp" alt="Musical dancing goose toy with lights" loading="lazy" decoding="async" />
+            <div class="product-actions">
+              <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-brand">Toys</div>
+            <h3 class="product-name">Dancing Musical Goose</h3>
+            <p class="product-desc">Music, flashing lights and dance moves that keep little ones entertained.</p>
+            <a href="#contact" class="btn-details">View Details</a>
+          </div>
+        </article>
+        <!-- Product 3 -->
+        <article class="product-card reveal" data-category="gear" style="transition-delay:.15s">
+          <div class="product-img">
+            <div class="product-badges">
+              <span class="tag">Parent Favourite</span>
+            </div>
+            <img src="image assets/imgi_74_PicabooGrand4in1MultipurposeBabyCarryCotCumCarSeat_1.webp" alt="Multipurpose baby carry cot and carrier" loading="lazy" decoding="async" />
+            <div class="product-actions">
+              <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-brand">Baby Carriers</div>
+            <h3 class="product-name">4-in-1 Multipurpose Carry Cot</h3>
+            <p class="product-desc">Carry cot, rocker and carrier in one. Padded interior with a secure harness.</p>
+            <a href="#contact" class="btn-details">View Details</a>
+          </div>
+        </article>
+        <!-- Product 4 -->
+        <article class="product-card reveal" data-category="toys" style="transition-delay:.2s">
+          <div class="product-img">
+            <div class="product-badges">
+              <span class="tag tag-soft">Age 3+</span>
+            </div>
+            <img src="image assets/imgi_84_Toy_car_rc_car.jpg" alt="Remote control stunt car toy" loading="lazy" decoding="async" />
+            <div class="product-actions">
+              <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-brand">Toys</div>
+            <h3 class="product-name">RC Stunt Car</h3>
+            <p class="product-desc">Full-function remote control with rechargeable battery and grippy tyres.</p>
+            <a href="#contact" class="btn-details">View Details</a>
+          </div>
+        </article>
+        <!-- Product 5 -->
+        <article class="product-card reveal" data-category="learning" style="transition-delay:.25s">
+          <div class="product-img">
+            <div class="product-badges">
+              <span class="tag">Trending</span>
+            </div>
+            <img src="image assets/imgi_89_IndiaMapPuzzle8_1024x1024_eeec2a79-c695-4488-9eb9-9a279a4834ef.webp" alt="India map jigsaw puzzle for children" loading="lazy" decoding="async" />
+            <div class="product-actions">
+              <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-brand">Learning</div>
+            <h3 class="product-name">India Map Jigsaw Puzzle</h3>
+            <p class="product-desc">Learn states and capitals through play. Thick pieces that hold up to daily use.</p>
+            <a href="#contact" class="btn-details">View Details</a>
+          </div>
+        </article>
+        <!-- Product 6 -->
+        <article class="product-card reveal" data-category="learning" style="transition-delay:.3s">
+          <div class="product-img">
+            <div class="product-badges">
+              <span class="tag">Staff Pick</span>
+            </div>
+            <img src="image assets/imgi_95_1032_-_Cataloguing-_Image01.webp" alt="DIY wooden music machine STEM building kit" loading="lazy" decoding="async" />
+            <div class="product-actions">
+              <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-brand">Learning</div>
+            <h3 class="product-name">DIY Music Machine Kit</h3>
+            <p class="product-desc">Build-it-yourself wooden STEM kit. No glue or tools needed, ages 8 and up.</p>
+            <a href="#contact" class="btn-details">View Details</a>
+          </div>
+        </article>
+        <!-- Product 7 -->
+        <article class="product-card reveal" data-category="learning" style="transition-delay:.35s">
+          <div class="product-img">
+            <div class="product-badges">
+              <span class="tag tag-amber">Bestselling</span>
+            </div>
+            <img src="image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp" alt="DIY kaleidoscope building kit for children" loading="lazy" decoding="async" />
+            <div class="product-actions">
+              <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-brand">Learning</div>
+            <h3 class="product-name">DIY Kaleidoscope Kit</h3>
+            <p class="product-desc">Assemble it, then explore colour and reflection. A favourite for ages 6 and up.</p>
+            <a href="#contact" class="btn-details">View Details</a>
+          </div>
+        </article>
+        <!-- Product 8 -->
+        <article class="product-card reveal" data-category="craft" style="transition-delay:.4s">
+          <div class="product-img">
+            <div class="product-badges">
+              <span class="tag">New Arrival</span>
+            </div>
+            <img src="image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp" alt="Foil art and craft activity kit" loading="lazy" decoding="async" />
+            <div class="product-actions">
+              <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-brand">Art &amp; Craft</div>
+            <h3 class="product-name">Foil Art Activity Kit</h3>
+            <p class="product-desc">Peel-and-stick foil sheets for mess-free creative afternoons. Everything included.</p>
+            <a href="#contact" class="btn-details">View Details</a>
+          </div>
+        </article>
+      </div>
+      <div style="text-align:center;margin-top:48px;" class="reveal">
+        <a href="#contact" class="btn btn-primary">Ask About Full Range</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 4 — FEATURED COLLECTIONS
+  ============================================= -->
+  <section class="collections" id="gallery" aria-labelledby="coll-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">Gallery</span>
+        <h2 class="section-title" id="coll-heading">Shop by <span>Interest</span></h2>
+        <p class="section-sub">A closer look at the ranges families ask for most.</p>
+      </div>
+      <div class="collections-grid">
+        <!-- Large card -->
+        <div class="coll-card reveal-left">
+          <img data-slot="collection_large" src="image assets/imgi_46_RforRabbitStreetSmartStrollerGreyBlack_1_1.jpg" alt="Strollers and travel gear range" loading="lazy" decoding="async" />
+          <div class="coll-overlay">
+            <div class="coll-tag">Out &amp; About</div>
+            <div class="coll-title">Strollers, Carriers &amp; Travel Gear</div>
+            <a href="#contact" class="coll-link">Enquire ›</a>
+          </div>
+        </div>
+        <!-- Small card top-right -->
+        <div class="coll-card reveal" style="transition-delay:.1s">
+          <img data-slot="collection_top_right" src="image assets/imgi_17_HTE9997-HolaToyAmbulance-1.webp" alt="Toy vehicles and play sets" loading="lazy" decoding="async" />
+          <div class="coll-overlay">
+            <div class="coll-tag">Toddler Picks</div>
+            <div class="coll-title">Toy Vehicles &amp; Play Sets</div>
+            <a href="#featured" class="coll-link">Browse ›</a>
+          </div>
+        </div>
+        <!-- Small card bottom-right top -->
+        <div class="coll-card reveal" style="transition-delay:.15s">
+          <img data-slot="collection_bottom_left" src="image assets/imgi_64_01_652a2989-83ec-4d10-bd8c-21f50957e002.webp" alt="Newborn essentials range" loading="lazy" decoding="async" />
+          <div class="coll-overlay">
+            <div class="coll-tag">0–6 Months</div>
+            <div class="coll-title">Newborn Starter Essentials</div>
+            <a href="#featured" class="coll-link">Browse ›</a>
+          </div>
+        </div>
+        <!-- Small card bottom-right bottom -->
+        <div class="coll-card reveal" style="transition-delay:.2s">
+          <img data-slot="collection_bottom_right" src="image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp" alt="Art, craft and stationery range" loading="lazy" decoding="async" />
+          <div class="coll-overlay">
+            <div class="coll-tag">Creative Play</div>
+            <div class="coll-title">Stationery, Art &amp; Craft</div>
+            <a href="#featured" class="coll-link">Browse ›</a>
+          </div>
+        </div>
+        <!-- Bottom full-span card -->
+        <div class="coll-card reveal" style="grid-column:1/-1;height:200px;transition-delay:.25s">
+          <img data-slot="collection_banner" src="image assets/imgi_2_b1-400.jpg" alt="School bags, bottles and back-to-school essentials" loading="lazy" decoding="async" />
+          <div class="coll-overlay" style="background:linear-gradient(to right, rgba(31,37,48,.86) 32%, rgba(31,37,48,.15) 72%);flex-direction:row;align-items:center;justify-content:space-between;gap:20px;">
+            <div>
+              <div class="coll-tag">Back to School</div>
+              <div class="coll-title" style="font-size:1.4rem;margin-bottom:0;">Bags, Bottles &amp; Stationery — All Sizes In Stock</div>
+            </div>
+            <a href="#contact" class="coll-link" style="flex-shrink:0;">Check Availability ›</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 5 — TRUST BADGES
+  ============================================= -->
+  <section class="trust" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">Why Choose Us</span>
+        <h2 class="section-title" id="why-heading">Why Families Keep <span>Coming Back</span></h2>
+        <p class="section-sub">Straightforward service, honest pricing and a range that actually covers what you need.</p>
+      </div>
+      <div class="trust-grid">
+        <div class="trust-item reveal">
+          <span class="trust-icon"><svg aria-hidden="true"><use href="#i-shield"/></svg></span>
+          <div>
+            <h3 class="trust-title">Quality Products</h3>
+            <p class="trust-desc">We check what we stock. Durable materials, safe finishes and brands we'd use ourselves.</p>
+          </div>
+        </div>
+        <div class="trust-item reveal" style="transition-delay:.06s">
+          <span class="trust-icon"><svg aria-hidden="true"><use href="#i-tag"/></svg></span>
+          <div>
+            <h3 class="trust-title">Affordable Pricing</h3>
+            <p class="trust-desc">Fair prices across every category, with genuine seasonal offers — no inflated markdowns.</p>
+          </div>
+        </div>
+        <div class="trust-item reveal" style="transition-delay:.12s">
+          <span class="trust-icon"><svg aria-hidden="true"><use href="#i-grid"/></svg></span>
+          <div>
+            <h3 class="trust-title">Wide Collection</h3>
+            <p class="trust-desc">Twelve categories from newborn clothing to school supplies, all under one roof.</p>
+          </div>
+        </div>
+        <div class="trust-item reveal" style="transition-delay:.18s">
+          <span class="trust-icon"><svg aria-hidden="true"><use href="#i-heart"/></svg></span>
+          <div>
+            <h3 class="trust-title">Trusted by Parents</h3>
+            <p class="trust-desc">Families come back for second and third children. That repeat trust is our best review.</p>
+          </div>
+        </div>
+        <div class="trust-item reveal" style="transition-delay:.24s">
+          <span class="trust-icon"><svg aria-hidden="true"><use href="#i-chat"/></svg></span>
+          <div>
+            <h3 class="trust-title">Friendly Customer Service</h3>
+            <p class="trust-desc">Ask us anything about sizing, age suitability or care. We answer properly, not with a script.</p>
+          </div>
+        </div>
+        <div class="trust-item reveal" style="transition-delay:.3s">
+          <span class="trust-icon"><svg aria-hidden="true"><use href="#i-cart"/></svg></span>
+          <div>
+            <h3 class="trust-title">Comfortable Shopping</h3>
+            <p class="trust-desc">Clear aisles, easy-to-browse shelves and staff who help without hovering.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 6 — BRAND STRIP
+  ============================================= -->
+  <!-- Scrolling category strip. The list is duplicated once so the
+       CSS marquee loops seamlessly; keep both copies identical. -->
+  <section class="brands" aria-label="Categories we stock">
+    <div class="container">
+      <p class="brands-label">All of this, in one store</p>
+    </div>
+    <div class="brands-track-wrap">
+      <div class="brands-track" aria-hidden="true">
+        <!-- Set 1 -->
+        <span class="brand-pill"><svg><use href="#i-onesie"/></svg> Newborn Clothes</span>
+        <span class="brand-pill"><svg><use href="#i-dress"/></svg> Party Wear</span>
+        <span class="brand-pill"><svg><use href="#i-tshirt"/></svg> Daily Wear</span>
+        <span class="brand-pill"><svg><use href="#i-toy"/></svg> Toys</span>
+        <span class="brand-pill"><svg><use href="#i-moon"/></svg> Night Suits</span>
+        <span class="brand-pill"><svg><use href="#i-maternity"/></svg> Maternity Wear</span>
+        <span class="brand-pill"><svg><use href="#i-backpack"/></svg> School Bags</span>
+        <span class="brand-pill"><svg><use href="#i-bottle"/></svg> Water Bottles</span>
+        <span class="brand-pill"><svg><use href="#i-pencil"/></svg> Stationery</span>
+        <span class="brand-pill"><svg><use href="#i-carrier"/></svg> Baby Carriers</span>
+        <span class="brand-pill"><svg><use href="#i-tricycle"/></svg> Tricycles</span>
+        <span class="brand-pill"><svg><use href="#i-walker"/></svg> Baby Walkers</span>
+        <!-- Set 2 (duplicate for seamless loop) -->
+        <span class="brand-pill"><svg><use href="#i-onesie"/></svg> Newborn Clothes</span>
+        <span class="brand-pill"><svg><use href="#i-dress"/></svg> Party Wear</span>
+        <span class="brand-pill"><svg><use href="#i-tshirt"/></svg> Daily Wear</span>
+        <span class="brand-pill"><svg><use href="#i-toy"/></svg> Toys</span>
+        <span class="brand-pill"><svg><use href="#i-moon"/></svg> Night Suits</span>
+        <span class="brand-pill"><svg><use href="#i-maternity"/></svg> Maternity Wear</span>
+        <span class="brand-pill"><svg><use href="#i-backpack"/></svg> School Bags</span>
+        <span class="brand-pill"><svg><use href="#i-bottle"/></svg> Water Bottles</span>
+        <span class="brand-pill"><svg><use href="#i-pencil"/></svg> Stationery</span>
+        <span class="brand-pill"><svg><use href="#i-carrier"/></svg> Baby Carriers</span>
+        <span class="brand-pill"><svg><use href="#i-tricycle"/></svg> Tricycles</span>
+        <span class="brand-pill"><svg><use href="#i-walker"/></svg> Baby Walkers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 7 — PROMOTIONAL BANNERS
+  ============================================= -->
+  <section class="promo" aria-label="Current promotions">
+    <div class="container">
+      <div class="promo-inner">
+        <div class="promo-card dark reveal-left">
+          <img data-slot="promo_left" src="image assets/imgi_199_Toy_car_rc_car.jpg" alt="Remote control toys offer" loading="lazy" decoding="async" />
+          <div class="promo-card-overlay">
+            <div class="promo-eyebrow">This Month</div>
+            <div class="promo-title">Toy Season Offers</div>
+            <div class="promo-subtitle">Special in-store pricing across ride-ons, RC toys and play sets.</div>
+            <a href="#contact" class="btn btn-primary btn-sm">Ask What's On Offer</a>
+          </div>
+        </div>
+        <div class="promo-card brand reveal-right">
+          <span class="promo-deco" aria-hidden="true"></span>
+          <div class="promo-card-overlay">
+            <div class="promo-eyebrow">Back to School</div>
+            <div class="promo-title">Bags, Bottles &amp; Stationery Ready</div>
+            <div class="promo-subtitle">Full range in stock ahead of the new term. Bundle pricing available in store.</div>
+            <a href="#contact" class="btn btn-dark btn-sm">Plan Your List</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 8 — TESTIMONIALS
+  ============================================= -->
+  <section class="testimonials" aria-labelledby="testi-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">Social Proof</span>
+        <h2 class="section-title" id="testi-heading">What <span>Parents</span> Are Saying</h2>
+        <p class="section-sub">Feedback from families who shop with us regularly.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testi-card reveal" style="transition-delay:.05s">
+          <div class="testi-quote" aria-hidden="true">"</div>
+          <div class="testi-rating" aria-label="5 stars">★★★★★</div>
+          <p class="testi-text">Got my daughter's entire school kit here — bag, bottle and stationery. Good quality and the pricing was better than anywhere else nearby.</p>
+          <div class="testi-author">
+            <div class="testi-avatar"><img src="image assets/imgi_10_1705643989.jpg" alt="" loading="lazy" /></div>
+            <div>
+              <div class="testi-name">Ananya K.</div>
+              <div class="testi-role">Mother of one</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal" style="transition-delay:.15s">
+          <div class="testi-quote" aria-hidden="true">"</div>
+          <div class="testi-rating" aria-label="5 stars">★★★★★</div>
+          <p class="testi-text">We picked up a carrier and a walker. The staff explained the differences properly instead of pushing the expensive one. Really appreciated that.</p>
+          <div class="testi-author">
+            <div class="testi-avatar"><img src="image assets/imgi_11_1705737547_5565a58b-27d2-4e7b-b950-f29cdd5531de.jpg" alt="" loading="lazy" /></div>
+            <div>
+              <div class="testi-name">Rahul M.</div>
+              <div class="testi-role">Father of two</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal" style="transition-delay:.25s">
+          <div class="testi-quote" aria-hidden="true">"</div>
+          <div class="testi-rating" aria-label="5 stars">★★★★★</div>
+          <p class="testi-text">The newborn clothing range is lovely and soft, and there's a good selection of party wear too. My go-to shop for gifting now.</p>
+          <div class="testi-author">
+            <div class="testi-avatar"><img src="image assets/imgi_8_1705662970.jpg" alt="" loading="lazy" /></div>
+            <div>
+              <div class="testi-name">Priya S.</div>
+              <div class="testi-role">Regular customer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 9 — IN-STORE HIGHLIGHTS
+       Uses the .locations component. Swap these images for
+       your own store photos from assets/shop/ when ready.
+  ============================================= -->
+  <section class="locations" aria-labelledby="loc-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">In Store</span>
+        <h2 class="section-title" id="loc-heading">Come See It <span>In Person</span></h2>
+        <p class="section-sub">Photos help, but sizes and fabrics are easier to judge in the shop.</p>
+      </div>
+      <div class="locations-grid">
+        <div class="loc-card reveal" style="transition-delay:.05s">
+          <img data-slot="location_1" src="image assets/imgi_108_budhigere-shop-image-compressed.jpg" alt="Store entrance and window display" loading="lazy" decoding="async" />
+          <div class="loc-overlay">
+            <div class="loc-name">Easy to Find</div>
+            <div class="loc-addr">Street-level entrance with parking close by.</div>
+          </div>
+        </div>
+        <div class="loc-card reveal" style="transition-delay:.15s">
+          <img data-slot="location_2" src="image assets/imgi_110_Kadugodi.jpg" alt="Organised shelves inside the store" loading="lazy" decoding="async" />
+          <div class="loc-overlay">
+            <div class="loc-name">Organised Aisles</div>
+            <div class="loc-addr">Every category clearly grouped and labelled.</div>
+          </div>
+        </div>
+        <div class="loc-card reveal" style="transition-delay:.25s">
+          <img data-slot="location_3" src="image assets/imgi_8_1705662970.jpg" alt="Staff assisting a customer in store" loading="lazy" decoding="async" />
+          <div class="loc-overlay">
+            <div class="loc-name">Help On Hand</div>
+            <div class="loc-addr">Ask us about age suitability, sizing or care.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 10 — INSTAGRAM / SOCIAL GALLERY
+  ============================================= -->
+  <section class="instagram" aria-labelledby="insta-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">Follow Along</span>
+        <h2 class="section-title" id="insta-heading">New Arrivals On <span>Instagram</span></h2>
+        <p class="section-sub">We post fresh stock, offers and store updates first on social.</p>
+      </div>
+      <div class="insta-grid">
+        <div class="insta-tile">
+          <img data-slot="insta_1" src="image assets/imgi_15_34.webp" alt="Instagram post" loading="lazy" />
+          <div class="insta-hover" aria-hidden="true">📷</div>
+        </div>
+        <div class="insta-tile">
+          <img data-slot="insta_2" src="image assets/imgi_21_HolaEarlyLearningFireEngine1.webp" alt="Instagram post" loading="lazy" />
+          <div class="insta-hover" aria-hidden="true">📷</div>
+        </div>
+        <div class="insta-tile">
+          <img data-slot="insta_3" src="image assets/imgi_76_bluegrey.webp" alt="Instagram post" loading="lazy" />
+          <div class="insta-hover" aria-hidden="true">📷</div>
+        </div>
+        <div class="insta-tile">
+          <img data-slot="insta_4" src="image assets/imgi_95_1032_-_Cataloguing-_Image01.webp" alt="Instagram post" loading="lazy" />
+          <div class="insta-hover" aria-hidden="true">📷</div>
+        </div>
+        <div class="insta-tile">
+          <img data-slot="insta_5" src="image assets/imgi_101_Peek-A-BooISeeYouJungle_1024x1024_0b891654-a445-4325-86bd-315883045819.webp" alt="Instagram post" loading="lazy" />
+          <div class="insta-hover" aria-hidden="true">📷</div>
+        </div>
+        <div class="insta-tile">
+          <img data-slot="insta_6" src="image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp" alt="Instagram post" loading="lazy" />
+          <div class="insta-hover" aria-hidden="true">📷</div>
+        </div>
+      </div>
+      <!-- Replace # with your Instagram profile URL -->
+      <p class="insta-handle">Follow <a href="#">@rtbw</a> for new arrivals, offers and store updates</p>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 11 — CONTACT
+       ---------------------------------------------
+       PLACEHOLDERS TO FILL IN:
+       • Store address   → .contact-value under "Store Address"
+       • Opening hours   → .contact-value under "Store Timings"
+       • Phone number    → both the tel: link and its text
+       • Google Maps     → paste your embed <iframe> inside .map-frame
+                           (Google Maps → Share → Embed a map → copy HTML)
+                           and delete the .map-placeholder div
+  ============================================= -->
+  <section class="contact" id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">Get in Touch</span>
+        <h2 class="section-title" id="contact-heading">We're Happy to <span>Help</span></h2>
+        <p class="section-sub">Questions about stock, sizes or pricing? Send us a note or drop by the store.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-cards reveal-left">
+
+          <div class="contact-card">
+            <span class="contact-icon"><svg aria-hidden="true"><use href="#i-mail"/></svg></span>
+            <div>
+              <div class="contact-label">Email Us</div>
+              <div class="contact-value"><a href="mailto:rtbw2016@gmail.com">rtbw2016@gmail.com</a></div>
+              <div class="contact-note">We reply within one working day.</div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-icon"><svg aria-hidden="true"><use href="#i-phone"/></svg></span>
+            <div>
+              <div class="contact-label">Call or WhatsApp</div>
+              <!-- Replace with your number in both places -->
+              <div class="contact-value"><a href="tel:+910000000000">+91 00000 00000</a></div>
+              <div class="contact-note">Quickest way to check live stock.</div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-icon"><svg aria-hidden="true"><use href="#i-pin"/></svg></span>
+            <div>
+              <div class="contact-label">Store Address</div>
+              <div class="contact-value">
+                [ Shop name and number ],<br />
+                [ Street / area ],<br />
+                [ City, State — PIN ]
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-icon"><svg aria-hidden="true"><use href="#i-clock"/></svg></span>
+            <div>
+              <div class="contact-label">Store Timings</div>
+              <div class="contact-value">
+                Mon – Sat: [ 10:00 AM – 9:00 PM ]<br />
+                Sunday: [ 11:00 AM – 8:00 PM ]
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-actions">
+            <a href="mailto:rtbw2016@gmail.com" class="btn btn-primary">
+              <svg aria-hidden="true"><use href="#i-mail"/></svg> Email Us
+            </a>
+            <a href="tel:+910000000000" class="btn btn-secondary">
+              <svg aria-hidden="true"><use href="#i-phone"/></svg> Call the Store
+            </a>
+          </div>
+        </div>
+
+        <!-- Google Maps slot -->
+        <div class="map-frame reveal-right">
+          <div class="map-placeholder">
+            <svg aria-hidden="true"><use href="#i-pin"/></svg>
+            <strong>Google Map goes here</strong>
+            <span>Paste your Google Maps embed iframe into this container to show the store location.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECTION 11 — FOOTER
+  ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-main">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="#top" class="logo" aria-label="RTBW — home">
+          <img class="logo-img" src="assets/logo.png" alt="RTBW" />
+          <span class="logo-text">RTBW</span>
+        </a>
+        <p>Newborn clothing, kids wear, toys, school essentials, maternity and nightwear — everything for babies, kids and mums in one friendly store.</p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="RTBW on Facebook"><svg aria-hidden="true"><use href="#i-facebook"/></svg></a>
+          <a href="#" class="social-btn" aria-label="RTBW on Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a href="#" class="social-btn" aria-label="RTBW on WhatsApp"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
+          <a href="#" class="social-btn" aria-label="RTBW on YouTube"><svg aria-hidden="true"><use href="#i-youtube"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#featured">Featured Products</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="#categories">Newborn Clothes &amp; Accessories</a></li>
+          <li><a href="#categories">Kids Party Wear</a></li>
+          <li><a href="#categories">Daily Wear for Kids</a></li>
+          <li><a href="#categories">Toys</a></li>
+          <li><a href="#categories">Women's Night Suits</a></li>
+          <li><a href="#categories">Maternity Wear</a></li>
+          <li><a href="#categories">School Bags &amp; Water Bottles</a></li>
+          <li><a href="#categories">Stationery</a></li>
+          <li><a href="#categories">Baby Carriers, Tricycles &amp; Walkers</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg aria-hidden="true"><use href="#i-mail"/></svg>
+            <a href="mailto:rtbw2016@gmail.com">rtbw2016@gmail.com</a>
+          </li>
+          <li>
+            <svg aria-hidden="true"><use href="#i-phone"/></svg>
+            <a href="tel:+910000000000">+91 00000 00000</a>
+          </li>
+          <li>
+            <svg aria-hidden="true"><use href="#i-pin"/></svg>
+            <span>[ Shop address ],<br />[ City, State — PIN ]</span>
+          </li>
+          <li>
+            <svg aria-hidden="true"><use href="#i-clock"/></svg>
+            <span>Mon – Sat: [ 10 AM – 9 PM ]<br />Sunday: [ 11 AM – 8 PM ]</span>
+          </li>
+        </ul>
+        <a href="mailto:rtbw2016@gmail.com" class="btn btn-primary btn-sm" style="margin-top:6px;">Email Us</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span>&copy; <span id="year">2026</span> RTBW. All rights reserved.</span>
+        <span>Babies &middot; Kids &middot; Moms &mdash; all under one roof</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =============================================
+       JAVASCRIPT — INTERACTIONS & REVEALS
+  ============================================= -->
+  <script>
+  /* =========================================================
+     RTBW — site scripts
+     Each concern is a small module, all started from init().
+     No external dependencies.
+  ========================================================= */
+  (function () {
+    'use strict';
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ----- 1. Scroll reveal ----- */
+    function initReveal() {
+      var els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+      if (!els.length) return;
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (el) { obs.observe(el); });
+    }
+
+    /* ----- 2. Sticky header shadow ----- */
+    function initHeaderShadow() {
+      var nav = document.querySelector('.navbar');
+      if (!nav) return;
+      function onScroll() {
+        nav.style.boxShadow = window.scrollY > 40
+          ? '0 4px 20px rgba(31,37,48,.10)'
+          : 'none';
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    /* ----- 8. Product filter ----- */
+    function initFilter() {
+      var tabs = document.querySelectorAll('.product-tabs [data-filter]');
+      var grid = document.getElementById('product-grid');
+      if (!tabs.length || !grid) return;
+
+      var cards = Array.prototype.slice.call(grid.querySelectorAll('.product-card'));
+      var empty = document.createElement('p');
+      empty.className = 'product-empty';
+      empty.hidden = true;
+      empty.textContent = 'Nothing listed here yet \u2014 ask us and we\u2019ll tell you what\u2019s in stock.';
+      grid.appendChild(empty);
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var filter = tab.dataset.filter;
+
+          tabs.forEach(function (t) {
+            var on = t === tab;
+            t.classList.toggle('btn-primary', on);
+            t.classList.toggle('btn-outline', !on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+
+          var shown = 0;
+          cards.forEach(function (card) {
+            var match = filter === 'all' || card.dataset.category === filter;
+            card.hidden = !match;
+            if (match) shown++;
+          });
+          empty.hidden = shown > 0;
+        });
+      });
+    }
+
+    /* ----- 3. Mobile drawer ----- */
+    function initDrawer() {
+      var toggle  = document.getElementById('navToggle');
+      var drawer  = document.getElementById('navDrawer');
+      var overlay = document.getElementById('navOverlay');
+      var close   = document.getElementById('navClose');
+      if (!toggle || !drawer || !overlay) return;
+
+      function open() {
+        drawer.classList.add('open');
+        overlay.hidden = false;
+        requestAnimationFrame(function () { overlay.classList.add('open'); });
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Close menu');
+        drawer.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('nav-open');
+      }
+      function shut() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Open menu');
+        drawer.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('nav-open');
+        setTimeout(function () {
+          if (!overlay.classList.contains('open')) overlay.hidden = true;
+        }, 350);
+      }
+
+      toggle.addEventListener('click', function () {
+        drawer.classList.contains('open') ? shut() : open();
+      });
+      overlay.addEventListener('click', shut);
+      if (close) close.addEventListener('click', shut);
+      drawer.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', shut);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) shut();
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 900 && drawer.classList.contains('open')) shut();
+      });
+    }
+
+    /* ----- 4. Shop carousel ----- */
+    function initCarousel() {
+      var root     = document.getElementById('shopCarousel');
+      var track    = document.getElementById('carouselTrack');
+      var dotsWrap = document.getElementById('carDots');
+      if (!root || !track) return;
+
+      var slides = Array.prototype.slice.call(track.children);
+      var total  = slides.length;
+      if (total < 2) {
+        if (dotsWrap) dotsWrap.style.display = 'none';
+        return;
+      }
+
+      var index = 0, timer = null, DELAY = 5000;
+
+      // Dots are generated from the slides that actually exist,
+      // so adding or removing a slide needs no other changes.
+      var dots = slides.map(function (_, i) {
+        var d = document.createElement('button');
+        d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        d.type = 'button';
+        d.setAttribute('role', 'tab');
+        d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        d.addEventListener('click', function () { go(i); restart(); });
+        dotsWrap.appendChild(d);
+        return d;
+      });
+
+      function render() {
+        track.style.transform = 'translateX(' + (-index * 100) + '%)';
+        dots.forEach(function (d, i) {
+          d.classList.toggle('active', i === index);
+          d.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        });
+        // Preload the next image so slides never arrive blank
+        var nxt = slides[(index + 1) % total].querySelector('img');
+        if (nxt) nxt.loading = 'eager';
+      }
+      function go(i)   { index = (i + total) % total; render(); }
+      function next()  { go(index + 1); }
+      function prev()  { go(index - 1); }
+      function start() { if (!reduceMotion && !timer) timer = setInterval(next, DELAY); }
+      function stop()  { clearInterval(timer); timer = null; }
+      function restart() { stop(); start(); }
+
+      var btnPrev = document.getElementById('carPrev');
+      var btnNext = document.getElementById('carNext');
+      if (btnPrev) btnPrev.addEventListener('click', function () { prev(); restart(); });
+      if (btnNext) btnNext.addEventListener('click', function () { next(); restart(); });
+
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+      root.addEventListener('focusin', stop);
+      root.addEventListener('focusout', start);
+
+      root.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { next(); restart(); }
+        if (e.key === 'ArrowLeft')  { prev(); restart(); }
+      });
+
+      var x0 = null;
+      root.addEventListener('touchstart', function (e) {
+        x0 = e.touches[0].clientX; stop();
+      }, { passive: true });
+      root.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 45) { dx < 0 ? next() : prev(); }
+        x0 = null; start();
+      });
+
+      document.addEventListener('visibilitychange', function () {
+        document.hidden ? stop() : start();
+      });
+
+      render();
+      start();
+    }
+
+    /* ----- 5. Smooth scroll + active nav link ----- */
+    function initNavHighlight() {
+      var links = document.querySelectorAll('.nav-links a[href^="#"]');
+      if (!links.length) return;
+
+      var targets = [];
+      links.forEach(function (link) {
+        var el = document.querySelector(link.getAttribute('href'));
+        if (el) targets.push({ link: link, el: el });
+      });
+      if (!targets.length) return;
+
+      function update() {
+        var pos = window.scrollY + 140;
+        var current = targets[0];
+        targets.forEach(function (t) {
+          if (t.el.offsetTop <= pos) current = t;
+        });
+        links.forEach(function (l) { l.classList.remove('active'); });
+        current.link.classList.add('active');
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    }
+
+    /* ----- 6. Button ripple ----- */
+    function initRipple() {
+      if (reduceMotion) return;
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.btn');
+        if (!btn) return;
+        var r = btn.getBoundingClientRect();
+        var size = Math.max(r.width, r.height);
+        var span = document.createElement('span');
+        span.className = 'ripple';
+        span.style.width = span.style.height = size + 'px';
+        span.style.left = (e.clientX - r.left - size / 2) + 'px';
+        span.style.top  = (e.clientY - r.top  - size / 2) + 'px';
+        btn.appendChild(span);
+        setTimeout(function () { span.remove(); }, 600);
+      });
+    }
+
+    /* ----- 7. Footer year ----- */
+    function initYear() {
+      var y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+    }
+
+    /* ----- 9. Logo fallback -----
+       If assets/logo.png is missing or fails, swap to the styled
+       "RTBW" text wordmark instead of showing a broken image. */
+    function initLogoFallback() {
+      document.querySelectorAll('.logo-img').forEach(function (img) {
+        function fail() {
+          var box = img.closest('.logo') || img.parentNode;
+          if (box) box.classList.add('logo-fallback');
+        }
+        img.addEventListener('error', fail);
+        // Catch images that already failed before JS ran
+        if (img.complete && img.naturalWidth === 0) fail();
+      });
+    }
+
+    function init() {
+      initReveal();
+      initHeaderShadow();
+      initDrawer();
+      initCarousel();
+      initFilter();
+      initNavHighlight();
+      initRipple();
+      initYear();
+      initLogoFallback();
+    }
+
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', init)
+      : init();
+  })();
+  </script>
+
+  <!-- CMS Image Slot Loader: fetches admin-managed images and replaces static defaults -->
+  <script>
+  (function() {
+    fetch('/api/image-slots')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data || !data.slots) return;
+        var slots = data.slots;
+        document.querySelectorAll('img[data-slot]').forEach(function(img) {
+          var key = img.getAttribute('data-slot');
+          var slot = slots[key];
+          if (slot && slot.url) {
+            img.src = slot.url;
+            if (slot.alt) img.alt = slot.alt;
+          }
+        });
+      })
+      .catch(function() { /* Silently fail — keep default images */ });
+  })();
+  </script>
+</body>
+</html>

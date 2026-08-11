@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — RTBW</title>
+  <meta name="description" content="Parenting tips, product guides and updates from RTBW — your one-stop shop for babies, kids and moms." />
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Poppins:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #FF6612;
+      --orange-light: #FF9457;
+      --orange-pale: #FFF1E8;
+      --orange-deep: #DD5000;
+      --orange-text: #A83C00;
+      --sun: #FFC145;
+      --white: #FFFFFF;
+      --gray-50: #FAFAFA;
+      --gray-100: #F4F5F7;
+      --gray-200: #E7E9EE;
+      --gray-600: #5B6472;
+      --gray-900: #1F2530;
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 28px;
+      --radius-xl: 40px;
+      --shadow-sm: 0 2px 12px rgba(31,37,48,.06);
+      --shadow-md: 0 6px 28px rgba(31,37,48,.10);
+      --shadow-orange: 0 6px 20px rgba(255,102,18,.32);
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+      --header-h: 70px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--white);
+      color: var(--gray-900);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; letter-spacing: -.01em; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    /* Navbar */
+    .topbar {
+      background: var(--orange); color: var(--white);
+      font-size: .8rem; font-weight: 700; text-align: center;
+      padding: 8px 24px; letter-spacing: .04em;
+    }
+    .topbar span { color: var(--sun); }
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200); padding: 0 24px;
+    }
+    .navbar-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; gap: 24px; height: 70px;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .logo-img { height: 40px; width: auto; }
+    .logo-text { display: none; font-family: 'Baloo 2', sans-serif; font-size: 1.65rem; font-weight: 800; color: var(--orange); }
+    .logo-tag { font-size: .66rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: var(--gray-600); padding-left: 12px; border-left: 1.5px solid var(--gray-200); line-height: 1.35; max-width: 92px; }
+    .nav-links { display: flex; align-items: center; gap: 6px; flex: 1; justify-content: center; }
+    .nav-links a { font-size: .9rem; font-weight: 700; color: var(--gray-900); padding: 8px 14px; border-radius: var(--radius-sm); transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--orange-text); background: var(--orange-pale); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Nunito', sans-serif; font-weight: 800; border: none; cursor: pointer; transition: var(--transition); border-radius: var(--radius-xl); font-size: .95rem; }
+    .btn-primary { background: var(--orange); color: var(--white); padding: 14px 32px; box-shadow: var(--shadow-orange); }
+    .btn-primary:hover { background: var(--orange-deep); transform: translateY(-2px); }
+    .btn-sm { padding: 9px 20px; font-size: .85rem; }
+    /* Blog page hero */
+    .blog-hero {
+      background: var(--orange-pale); padding: 60px 0 48px; text-align: center;
+    }
+    .blog-hero .section-label {
+      display: inline-block; font-size: .75rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--orange-text); background: var(--white);
+      padding: 5px 15px; border-radius: 20px; margin-bottom: 12px;
+    }
+    .blog-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
+      color: var(--gray-900); margin-bottom: 12px;
+    }
+    .blog-hero h1 span { color: var(--orange-deep); }
+    .blog-hero p { font-size: 1rem; color: var(--gray-600); max-width: 520px; margin: 0 auto; }
+
+    /* Blog grid */
+    .blog-section { padding: 60px 0 80px; }
+    .blog-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px;
+    }
+    .blog-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      overflow: hidden; border: 1.5px solid var(--gray-200);
+      transition: var(--transition); cursor: pointer;
+    }
+    .blog-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--orange-light); }
+    .blog-card-img {
+      aspect-ratio: 16/9; overflow: hidden; background: var(--gray-100);
+    }
+    .blog-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .blog-card:hover .blog-card-img img { transform: scale(1.05); }
+    .blog-card-body { padding: 24px; }
+    .blog-card-meta {
+      display: flex; align-items: center; gap: 12px;
+      font-size: .75rem; color: var(--gray-600); font-weight: 700; margin-bottom: 10px;
+    }
+    .blog-card-meta .cat {
+      background: var(--orange-pale); color: var(--orange-text);
+      padding: 3px 10px; border-radius: 12px;
+    }
+    .blog-card-body h3 {
+      font-size: 1.1rem; font-weight: 700; color: var(--gray-900);
+      margin-bottom: 8px; line-height: 1.35;
+    }
+    .blog-card-body p {
+      font-size: .88rem; color: var(--gray-600); line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .read-more {
+      font-size: .85rem; font-weight: 800; color: var(--orange-text);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .read-more:hover { color: var(--orange-deep); }
+    /* Footer */
+    .footer { background: var(--gray-900); color: rgba(255,255,255,.75); }
+    .footer-main {
+      max-width: 1280px; margin: 0 auto; padding: 64px 24px 48px;
+      display: grid; grid-template-columns: 1.7fr 1fr 1.2fr 1.4fr; gap: 40px;
+    }
+    .footer-brand p { font-size: .875rem; line-height: 1.7; max-width: 280px; margin-bottom: 24px; }
+    .footer-col h4 { font-family: 'Poppins', sans-serif; font-size: .82rem; font-weight: 700; color: var(--white); margin-bottom: 20px; text-transform: uppercase; letter-spacing: .1em; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: .875rem; color: rgba(255,255,255,.6); transition: var(--transition); }
+    .footer-col ul li a:hover { color: var(--orange-light); padding-left: 4px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 20px 24px; }
+    .footer-bottom-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; font-size: .8rem; gap: 16px; flex-wrap: wrap; }
+
+    /* Empty / loading states */
+    .loading { text-align: center; padding: 60px; color: var(--gray-600); font-size: .95rem; }
+    .empty-state { text-align: center; padding: 80px 24px; }
+    .empty-state h3 { font-size: 1.2rem; color: var(--gray-900); margin-bottom: 8px; }
+    .empty-state p { color: var(--gray-600); max-width: 400px; margin: 0 auto; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .footer-main { grid-template-columns: 1fr 1fr; }
+      .blog-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .footer-main { grid-template-columns: 1fr; }
+      .blog-hero { padding: 40px 0 32px; }
+      .blog-section { padding: 40px 0 60px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    Newborn to 12 years &nbsp;•&nbsp; <span>New arrivals every week</span> &nbsp;•&nbsp; Visit our store or write to us any time
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="logo" aria-label="RTBW — home">
+        <img class="logo-img" src="/assets/logo.png" alt="RTBW" />
+        <span class="logo-text">RTBW</span>
+        <span class="logo-tag">Babies &middot; Kids &middot; Moms</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/#categories">Categories</a>
+        <a href="/#about">About</a>
+        <a href="/blog" class="active">Blog</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="/#contact" class="btn btn-primary btn-sm">Enquire Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Blog Hero -->
+  <section class="blog-hero">
+    <div class="container">
+      <span class="section-label">Our Blog</span>
+      <h1>Tips, Guides &amp; <span>Updates</span></h1>
+      <p>Parenting advice, product guides and the latest from our store.</p>
+    </div>
+  </section>
+
+  <!-- Blog Listing -->
+  <section class="blog-section">
+    <div class="container">
+      <div class="loading" id="blogLoading">Loading posts...</div>
+      <div class="blog-grid" id="blogGrid" style="display:none;"></div>
+      <div class="empty-state" id="blogEmpty" style="display:none;">
+        <h3>No posts yet</h3>
+        <p>We're working on some great content. Check back soon!</p>
+      </div>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="/" class="logo" style="margin-bottom:18px;">
+          <img class="logo-img" src="/assets/logo.png" alt="RTBW" style="height:36px;" />
+        </a>
+        <p>Newborn clothing, kids wear, toys, school essentials, maternity and nightwear — everything for babies, kids and mums in one friendly store.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/#categories">Categories</a></li>
+          <li><a href="/#about">About Us</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="/#categories">Newborn Clothes</a></li>
+          <li><a href="/#categories">Kids Party Wear</a></li>
+          <li><a href="/#categories">Toys</a></li>
+          <li><a href="/#categories">School Bags</a></li>
+          <li><a href="/#categories">Baby Carriers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:rtbw2016@gmail.com">rtbw2016@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span>&copy; 2026 RTBW. All rights reserved.</span>
+        <span>Babies &middot; Kids &middot; Moms</span>
+      </div>
+    </div>
+  </footer>
+  <script>
+  (async function() {
+    const grid = document.getElementById('blogGrid');
+    const loading = document.getElementById('blogLoading');
+    const empty = document.getElementById('blogEmpty');
+
+    try {
+      const res = await fetch('/api/blogs');
+      const data = await res.json();
+      loading.style.display = 'none';
+
+      if (!data.blogs || data.blogs.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+
+      grid.style.display = '';
+      grid.innerHTML = data.blogs.map(blog => `
+        <a href="/blog/${encodeURIComponent(blog.slug)}" class="blog-card">
+          <div class="blog-card-img">
+            ${blog.featured_image
+              ? `<img src="${blog.featured_image}" alt="${esc(blog.title)}" loading="lazy" />`
+              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--gray-600);font-size:.85rem;">No image</div>`
+            }
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              ${blog.category ? `<span class="cat">${esc(blog.category)}</span>` : ''}
+              <span>${formatDate(blog.published_at)}</span>
+            </div>
+            <h3>${esc(blog.title)}</h3>
+            <p>${esc(blog.excerpt || '')}</p>
+            <span class="read-more">Read More →</span>
+          </div>
+        </a>
+      `).join('');
+    } catch (err) {
+      loading.textContent = 'Failed to load posts.';
+    }
+
+    function esc(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function formatDate(d) { if (!d) return ''; return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }); }
+  })();
+  </script>
+</body>
+</html>

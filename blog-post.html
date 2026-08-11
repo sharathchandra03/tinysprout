@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — RTBW</title>
+  <meta name="description" content="" id="metaDesc" />
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Poppins:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #FF6612;
+      --orange-light: #FF9457;
+      --orange-pale: #FFF1E8;
+      --orange-deep: #DD5000;
+      --orange-text: #A83C00;
+      --sun: #FFC145;
+      --white: #FFFFFF;
+      --gray-50: #FAFAFA;
+      --gray-100: #F4F5F7;
+      --gray-200: #E7E9EE;
+      --gray-600: #5B6472;
+      --gray-900: #1F2530;
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 28px;
+      --radius-xl: 40px;
+      --shadow-sm: 0 2px 12px rgba(31,37,48,.06);
+      --shadow-md: 0 6px 28px rgba(31,37,48,.10);
+      --shadow-orange: 0 6px 20px rgba(255,102,18,.32);
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--white); color: var(--gray-900); -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; letter-spacing: -.01em; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    /* Navbar */
+    .topbar { background: var(--orange); color: var(--white); font-size: .8rem; font-weight: 700; text-align: center; padding: 8px 24px; letter-spacing: .04em; }
+    .topbar span { color: var(--sun); }
+    .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-200); padding: 0 24px; }
+    .navbar-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 24px; height: 70px; }
+    .logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .logo-img { height: 40px; width: auto; }
+    .logo-text { display: none; font-family: 'Baloo 2', sans-serif; font-size: 1.65rem; font-weight: 800; color: var(--orange); }
+    .logo-tag { font-size: .66rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: var(--gray-600); padding-left: 12px; border-left: 1.5px solid var(--gray-200); line-height: 1.35; max-width: 92px; }
+    .nav-links { display: flex; align-items: center; gap: 6px; flex: 1; justify-content: center; }
+    .nav-links a { font-size: .9rem; font-weight: 700; color: var(--gray-900); padding: 8px 14px; border-radius: var(--radius-sm); transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--orange-text); background: var(--orange-pale); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Nunito', sans-serif; font-weight: 800; border: none; cursor: pointer; transition: var(--transition); border-radius: var(--radius-xl); font-size: .95rem; }
+    .btn-primary { background: var(--orange); color: var(--white); padding: 14px 32px; box-shadow: var(--shadow-orange); }
+    .btn-primary:hover { background: var(--orange-deep); transform: translateY(-2px); }
+    .btn-sm { padding: 9px 20px; font-size: .85rem; }
+    /* Blog post article */
+    .post-header { background: var(--orange-pale); padding: 48px 0 40px; }
+    .post-header .container { max-width: 820px; }
+    .post-breadcrumb { font-size: .8rem; color: var(--gray-600); margin-bottom: 16px; }
+    .post-breadcrumb a { color: var(--orange-text); font-weight: 700; }
+    .post-breadcrumb a:hover { text-decoration: underline; }
+    .post-title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: var(--gray-900); line-height: 1.25; margin-bottom: 16px; }
+    .post-meta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: .85rem; color: var(--gray-600); }
+    .post-meta .cat { background: var(--white); color: var(--orange-text); padding: 4px 12px; border-radius: 14px; font-weight: 800; font-size: .75rem; }
+
+    .post-featured { max-width: 820px; margin: -20px auto 0; padding: 0 24px; }
+    .post-featured img { width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+
+    .post-content {
+      max-width: 720px; margin: 48px auto 80px; padding: 0 24px;
+      font-size: 1.05rem; line-height: 1.85; color: var(--gray-900);
+    }
+    .post-content h1, .post-content h2, .post-content h3,
+    .post-content h4, .post-content h5, .post-content h6 {
+      margin-top: 2em; margin-bottom: .6em; line-height: 1.3;
+    }
+    .post-content h2 { font-size: 1.5rem; }
+    .post-content h3 { font-size: 1.25rem; }
+    .post-content p { margin-bottom: 1.2em; }
+    .post-content img { border-radius: var(--radius-md); margin: 1.5em 0; max-width: 100%; }
+    .post-content blockquote {
+      border-left: 4px solid var(--orange); padding: 16px 24px;
+      margin: 1.5em 0; background: var(--orange-pale); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic; color: var(--gray-600);
+    }
+    .post-content ul, .post-content ol { margin: 1em 0 1em 1.5em; }
+    .post-content li { margin-bottom: .5em; }
+    .post-content ul { list-style: disc; }
+    .post-content ol { list-style: decimal; }
+    .post-content a { color: var(--orange-text); font-weight: 700; }
+    .post-content a:hover { text-decoration: underline; }
+    .post-content table { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
+    .post-content th, .post-content td { border: 1px solid var(--gray-200); padding: 10px 14px; text-align: left; }
+    .post-content th { background: var(--gray-50); font-weight: 700; }
+    .post-content hr { border: none; border-top: 2px solid var(--gray-200); margin: 2em 0; }
+    .post-content pre { background: var(--gray-100); padding: 16px; border-radius: var(--radius-sm); overflow-x: auto; margin: 1.5em 0; }
+    /* Related posts */
+    .related-section { padding: 60px 0 80px; background: var(--gray-50); }
+    .related-section h2 { font-size: 1.4rem; text-align: center; margin-bottom: 32px; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    .related-card { background: var(--white); border-radius: var(--radius-md); overflow: hidden; border: 1.5px solid var(--gray-200); transition: var(--transition); }
+    .related-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .related-card-img { aspect-ratio: 16/9; overflow: hidden; background: var(--gray-100); }
+    .related-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .related-card-body { padding: 18px; }
+    .related-card-body h4 { font-size: .95rem; margin-bottom: 6px; }
+    .related-card-body span { font-size: .78rem; color: var(--gray-600); }
+
+    /* Footer */
+    .footer { background: var(--gray-900); color: rgba(255,255,255,.75); }
+    .footer-main { max-width: 1280px; margin: 0 auto; padding: 64px 24px 48px; display: grid; grid-template-columns: 1.7fr 1fr 1.2fr 1.4fr; gap: 40px; }
+    .footer-brand p { font-size: .875rem; line-height: 1.7; max-width: 280px; margin-bottom: 24px; }
+    .footer-col h4 { font-family: 'Poppins', sans-serif; font-size: .82rem; font-weight: 700; color: var(--white); margin-bottom: 20px; text-transform: uppercase; letter-spacing: .1em; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: .875rem; color: rgba(255,255,255,.6); transition: var(--transition); }
+    .footer-col ul li a:hover { color: var(--orange-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 20px 24px; }
+    .footer-bottom-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; font-size: .8rem; gap: 16px; flex-wrap: wrap; }
+
+    /* Loading / 404 */
+    .loading { text-align: center; padding: 80px; color: var(--gray-600); }
+    .not-found { text-align: center; padding: 100px 24px; }
+    .not-found h2 { font-size: 1.6rem; margin-bottom: 12px; }
+    .not-found p { color: var(--gray-600); margin-bottom: 24px; }
+
+    @media (max-width: 900px) { .nav-links { display: none; } .footer-main { grid-template-columns: 1fr 1fr; } .related-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .footer-main { grid-template-columns: 1fr; } .post-content { font-size: .95rem; } }
+  </style>
+</head>
+<body>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    Newborn to 12 years &nbsp;•&nbsp; <span>New arrivals every week</span> &nbsp;•&nbsp; Visit our store or write to us any time
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="logo" aria-label="RTBW — home">
+        <img class="logo-img" src="/assets/logo.png" alt="RTBW" />
+        <span class="logo-text">RTBW</span>
+        <span class="logo-tag">Babies &middot; Kids &middot; Moms</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/#categories">Categories</a>
+        <a href="/#about">About</a>
+        <a href="/blog" class="active">Blog</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="/#contact" class="btn btn-primary btn-sm">Enquire Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dynamic content loads here -->
+  <div id="postContainer">
+    <div class="loading">Loading article...</div>
+  </div>
+
+  <!-- Related posts -->
+  <section class="related-section" id="relatedSection" style="display:none;">
+    <div class="container">
+      <h2>More from our blog</h2>
+      <div class="related-grid" id="relatedGrid"></div>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a href="/" class="logo" style="margin-bottom:18px;">
+          <img class="logo-img" src="/assets/logo.png" alt="RTBW" style="height:36px;" />
+        </a>
+        <p>Newborn clothing, kids wear, toys, school essentials, maternity and nightwear — everything for babies, kids and mums in one friendly store.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/#categories">Categories</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="/#categories">Newborn Clothes</a></li>
+          <li><a href="/#categories">Kids Party Wear</a></li>
+          <li><a href="/#categories">Toys</a></li>
+          <li><a href="/#categories">School Bags</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:rtbw2016@gmail.com">rtbw2016@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <span>&copy; 2026 RTBW. All rights reserved.</span>
+        <span>Babies &middot; Kids &middot; Moms</span>
+      </div>
+    </div>
+  </footer>
+  <script>
+  (async function() {
+    const container = document.getElementById('postContainer');
+    const slug = window.location.pathname.replace('/blog/', '').replace(/\/$/, '');
+
+    if (!slug) {
+      show404(); return;
+    }
+
+    try {
+      const res = await fetch(`/api/blogs/${encodeURIComponent(slug)}`);
+      if (!res.ok) { show404(); return; }
+      const data = await res.json();
+      const blog = data.blog;
+
+      // Update page meta
+      document.title = blog.title + ' — RTBW Blog';
+      document.getElementById('metaDesc').content = blog.excerpt || '';
+
+      container.innerHTML = `
+        <section class="post-header">
+          <div class="container" style="max-width:820px;">
+            <div class="post-breadcrumb"><a href="/blog">← Back to Blog</a></div>
+            <h1 class="post-title">${esc(blog.title)}</h1>
+            <div class="post-meta">
+              ${blog.category ? `<span class="cat">${esc(blog.category)}</span>` : ''}
+              <span>${esc(blog.author || 'Admin')}</span>
+              <span>${formatDate(blog.published_at)}</span>
+              ${blog.tags ? `<span>${esc(blog.tags)}</span>` : ''}
+            </div>
+          </div>
+        </section>
+        ${blog.featured_image ? `
+          <div class="post-featured">
+            <img src="${esc(blog.featured_image)}" alt="${esc(blog.title)}" />
+          </div>
+        ` : ''}
+        <article class="post-content">${renderBlogContent(blog.content)}</article>
+      `;
+
+      // Load related posts
+      loadRelated(blog.id);
+    } catch (err) {
+      container.innerHTML = '<div class="loading">Failed to load article.</div>';
+    }
+
+    function show404() {
+      container.innerHTML = `
+        <div class="not-found">
+          <h2>Post not found</h2>
+          <p>The blog post you're looking for doesn't exist or has been unpublished.</p>
+          <a href="/blog" class="btn btn-primary btn-sm">← Back to Blog</a>
+        </div>
+      `;
+    }
+
+    async function loadRelated(currentId) {
+      try {
+        const res = await fetch('/api/blogs?limit=3');
+        const data = await res.json();
+        const related = data.blogs.filter(b => b.id !== currentId).slice(0, 3);
+        if (related.length === 0) return;
+
+        document.getElementById('relatedSection').style.display = '';
+        document.getElementById('relatedGrid').innerHTML = related.map(b => `
+          <a href="/blog/${encodeURIComponent(b.slug)}" class="related-card">
+            <div class="related-card-img">
+              ${b.featured_image ? `<img src="${b.featured_image}" alt="${esc(b.title)}" loading="lazy" />` : ''}
+            </div>
+            <div class="related-card-body">
+              <h4>${esc(b.title)}</h4>
+              <span>${formatDate(b.published_at)}</span>
+            </div>
+          </a>
+        `).join('');
+      } catch(e) {}
+    }
+
+    function renderBlogContent(content) {
+      // Try parsing as sections JSON
+      try {
+        const sections = JSON.parse(content);
+        if (Array.isArray(sections)) {
+          return sections.map(sec => {
+            let html = '';
+            if (sec.heading) html += `<h2 style="margin-top:2.5em;margin-bottom:.7em;">${esc(sec.heading)}</h2>`;
+            if (sec.content) html += sec.content;
+            return html;
+          }).join('<hr style="border:none;border-top:1px solid #E7E9EE;margin:2.5em 0;" />');
+        }
+      } catch(e) {}
+      // Fallback: render as raw HTML (legacy content)
+      return content || '';
+    }
+
+    function esc(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function formatDate(d) { if (!d) return ''; return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }); }
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — RTBW CMS</title>
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #FF6612;
+      --orange-light: #FF9457;
+      --orange-pale: #FFF1E8;
+      --orange-deep: #DD5000;
+      --orange-text: #A83C00;
+      --white: #FFFFFF;
+      --gray-50: #FAFAFA;
+      --gray-100: #F4F5F7;
+      --gray-200: #E7E9EE;
+      --gray-600: #5B6472;
+      --gray-900: #1F2530;
+      --radius-md: 18px;
+      --radius-lg: 28px;
+      --radius-xl: 40px;
+      --shadow-md: 0 6px 28px rgba(31,37,48,.10);
+      --shadow-orange: 0 6px 20px rgba(255,102,18,.32);
+      --transition: .3s cubic-bezier(.4,0,.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--orange-pale);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 48px 40px;
+      width: 100%; max-width: 420px;
+    }
+    .login-logo {
+      text-align: center; margin-bottom: 32px;
+    }
+    .login-logo img {
+      height: 48px; width: auto; margin: 0 auto 12px; display: block;
+    }
+    .login-logo h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--gray-900);
+    }
+    .login-logo p {
+      font-size: .85rem; color: var(--gray-600); margin-top: 4px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block; font-size: .8rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--gray-600); margin-bottom: 8px;
+    }
+    .form-group input {
+      width: 100%; padding: 14px 18px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 12px; font-size: .95rem;
+      font-family: 'Nunito', sans-serif;
+      transition: var(--transition);
+      outline: none;
+    }
+    .form-group input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255,102,18,.12);
+    }
+    .btn-login {
+      width: 100%; padding: 16px;
+      background: var(--orange); color: var(--white);
+      border: none; border-radius: var(--radius-xl);
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      cursor: pointer; transition: var(--transition);
+      box-shadow: var(--shadow-orange);
+    }
+    .btn-login:hover {
+      background: var(--orange-deep);
+      transform: translateY(-2px);
+    }
+    .btn-login:disabled {
+      opacity: .6; cursor: not-allowed; transform: none;
+    }
+    .error-msg {
+      background: #FEF2F2; border: 1px solid #FECACA;
+      color: #DC2626; padding: 12px 16px;
+      border-radius: 10px; font-size: .85rem;
+      margin-bottom: 20px; display: none;
+    }
+    .error-msg.show { display: block; }
+    @media (max-width: 480px) {
+      .login-card { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="/assets/logo.png" alt="RTBW" />
+      <h1>Admin Panel</h1>
+      <p>Sign in to manage your website</p>
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required autocomplete="email" placeholder="admin@rtbw.com" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="Enter your password" />
+      </div>
+      <button type="submit" class="btn-login" id="btnLogin">Sign In</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnLogin');
+      const errEl = document.getElementById('errorMsg');
+      errEl.classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = 'Signing in...';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+          })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          window.location.href = '/admin';
+        } else {
+          errEl.textContent = data.error || 'Login failed.';
+          errEl.classList.add('show');
+        }
+      } catch (err) {
+        errEl.textContent = 'Connection error. Please try again.';
+        errEl.classList.add('show');
+      }
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+    });
+  </script>
+</body>
+</html>
