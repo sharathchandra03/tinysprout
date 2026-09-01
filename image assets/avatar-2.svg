@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" viewBox="0 0 88 88" role="img" aria-label="Reviewer avatar">
+  <rect width="88" height="88" rx="44" fill="#FFF4D9"/>
+  <circle cx="44" cy="34" r="15" fill="#FFC145"/>
+  <path d="M18 78c0-14.4 11.6-26 26-26s26 11.6 26 26" fill="#FFC145"/>
+</svg>
