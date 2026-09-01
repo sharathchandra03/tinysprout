@@ -677,6 +677,22 @@
     .testi-name { font-size: .875rem; font-weight: 800; color: var(--gray-900); }
     .testi-role { font-size: .75rem; color: var(--gray-600); }
     .testi-rating { color: var(--sun); font-size: .85rem; margin-bottom: 4px; }
+    /* Google attribution row on each review card */
+    .testi-source { display: flex; align-items: center; gap: 7px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--gray-200); font-size: .72rem; font-weight: 700; color: var(--gray-600); }
+    .testi-source svg { width: 16px; height: 16px; flex-shrink: 0; }
+    /* "Rated on Google" badge under the section heading */
+    .google-review-badge {
+      display: inline-flex; align-items: center; gap: 10px; margin: 18px auto 0;
+      background: var(--white); border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-xl); padding: 10px 20px; box-shadow: var(--shadow-sm);
+      font-weight: 700; color: var(--gray-900); transition: var(--transition);
+    }
+    .google-review-badge:hover { border-color: var(--orange-light); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .google-review-stars { color: var(--sun); font-size: 1rem; letter-spacing: 1px; }
+    .google-review-text { font-size: .85rem; color: var(--gray-600); font-weight: 700; }
+    /* Live Google reviews widget mount (Elfsight / Trustindex / Places API) */
+    #googleReviewsWidget:empty { display: none; }
+    #googleReviewsWidget { margin-top: 8px; }
 
     /* =========================================
        LOCATIONS
@@ -721,13 +737,16 @@
       font-size: 1rem; color: var(--gray-600); font-weight: 700;
     }
     .insta-handle a { color: var(--orange-text); font-weight: 800; }
+    /* When a live Instagram widget is mounted, hide the static fallback grid */
+    #instaFeedWidget:empty { display: none; }
+    #instaFeedWidget:not(:empty) ~ #instaFallbackGrid { display: none; }
 
     /* =========================================
        CONTACT
     ========================================= */
     .contact { padding: 80px 0; background: var(--gray-50); }
     .contact-grid {
-      display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: start;
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: stretch;
     }
     .contact-cards { display: grid; gap: 14px; }
     .contact-card {
@@ -760,7 +779,7 @@
     .map-frame {
       border-radius: var(--radius-lg); overflow: hidden;
       background: var(--gray-100); border: 1.5px solid var(--gray-200);
-      aspect-ratio: 4 / 3; position: relative;
+      position: relative; height: 100%; min-height: 420px;
       display: flex; align-items: center; justify-content: center;
     }
     .map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
@@ -992,7 +1011,7 @@
 
   <!-- TOPBAR -->
   <div class="topbar">
-    Newborn to 12 years &nbsp;•&nbsp; <span>New arrivals every week</span> &nbsp;•&nbsp; Visit our store or write to us any time
+    Newborn to 16 years &nbsp;•&nbsp; <span>New arrivals every week</span> &nbsp;•&nbsp; Open daily 9:00 AM – 9:30 PM &nbsp;•&nbsp; Call <a href="tel:+918043714157" style="color:var(--sun);font-weight:800;">080-43714157</a>
   </div>
 
   <!-- ==========================================================
@@ -1064,7 +1083,7 @@
       <div class="hero-content reveal-left">
         <div class="hero-eyebrow">
           <span class="dot" aria-hidden="true"></span>
-          Newborn to 12 years — all under one roof
+          Newborn to 16 years — all under one roof
         </div>
         <h1 class="hero-title" id="hero-heading">
           Everything for Your
@@ -1085,7 +1104,7 @@
             <div class="hero-stat-label">Categories</div>
           </div>
           <div role="listitem">
-            <div class="hero-stat-num">Newborn–12y</div>
+            <div class="hero-stat-num">Newborn–16y</div>
             <div class="hero-stat-label">Every Age</div>
           </div>
           <div role="listitem">
@@ -1113,10 +1132,10 @@
           </div>
         </div>
         <div class="hero-img-side">
-          <img data-slot="hero_side_1" src="image assets/imgi_124_b2_04b6be89-d906-4fff-b3ff-5698cbdd05e0.jpg" alt="Kids essentials range" loading="eager" />
+          <img data-slot="hero_side_1" src="image assets/imgi_19_HolaShapeSortingBus1.webp" alt="Learning toys for toddlers" loading="eager" />
         </div>
         <div class="hero-img-side">
-          <img data-slot="hero_side_2" src="image assets/imgi_125_b3.jpg" alt="Toys and play items on display" loading="eager" />
+          <img data-slot="hero_side_2" src="image assets/imgi_101_Peek-A-BooISeeYouJungle_1024x1024_0b891654-a445-4325-86bd-315883045819.webp" alt="Kids apparel and play items" loading="eager" />
         </div>
       </div>
     </div>
@@ -1163,7 +1182,7 @@
             </div>
 
             <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="3 of 5">
-              <img data-slot="carousel_3" src="image assets/imgi_5_25926.jpg"
+              <img data-slot="carousel_3" src="image assets/imgi_231_banner3_m.jpg"
                    alt="Display of toys and baby products in store" loading="lazy" decoding="async" />
               <div class="carousel-caption">
                 <h3>See It Before You Buy</h3>
@@ -1172,7 +1191,7 @@
             </div>
 
             <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="4 of 5">
-              <img data-slot="carousel_4" src="image assets/imgi_10_1705643989.jpg"
+              <img data-slot="carousel_4" src="image assets/imgi_108_budhigere-shop-image-compressed.jpg"
                    alt="Kids clothing section inside the store" loading="lazy" decoding="async" />
               <div class="carousel-caption">
                 <h3>Party Wear &amp; Daily Wear</h3>
@@ -1181,7 +1200,7 @@
             </div>
 
             <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="5 of 5">
-              <img data-slot="carousel_5" src="image assets/imgi_11_1705737547_5565a58b-27d2-4e7b-b950-f29cdd5531de.jpg"
+              <img data-slot="carousel_5" src="image assets/imgi_110_Kadugodi.jpg"
                    alt="Baby gear and accessories aisle" loading="lazy" decoding="async" />
               <div class="carousel-caption">
                 <h3>Gear That Lasts</h3>
@@ -1697,11 +1716,36 @@
   <section class="testimonials" aria-labelledby="testi-heading">
     <div class="container">
       <div class="section-head reveal">
-        <span class="section-label">Social Proof</span>
+        <span class="section-label">Google Reviews</span>
         <h2 class="section-title" id="testi-heading">What <span>Parents</span> Are Saying</h2>
-        <p class="section-sub">Feedback from families who shop with us regularly.</p>
+        <p class="section-sub">Genuine reviews from families who shop with us on Google.</p>
+        <a class="google-review-badge" href="https://www.google.com/maps/search/?api=1&query=Ramdev+Toys+%26+Baby+Wear+Vignan+Nagar+New+Thippasandra+Bengaluru"
+           target="_blank" rel="noopener" aria-label="See all Ramdev Toys & Baby Wear reviews on Google">
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.06H12v3.9h5.9a5.06 5.06 0 0 1-2.19 3.32v2.76h3.54c2.07-1.91 3.26-4.72 3.26-8.02Z"/><path fill="#34A853" d="M12 23c2.94 0 5.41-.97 7.21-2.63l-3.54-2.76c-.98.66-2.24 1.05-3.67 1.05-2.82 0-5.21-1.9-6.06-4.46H2.28v2.85A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.94 14.2a6.6 6.6 0 0 1 0-4.2V7.15H2.28a11 11 0 0 0 0 9.9l3.66-2.85Z"/><path fill="#EA4335" d="M12 5.34c1.6 0 3.03.55 4.16 1.62l3.12-3.12A11 11 0 0 0 12 1a11 11 0 0 0-9.72 6.15l3.66 2.85C6.79 7.24 9.18 5.34 12 5.34Z"/></svg>
+          <span class="google-review-stars" aria-hidden="true">★★★★★</span>
+          <span class="google-review-text">Rated on Google — read all reviews</span>
+        </a>
       </div>
       <div class="testimonials-grid">
+        <!-- =========================================================
+             GOOGLE REVIEWS
+             The cards below are placeholders. To show your store's
+             REAL, AUTO-UPDATING Google reviews, do ONE of these:
+
+             OPTION A (easiest, no code): use a free widget service.
+               1. Create a widget at https://elfsight.com/google-reviews-widget/
+                  (or https://www.trustindex.io/) and connect your Google
+                  Business Profile: "Ramdev Toys & Baby Wear".
+               2. Paste the embed code the service gives you into the
+                  #googleReviewsWidget element below, then delete these
+                  placeholder review cards.
+
+             OPTION B (developer): call the Google Places API.
+               - Get a Place ID for the store and a Maps API key.
+               - Fetch place details (reviews field) server-side and render
+                 them into #googleReviewsWidget. See the fetchGoogleReviews()
+                 stub in the script at the bottom of this file.
+        ========================================================== -->
         <div class="testi-card reveal" style="transition-delay:.05s">
           <div class="testi-quote" aria-hidden="true">"</div>
           <div class="testi-rating" aria-label="5 stars">★★★★★</div>
@@ -1713,6 +1757,7 @@
               <div class="testi-role">Mother of one</div>
             </div>
           </div>
+          <div class="testi-source"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.06H12v3.9h5.9a5.06 5.06 0 0 1-2.19 3.32v2.76h3.54c2.07-1.91 3.26-4.72 3.26-8.02Z"/><path fill="#34A853" d="M12 23c2.94 0 5.41-.97 7.21-2.63l-3.54-2.76c-.98.66-2.24 1.05-3.67 1.05-2.82 0-5.21-1.9-6.06-4.46H2.28v2.85A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.94 14.2a6.6 6.6 0 0 1 0-4.2V7.15H2.28a11 11 0 0 0 0 9.9l3.66-2.85Z"/><path fill="#EA4335" d="M12 5.34c1.6 0 3.03.55 4.16 1.62l3.12-3.12A11 11 0 0 0 12 1a11 11 0 0 0-9.72 6.15l3.66 2.85C6.79 7.24 9.18 5.34 12 5.34Z"/></svg> Posted on Google</div>
         </div>
         <div class="testi-card reveal" style="transition-delay:.15s">
           <div class="testi-quote" aria-hidden="true">"</div>
@@ -1725,6 +1770,7 @@
               <div class="testi-role">Father of two</div>
             </div>
           </div>
+          <div class="testi-source"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.06H12v3.9h5.9a5.06 5.06 0 0 1-2.19 3.32v2.76h3.54c2.07-1.91 3.26-4.72 3.26-8.02Z"/><path fill="#34A853" d="M12 23c2.94 0 5.41-.97 7.21-2.63l-3.54-2.76c-.98.66-2.24 1.05-3.67 1.05-2.82 0-5.21-1.9-6.06-4.46H2.28v2.85A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.94 14.2a6.6 6.6 0 0 1 0-4.2V7.15H2.28a11 11 0 0 0 0 9.9l3.66-2.85Z"/><path fill="#EA4335" d="M12 5.34c1.6 0 3.03.55 4.16 1.62l3.12-3.12A11 11 0 0 0 12 1a11 11 0 0 0-9.72 6.15l3.66 2.85C6.79 7.24 9.18 5.34 12 5.34Z"/></svg> Posted on Google</div>
         </div>
         <div class="testi-card reveal" style="transition-delay:.25s">
           <div class="testi-quote" aria-hidden="true">"</div>
@@ -1737,8 +1783,14 @@
               <div class="testi-role">Regular customer</div>
             </div>
           </div>
+          <div class="testi-source"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.06H12v3.9h5.9a5.06 5.06 0 0 1-2.19 3.32v2.76h3.54c2.07-1.91 3.26-4.72 3.26-8.02Z"/><path fill="#34A853" d="M12 23c2.94 0 5.41-.97 7.21-2.63l-3.54-2.76c-.98.66-2.24 1.05-3.67 1.05-2.82 0-5.21-1.9-6.06-4.46H2.28v2.85A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.94 14.2a6.6 6.6 0 0 1 0-4.2V7.15H2.28a11 11 0 0 0 0 9.9l3.66-2.85Z"/><path fill="#EA4335" d="M12 5.34c1.6 0 3.03.55 4.16 1.62l3.12-3.12A11 11 0 0 0 12 1a11 11 0 0 0-9.72 6.15l3.66 2.85C6.79 7.24 9.18 5.34 12 5.34Z"/></svg> Posted on Google</div>
         </div>
       </div>
+
+      <!-- Live Google reviews mount point. Paste your Elfsight/Trustindex
+           embed here, OR let fetchGoogleReviews() populate it via the API.
+           When it fills, hide the placeholder cards above. -->
+      <div id="googleReviewsWidget" class="reveal"></div>
     </div>
   </section>
 
@@ -1789,48 +1841,65 @@
         <span class="section-label">Follow Along</span>
         <h2 class="section-title" id="insta-heading">New Arrivals On <span>Instagram</span></h2>
         <p class="section-sub">We post fresh stock, offers and store updates first on social.</p>
+        <a class="btn btn-secondary btn-sm" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" style="margin-top:16px;">
+          <svg aria-hidden="true"><use href="#i-instagram"/></svg> Follow @_ramdev2016rtbw
+        </a>
       </div>
-      <div class="insta-grid">
-        <div class="insta-tile">
+
+      <!-- =========================================================
+           AUTO-UPDATING INSTAGRAM FEED
+           The tiles below are a static fallback. To make posts update
+           AUTOMATICALLY as they are posted to @_ramdev2016rtbw, do ONE:
+
+           OPTION A (easiest, no code): a free feed widget.
+             1. Create a feed at https://elfsight.com/instagram-feed-instagram-widget/
+                (or https://snapwidget.com/) and connect @_ramdev2016rtbw.
+             2. Paste the embed code they give you into the
+                #instaFeedWidget element below. It refreshes on its own.
+
+           OPTION B (developer): Instagram Basic Display / Graph API.
+             - Register an app, get a long-lived access token for the
+               account, then fetch /me/media and render into #instaFeedWidget.
+             - Refresh the token periodically (tokens last ~60 days).
+      ========================================================== -->
+      <div id="instaFeedWidget" class="reveal"></div>
+
+      <div class="insta-grid" id="instaFallbackGrid">
+        <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_1" src="image assets/imgi_15_34.webp" alt="Instagram post" loading="lazy" />
           <div class="insta-hover" aria-hidden="true">📷</div>
-        </div>
-        <div class="insta-tile">
+        </a>
+        <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_2" src="image assets/imgi_21_HolaEarlyLearningFireEngine1.webp" alt="Instagram post" loading="lazy" />
           <div class="insta-hover" aria-hidden="true">📷</div>
-        </div>
-        <div class="insta-tile">
+        </a>
+        <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_3" src="image assets/imgi_76_bluegrey.webp" alt="Instagram post" loading="lazy" />
           <div class="insta-hover" aria-hidden="true">📷</div>
-        </div>
-        <div class="insta-tile">
+        </a>
+        <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_4" src="image assets/imgi_95_1032_-_Cataloguing-_Image01.webp" alt="Instagram post" loading="lazy" />
           <div class="insta-hover" aria-hidden="true">📷</div>
-        </div>
-        <div class="insta-tile">
+        </a>
+        <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_5" src="image assets/imgi_101_Peek-A-BooISeeYouJungle_1024x1024_0b891654-a445-4325-86bd-315883045819.webp" alt="Instagram post" loading="lazy" />
           <div class="insta-hover" aria-hidden="true">📷</div>
-        </div>
-        <div class="insta-tile">
+        </a>
+        <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_6" src="image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp" alt="Instagram post" loading="lazy" />
           <div class="insta-hover" aria-hidden="true">📷</div>
-        </div>
+        </a>
       </div>
-      <!-- Replace # with your Instagram profile URL -->
-      <p class="insta-handle">Follow <a href="#">@rtbw</a> for new arrivals, offers and store updates</p>
+      <p class="insta-handle">Follow <a href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener">@_ramdev2016rtbw</a> for new arrivals, offers and store updates</p>
     </div>
   </section>
 
   <!-- =============================================
        SECTION 11 — CONTACT
        ---------------------------------------------
-       PLACEHOLDERS TO FILL IN:
-       • Store address   → .contact-value under "Store Address"
-       • Opening hours   → .contact-value under "Store Timings"
-       • Phone number    → both the tel: link and its text
-       • Google Maps     → paste your embed <iframe> inside .map-frame
-                           (Google Maps → Share → Embed a map → copy HTML)
-                           and delete the .map-placeholder div
+       Live details for Ramdev Toys & Baby Wear are filled in below.
+       The Google Maps embed points at the store address; swap the
+       src for a custom "Share → Embed a map" iframe if you prefer.
   ============================================= -->
   <section class="contact" id="contact" aria-labelledby="contact-heading">
     <div class="container">
@@ -1855,10 +1924,18 @@
           <div class="contact-card">
             <span class="contact-icon"><svg aria-hidden="true"><use href="#i-phone"/></svg></span>
             <div>
-              <div class="contact-label">Call or WhatsApp</div>
-              <!-- Replace with your number in both places -->
-              <div class="contact-value"><a href="tel:+910000000000">+91 00000 00000</a></div>
+              <div class="contact-label">Call Us</div>
+              <div class="contact-value"><a href="tel:+918043714157">080-43714157</a></div>
               <div class="contact-note">Quickest way to check live stock.</div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-icon"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg></span>
+            <div>
+              <div class="contact-label">WhatsApp</div>
+              <div class="contact-value"><a href="https://wa.me/918884876750" target="_blank" rel="noopener">+91 88848 76750</a></div>
+              <div class="contact-note">Message us for photos, sizes and prices.</div>
             </div>
           </div>
 
@@ -1867,9 +1944,9 @@
             <div>
               <div class="contact-label">Store Address</div>
               <div class="contact-value">
-                [ Shop name and number ],<br />
-                [ Street / area ],<br />
-                [ City, State — PIN ]
+                Ramdev Toys &amp; Baby Wear,<br />
+                #15/16, Vignan Nagar Main Road,<br />
+                New Thippasandra Post, Bengaluru – 560075, Karnataka
               </div>
             </div>
           </div>
@@ -1879,29 +1956,29 @@
             <div>
               <div class="contact-label">Store Timings</div>
               <div class="contact-value">
-                Mon – Sat: [ 10:00 AM – 9:00 PM ]<br />
-                Sunday: [ 11:00 AM – 8:00 PM ]
+                Open all week<br />
+                9:00 AM – 9:30 PM
               </div>
             </div>
           </div>
 
           <div class="contact-actions">
-            <a href="mailto:rtbw2016@gmail.com" class="btn btn-primary">
-              <svg aria-hidden="true"><use href="#i-mail"/></svg> Email Us
-            </a>
-            <a href="tel:+910000000000" class="btn btn-secondary">
+            <a href="tel:+918043714157" class="btn btn-primary">
               <svg aria-hidden="true"><use href="#i-phone"/></svg> Call the Store
+            </a>
+            <a href="https://wa.me/918884876750" target="_blank" rel="noopener" class="btn btn-secondary">
+              <svg aria-hidden="true"><use href="#i-whatsapp"/></svg> WhatsApp Us
             </a>
           </div>
         </div>
 
         <!-- Google Maps slot -->
         <div class="map-frame reveal-right">
-          <div class="map-placeholder">
-            <svg aria-hidden="true"><use href="#i-pin"/></svg>
-            <strong>Google Map goes here</strong>
-            <span>Paste your Google Maps embed iframe into this container to show the store location.</span>
-          </div>
+          <iframe
+            title="Ramdev Toys & Baby Wear location on Google Maps"
+            src="https://maps.google.com/maps?q=Ramdev%20Toys%20%26%20Baby%20Wear%2C%20%2315%2F16%2C%20Vignan%20Nagar%20Main%20Road%2C%20New%20Thippasandra%2C%20Bengaluru%20560075&output=embed"
+            style="border:0;width:100%;height:100%;min-height:340px;"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -1920,10 +1997,9 @@
         </a>
         <p>Newborn clothing, kids wear, toys, school essentials, maternity and nightwear — everything for babies, kids and mums in one friendly store.</p>
         <div class="social-links">
-          <a href="#" class="social-btn" aria-label="RTBW on Facebook"><svg aria-hidden="true"><use href="#i-facebook"/></svg></a>
-          <a href="#" class="social-btn" aria-label="RTBW on Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
-          <a href="#" class="social-btn" aria-label="RTBW on WhatsApp"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
-          <a href="#" class="social-btn" aria-label="RTBW on YouTube"><svg aria-hidden="true"><use href="#i-youtube"/></svg></a>
+          <a href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" class="social-btn" aria-label="RTBW on Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a href="https://wa.me/918884876750" target="_blank" rel="noopener" class="social-btn" aria-label="RTBW on WhatsApp"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
+          <a href="tel:+918043714157" class="social-btn" aria-label="Call RTBW"><svg aria-hidden="true"><use href="#i-phone"/></svg></a>
         </div>
       </div>
 
@@ -1962,23 +2038,23 @@
         <h4>Contact</h4>
         <ul class="footer-contact">
           <li>
-            <svg aria-hidden="true"><use href="#i-mail"/></svg>
-            <a href="mailto:rtbw2016@gmail.com">rtbw2016@gmail.com</a>
+            <svg aria-hidden="true"><use href="#i-phone"/></svg>
+            <a href="tel:+918043714157">080-43714157</a>
           </li>
           <li>
-            <svg aria-hidden="true"><use href="#i-phone"/></svg>
-            <a href="tel:+910000000000">+91 00000 00000</a>
+            <svg aria-hidden="true"><use href="#i-whatsapp"/></svg>
+            <a href="https://wa.me/918884876750" target="_blank" rel="noopener">+91 88848 76750</a>
           </li>
           <li>
             <svg aria-hidden="true"><use href="#i-pin"/></svg>
-            <span>[ Shop address ],<br />[ City, State — PIN ]</span>
+            <span>Ramdev Toys &amp; Baby Wear, #15/16, Vignan Nagar Main Road,<br />New Thippasandra Post, Bengaluru – 560075, Karnataka</span>
           </li>
           <li>
             <svg aria-hidden="true"><use href="#i-clock"/></svg>
-            <span>Mon – Sat: [ 10 AM – 9 PM ]<br />Sunday: [ 11 AM – 8 PM ]</span>
+            <span>Open all week<br />9:00 AM – 9:30 PM</span>
           </li>
         </ul>
-        <a href="mailto:rtbw2016@gmail.com" class="btn btn-primary btn-sm" style="margin-top:6px;">Email Us</a>
+        <a href="https://wa.me/918884876750" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:6px;">WhatsApp Us</a>
       </div>
     </div>
 
@@ -2261,6 +2337,57 @@
       });
     }
 
+    /* ----- 10. Google reviews (optional live feed) -----
+       Leave OFF and the placeholder cards + "Rated on Google" badge show.
+       To go live WITHOUT this stub, just paste an Elfsight/Trustindex embed
+       into #googleReviewsWidget (see the comment in that section).
+
+       To go live WITH the Places API instead:
+         1. Set GOOGLE_MAPS_API_KEY and GOOGLE_PLACE_ID below.
+         2. Proxy the request through your own server (server.js) to keep
+            the key secret — browsers cannot call the Places API directly
+            due to CORS + key exposure. Point REVIEWS_ENDPOINT at that route.
+    */
+    var GOOGLE_PLACE_ID   = '';   // e.g. 'ChIJ...'  (find via Google Place ID Finder)
+    var REVIEWS_ENDPOINT  = '';   // e.g. '/api/google-reviews'  (your server proxy)
+
+    function initGoogleReviews() {
+      var mount = document.getElementById('googleReviewsWidget');
+      if (!mount || !REVIEWS_ENDPOINT) return;   // no endpoint -> keep placeholders
+      fetch(REVIEWS_ENDPOINT + (GOOGLE_PLACE_ID ? ('?place_id=' + encodeURIComponent(GOOGLE_PLACE_ID)) : ''))
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (data) {
+          var reviews = (data && data.reviews) || [];
+          if (!reviews.length) return;
+          var google = '<svg viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;vertical-align:middle;"><path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.06H12v3.9h5.9a5.06 5.06 0 0 1-2.19 3.32v2.76h3.54c2.07-1.91 3.26-4.72 3.26-8.02Z"/><path fill="#34A853" d="M12 23c2.94 0 5.41-.97 7.21-2.63l-3.54-2.76c-.98.66-2.24 1.05-3.67 1.05-2.82 0-5.21-1.9-6.06-4.46H2.28v2.85A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.94 14.2a6.6 6.6 0 0 1 0-4.2V7.15H2.28a11 11 0 0 0 0 9.9l3.66-2.85Z"/><path fill="#EA4335" d="M12 5.34c1.6 0 3.03.55 4.16 1.62l3.12-3.12A11 11 0 0 0 12 1a11 11 0 0 0-9.72 6.15l3.66 2.85C6.79 7.24 9.18 5.34 12 5.34Z"/></svg>';
+          var html = '<div class="testimonials-grid" style="margin-top:24px;">';
+          reviews.slice(0, 6).forEach(function (rv) {
+            var stars = '★★★★★'.slice(0, Math.round(rv.rating || 5));
+            html += '<div class="testi-card">'
+                 +    '<div class="testi-rating" aria-label="rating">' + stars + '</div>'
+                 +    '<p class="testi-text">' + escapeHtml(rv.text || '') + '</p>'
+                 +    '<div class="testi-author"><div class="testi-avatar">'
+                 +      (rv.profile_photo_url ? '<img src="' + rv.profile_photo_url + '" alt="" loading="lazy" />' : '')
+                 +    '</div><div><div class="testi-name">' + escapeHtml(rv.author_name || 'Google user') + '</div>'
+                 +    '<div class="testi-role">' + escapeHtml(rv.relative_time_description || '') + '</div></div></div>'
+                 +    '<div class="testi-source">' + google + ' Posted on Google</div>'
+                 +  '</div>';
+          });
+          html += '</div>';
+          mount.innerHTML = html;
+          // Hide the static placeholder cards once real reviews load
+          var placeholder = mount.parentNode.querySelector('.testimonials-grid');
+          if (placeholder && placeholder.parentNode) placeholder.style.display = 'none';
+        })
+        .catch(function () { /* keep placeholders */ });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+      });
+    }
+
     function init() {
       initReveal();
       initHeaderShadow();
@@ -2271,6 +2398,7 @@
       initRipple();
       initYear();
       initLogoFallback();
+      initGoogleReviews();
     }
 
     document.readyState === 'loading'
