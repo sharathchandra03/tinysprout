@@ -109,6 +109,7 @@ if (slotCount.cnt === 0) {
     { key: 'collection_top_right', page: 'Homepage', section: 'Collections', label: 'Collection - Top Right', image_url: '/image assets/imgi_17_HTE9997-HolaToyAmbulance-1.webp', alt_text: 'Toy vehicles and play sets' },
     { key: 'collection_bottom_left', page: 'Homepage', section: 'Collections', label: 'Collection - Bottom Left', image_url: '/image assets/imgi_64_01_652a2989-83ec-4d10-bd8c-21f50957e002.webp', alt_text: 'Newborn essentials range' },
     { key: 'collection_bottom_right', page: 'Homepage', section: 'Collections', label: 'Collection - Bottom Right', image_url: '/image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp', alt_text: 'Art, craft and stationery range' },
+    { key: 'collection_extra', page: 'Homepage', section: 'Collections', label: 'Collection - Extra Card', image_url: '/image assets/imgi_87_City3_1024x1024_e7baab53-da12-4fa7-8e59-79081a7c52a4.webp', alt_text: 'Learning and puzzle toys range' },
     { key: 'collection_banner', page: 'Homepage', section: 'Collections', label: 'Collection - Full Banner', image_url: '/image assets/imgi_2_b1-400.jpg', alt_text: 'School bags, bottles and back-to-school essentials' },
     { key: 'promo_left', page: 'Homepage', section: 'Promotions', label: 'Promo Banner Left', image_url: '/image assets/imgi_199_Toy_car_rc_car.jpg', alt_text: 'Remote control toys offer' },
     { key: 'location_1', page: 'Homepage', section: 'Locations', label: 'Store Photo 1', image_url: '/image assets/imgi_108_budhigere-shop-image-compressed.jpg', alt_text: 'Store entrance and window display' },
@@ -167,6 +168,24 @@ if (slotCount.cnt === 0) {
     }
     console.log(`Filled ${emptySlots.length} empty image slots with defaults.`);
   }
+}
+
+// Ensure slots added after the initial seed exist in already-created databases.
+// Idempotent: only inserts a slot when its key is missing.
+const ADDED_SLOTS = [
+  { key: 'collection_extra', page: 'Homepage', section: 'Collections', label: 'Collection - Extra Card', image_url: '/image assets/imgi_87_City3_1024x1024_e7baab53-da12-4fa7-8e59-79081a7c52a4.webp', alt_text: 'Learning and puzzle toys range' },
+];
+{
+  const existsStmt = db.prepare('SELECT 1 FROM image_slots WHERE slot_key = ?');
+  const insertStmt = db.prepare('INSERT INTO image_slots (slot_key, page, section, label, image_url, alt_text) VALUES (?, ?, ?, ?, ?, ?)');
+  let added = 0;
+  for (const s of ADDED_SLOTS) {
+    if (!existsStmt.get(s.key)) {
+      insertStmt.run(s.key, s.page, s.section, s.label, s.image_url, s.alt_text);
+      added++;
+    }
+  }
+  if (added > 0) console.log(`Added ${added} new image slot(s).`);
 }
 
 // ---------------------------------------------------------------------------

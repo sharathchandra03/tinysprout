@@ -1193,6 +1193,35 @@
         'Instagram': 'The 6-tile grid in "New Arrivals On Instagram" section at the bottom.'
       };
 
+      // Recommended upload size for each specific image slot.
+      // { w, h, note } — w×h is the ideal pixel size, note explains the shape.
+      const slotDimensions = {
+        hero_main:               { w: 900,  h: 700,  note: 'Landscape (≈4:3)' },
+        hero_side_1:             { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        hero_side_2:             { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        carousel_1:              { w: 800,  h: 1000, note: 'Portrait (4:5)' },
+        carousel_2:              { w: 800,  h: 1000, note: 'Portrait (4:5)' },
+        carousel_3:              { w: 800,  h: 1000, note: 'Portrait (4:5)' },
+        carousel_4:              { w: 800,  h: 1000, note: 'Portrait (4:5)' },
+        carousel_5:              { w: 800,  h: 1000, note: 'Portrait (4:5)' },
+        collection_large:        { w: 700,  h: 1000, note: 'Tall portrait' },
+        collection_top_right:    { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        collection_bottom_left:  { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        collection_bottom_right: { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        collection_extra:        { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        collection_banner:       { w: 1600, h: 400,  note: 'Wide banner (4:1)' },
+        promo_left:              { w: 900,  h: 640,  note: 'Landscape (≈4:3)' },
+        location_1:              { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        location_2:              { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        location_3:              { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
+        insta_1:                 { w: 800,  h: 800,  note: 'Square (1:1)' },
+        insta_2:                 { w: 800,  h: 800,  note: 'Square (1:1)' },
+        insta_3:                 { w: 800,  h: 800,  note: 'Square (1:1)' },
+        insta_4:                 { w: 800,  h: 800,  note: 'Square (1:1)' },
+        insta_5:                 { w: 800,  h: 800,  note: 'Square (1:1)' },
+        insta_6:                 { w: 800,  h: 800,  note: 'Square (1:1)' }
+      };
+
       // Group slots by section
       const grouped = {};
       data.slots.forEach(s => {
@@ -1222,6 +1251,13 @@
                   </div>
                   <div class="slot-card-body">
                     <div class="slot-label">${escHtml(s.label)}</div>
+                    ${slotDimensions[s.slot_key] ? `
+                      <div style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:4px 10px;background:var(--orange-pale);border:1px solid var(--orange-light);border-radius:20px;font-size:.72rem;font-weight:700;color:var(--orange-text);">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                        Upload ${slotDimensions[s.slot_key].w} × ${slotDimensions[s.slot_key].h} px
+                        <span style="font-weight:600;opacity:.8;">· ${escHtml(slotDimensions[s.slot_key].note)}</span>
+                      </div>
+                    ` : ''}
                     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;">
                       <button class="btn btn-primary btn-sm" onclick="document.getElementById('slot-upload-${s.id}').click()">Upload New</button>
                       <button class="btn btn-secondary btn-sm" onclick="pickSlotImage(${s.id})">Choose from Library</button>
