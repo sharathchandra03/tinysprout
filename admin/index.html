@@ -468,6 +468,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 7h5M17 17h5"/></svg>
         Website Images
       </a>
+      <a href="#" data-page="text-slots">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V5h16v2M9 20h6M12 5v15"/></svg>
+        Website Text
+      </a>
     </nav>
     <div class="sidebar-footer">
       <a href="/" target="_blank" style="font-weight:700;color:var(--orange-text);display:block;margin-bottom:8px;">View Website →</a>
@@ -626,6 +630,14 @@
           Manage images on your website. Sections are ordered exactly as they appear on the site (top to bottom). Upload or replace any image — changes reflect immediately.
         </p>
         <div id="slotsContainer"></div>
+      </div>
+
+      <!-- TEXT SLOTS -->
+      <div class="page-view" id="page-text-slots">
+        <p style="margin-bottom:24px;color:var(--gray-600);font-size:.9rem;">
+          Edit the words shown on your website. Change any field and click Save — the change appears on the site immediately.
+        </p>
+        <div id="textSlotsContainer"></div>
       </div>
 
     </div><!-- /content -->
@@ -857,7 +869,8 @@
       blogs: 'All Blogs',
       'blog-editor': editingBlogId ? 'Edit Blog' : 'Create New Blog',
       media: 'Media Library',
-      'image-slots': 'Website Images'
+      'image-slots': 'Website Images',
+      'text-slots': 'Website Text'
     };
     document.getElementById('pageTitle').textContent = titles[page] || 'Dashboard';
     document.getElementById('breadcrumb').textContent = 'Admin / ' + (titles[page] || 'Dashboard');
@@ -868,6 +881,7 @@
     else if (page === 'blog-editor') { initQuill(); if (data) loadBlogForEdit(data); else resetBlogForm(); }
     else if (page === 'media') loadMedia();
     else if (page === 'image-slots') loadImageSlots();
+    else if (page === 'text-slots') loadTextSlots();
   }
 
   // Sidebar click handlers
@@ -1183,11 +1197,12 @@
       const container = document.getElementById('slotsContainer');
 
       // Define section order matching the website top-to-bottom
-      const sectionOrder = ['Hero', 'Shop Carousel', 'Collections', 'Promotions', 'Locations', 'Instagram'];
+      const sectionOrder = ['Hero', 'Shop Carousel', 'Collections', 'Featured Products', 'Promotions', 'Locations', 'Instagram'];
       const sectionDescriptions = {
         'Hero': 'The large banner area at the very top of your homepage with the main image and two side images.',
         'Shop Carousel': 'The slideshow of store photos that auto-rotates in the "Inside Our Store" section.',
         'Collections': 'The gallery grid in "Shop by Interest" — one large card, smaller cards, and a full-width banner.',
+        'Featured Products': 'The 8 product cards in the "Featured Products — Picked Out For You" section.',
         'Promotions': 'The promotional banner section with offers and deals.',
         'Locations': 'The "Come See It In Person" section showing store photos.',
         'Instagram': 'The 6-tile grid in "New Arrivals On Instagram" section at the bottom.'
@@ -1210,6 +1225,14 @@
         collection_bottom_right: { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
         collection_extra:        { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
         collection_banner:       { w: 1600, h: 400,  note: 'Wide banner (4:1)' },
+        product_1:               { w: 800,  h: 600,  note: 'Landscape (4:3)' },
+        product_2:               { w: 800,  h: 600,  note: 'Landscape (4:3)' },
+        product_3:               { w: 800,  h: 600,  note: 'Landscape (4:3)' },
+        product_4:               { w: 800,  h: 600,  note: 'Landscape (4:3)' },
+        product_5:               { w: 800,  h: 600,  note: 'Landscape (4:3)' },
+        product_6:               { w: 800,  h: 600,  note: 'Landscape (4:3)' },
+        product_7:               { w: 800,  h: 600,  note: 'Landscape (4:3)' },
+        product_8:               { w: 800,  h: 600,  note: 'Landscape (4:3)' },
         promo_left:              { w: 900,  h: 640,  note: 'Landscape (≈4:3)' },
         location_1:              { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
         location_2:              { w: 600,  h: 450,  note: 'Landscape (≈4:3)' },
@@ -1338,6 +1361,77 @@
       showToast('Alt text saved');
     } catch (err) { showToast(err.message, 'error'); }
   }
+
+  // ===== TEXT SLOTS =====
+  async function loadTextSlots() {
+    try {
+      const data = await api('/api/admin/text-slots');
+      if (!data) return;
+      const container = document.getElementById('textSlotsContainer');
+
+      const sectionOrder = ['Featured Products'];
+      const sectionDescriptions = {
+        'Featured Products': 'The words on the 8 product cards in the "Featured Products — Picked Out For You" section.'
+      };
+
+      // Group slots by section
+      const grouped = {};
+      data.slots.forEach(s => {
+        if (!grouped[s.section]) grouped[s.section] = [];
+        grouped[s.section].push(s);
+      });
+
+      // Any section not explicitly ordered still gets shown, after the ordered ones
+      const sections = sectionOrder.concat(Object.keys(grouped).filter(s => !sectionOrder.includes(s)));
+
+      let html = '';
+      sections.forEach(section => {
+        const slots = grouped[section];
+        if (!slots || slots.length === 0) return;
+        html += `
+          <div style="margin-bottom:40px;">
+            <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--orange-pale);">
+              <h3 style="font-size:1.1rem;font-weight:700;color:var(--gray-900);margin-bottom:4px;">
+                <span style="color:var(--orange);">●</span> ${escHtml(section)}
+              </h3>
+              <p style="font-size:.82rem;color:var(--gray-600);margin:0;">${sectionDescriptions[section] || ''}</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              ${slots.map(s => {
+                const isLong = s.slot_key.endsWith('_desc');
+                const field = isLong
+                  ? `<textarea id="text-input-${s.id}" rows="3" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:.88rem;font-family:inherit;resize:vertical;">${escHtml(s.content)}</textarea>`
+                  : `<input type="text" id="text-input-${s.id}" value="${escHtml(s.content)}" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:.88rem;" />`;
+                return `
+                  <div style="background:var(--white);border:1.5px solid var(--gray-200);border-radius:12px;padding:16px;${isLong ? 'grid-column:1/-1;' : ''}">
+                    <label style="display:block;font-size:.8rem;font-weight:700;color:var(--gray-900);margin-bottom:8px;">${escHtml(s.label)}</label>
+                    ${field}
+                    <div style="margin-top:10px;">
+                      <button class="btn btn-primary btn-sm" onclick="saveTextSlot(${s.id})">Save</button>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html || '<p style="color:var(--gray-600);">No editable text found.</p>';
+    } catch (err) { showToast(err.message, 'error'); }
+  }
+
+  async function saveTextSlot(slotId) {
+    try {
+      const input = document.getElementById(`text-input-${slotId}`);
+      await api(`/api/admin/text-slots/${slotId}`, {
+        method: 'PUT',
+        body: JSON.stringify({ content: input.value })
+      });
+      showToast('Text saved');
+    } catch (err) { showToast(err.message, 'error'); }
+  }
+
   // ===== DELETE CONFIRMATION =====
   let deleteType = '';
   let deleteId = null;

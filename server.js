@@ -81,6 +81,16 @@ db.exec(`
     alt_text TEXT DEFAULT '',
     updated_at TEXT DEFAULT (datetime('now'))
   );
+
+  CREATE TABLE IF NOT EXISTS text_slots (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    slot_key TEXT UNIQUE NOT NULL,
+    page TEXT NOT NULL,
+    section TEXT NOT NULL,
+    label TEXT DEFAULT '',
+    content TEXT DEFAULT '',
+    updated_at TEXT DEFAULT (datetime('now'))
+  );
 `);
 
 // Seed default admin user if none exists
@@ -97,30 +107,30 @@ if (userCount.cnt === 0) {
 const slotCount = db.prepare('SELECT COUNT(*) as cnt FROM image_slots').get();
 if (slotCount.cnt === 0) {
   const defaultSlots = [
-    { key: 'hero_main', page: 'Homepage', section: 'Hero', label: 'Hero Main Image', image_url: '/image assets/imgi_123_b1-400.jpg', alt_text: 'Baby and kids products display' },
-    { key: 'hero_side_1', page: 'Homepage', section: 'Hero', label: 'Hero Side Image 1', image_url: '/image assets/imgi_124_b2_04b6be89-d906-4fff-b3ff-5698cbdd05e0.jpg', alt_text: 'Kids essentials range' },
-    { key: 'hero_side_2', page: 'Homepage', section: 'Hero', label: 'Hero Side Image 2', image_url: '/image assets/imgi_125_b3.jpg', alt_text: 'Toys and play items on display' },
-    { key: 'carousel_1', page: 'Homepage', section: 'Shop Carousel', label: 'Carousel Slide 1', image_url: '/image assets/imgi_108_budhigere-shop-image-compressed.jpg', alt_text: 'Storefront entrance with product displays' },
-    { key: 'carousel_2', page: 'Homepage', section: 'Shop Carousel', label: 'Carousel Slide 2', image_url: '/image assets/imgi_110_Kadugodi.jpg', alt_text: 'Store interior showing shelves of kids products' },
-    { key: 'carousel_3', page: 'Homepage', section: 'Shop Carousel', label: 'Carousel Slide 3', image_url: '/image assets/imgi_5_25926.jpg', alt_text: 'Display of toys and baby products in store' },
-    { key: 'carousel_4', page: 'Homepage', section: 'Shop Carousel', label: 'Carousel Slide 4', image_url: '/image assets/imgi_10_1705643989.jpg', alt_text: 'Kids clothing section inside the store' },
-    { key: 'carousel_5', page: 'Homepage', section: 'Shop Carousel', label: 'Carousel Slide 5', image_url: '/image assets/imgi_11_1705737547_5565a58b-27d2-4e7b-b950-f29cdd5531de.jpg', alt_text: 'Baby gear and accessories aisle' },
-    { key: 'collection_large', page: 'Homepage', section: 'Collections', label: 'Featured Collection - Large Card', image_url: '/image assets/imgi_46_RforRabbitStreetSmartStrollerGreyBlack_1_1.jpg', alt_text: 'Strollers and travel gear range' },
-    { key: 'collection_top_right', page: 'Homepage', section: 'Collections', label: 'Collection - Top Right', image_url: '/image assets/imgi_17_HTE9997-HolaToyAmbulance-1.webp', alt_text: 'Toy vehicles and play sets' },
-    { key: 'collection_bottom_left', page: 'Homepage', section: 'Collections', label: 'Collection - Bottom Left', image_url: '/image assets/imgi_64_01_652a2989-83ec-4d10-bd8c-21f50957e002.webp', alt_text: 'Newborn essentials range' },
-    { key: 'collection_bottom_right', page: 'Homepage', section: 'Collections', label: 'Collection - Bottom Right', image_url: '/image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp', alt_text: 'Art, craft and stationery range' },
-    { key: 'collection_extra', page: 'Homepage', section: 'Collections', label: 'Collection - Extra Card', image_url: '/image assets/imgi_87_City3_1024x1024_e7baab53-da12-4fa7-8e59-79081a7c52a4.webp', alt_text: 'Learning and puzzle toys range' },
-    { key: 'collection_banner', page: 'Homepage', section: 'Collections', label: 'Collection - Full Banner', image_url: '/image assets/imgi_2_b1-400.jpg', alt_text: 'School bags, bottles and back-to-school essentials' },
-    { key: 'promo_left', page: 'Homepage', section: 'Promotions', label: 'Promo Banner Left', image_url: '/image assets/imgi_199_Toy_car_rc_car.jpg', alt_text: 'Remote control toys offer' },
-    { key: 'location_1', page: 'Homepage', section: 'Locations', label: 'Store Photo 1', image_url: '/image assets/imgi_108_budhigere-shop-image-compressed.jpg', alt_text: 'Store entrance and window display' },
-    { key: 'location_2', page: 'Homepage', section: 'Locations', label: 'Store Photo 2', image_url: '/image assets/imgi_110_Kadugodi.jpg', alt_text: 'Organised shelves inside the store' },
-    { key: 'location_3', page: 'Homepage', section: 'Locations', label: 'Store Photo 3', image_url: '/image assets/imgi_8_1705662970.jpg', alt_text: 'Staff assisting a customer in store' },
-    { key: 'insta_1', page: 'Homepage', section: 'Instagram', label: 'Instagram Tile 1', image_url: '/image assets/imgi_15_34.webp', alt_text: 'Instagram post' },
-    { key: 'insta_2', page: 'Homepage', section: 'Instagram', label: 'Instagram Tile 2', image_url: '/image assets/imgi_21_HolaEarlyLearningFireEngine1.webp', alt_text: 'Instagram post' },
-    { key: 'insta_3', page: 'Homepage', section: 'Instagram', label: 'Instagram Tile 3', image_url: '/image assets/imgi_76_bluegrey.webp', alt_text: 'Instagram post' },
-    { key: 'insta_4', page: 'Homepage', section: 'Instagram', label: 'Instagram Tile 4', image_url: '/image assets/imgi_95_1032_-_Cataloguing-_Image01.webp', alt_text: 'Instagram post' },
-    { key: 'insta_5', page: 'Homepage', section: 'Instagram', label: 'Instagram Tile 5', image_url: '/image assets/imgi_101_Peek-A-BooISeeYouJungle_1024x1024_0b891654-a445-4325-86bd-315883045819.webp', alt_text: 'Instagram post' },
-    { key: 'insta_6', page: 'Homepage', section: 'Instagram', label: 'Instagram Tile 6', image_url: '/image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp', alt_text: 'Instagram post' },
+    { key: 'hero_main', page: 'Homepage', section: 'Hero', label: 'Hero — Big Main Photo (top-left banner)', image_url: '/image assets/imgi_123_b1-400.jpg', alt_text: 'Baby and kids products display' },
+    { key: 'hero_side_1', page: 'Homepage', section: 'Hero', label: 'Hero — Small Photo 1 (top-right, upper)', image_url: '/image assets/imgi_124_b2_04b6be89-d906-4fff-b3ff-5698cbdd05e0.jpg', alt_text: 'Kids essentials range' },
+    { key: 'hero_side_2', page: 'Homepage', section: 'Hero', label: 'Hero — Small Photo 2 (top-right, lower)', image_url: '/image assets/imgi_125_b3.jpg', alt_text: 'Toys and play items on display' },
+    { key: 'carousel_1', page: 'Homepage', section: 'Shop Carousel', label: 'Inside Our Store — Slide 1 "Walk In, Browse Freely"', image_url: '/image assets/imgi_108_budhigere-shop-image-compressed.jpg', alt_text: 'Storefront entrance with product displays' },
+    { key: 'carousel_2', page: 'Homepage', section: 'Shop Carousel', label: 'Inside Our Store — Slide 2 "Stocked Floor to Ceiling"', image_url: '/image assets/imgi_110_Kadugodi.jpg', alt_text: 'Store interior showing shelves of kids products' },
+    { key: 'carousel_3', page: 'Homepage', section: 'Shop Carousel', label: 'Inside Our Store — Slide 3 "See It Before You Buy"', image_url: '/image assets/imgi_5_25926.jpg', alt_text: 'Display of toys and baby products in store' },
+    { key: 'carousel_4', page: 'Homepage', section: 'Shop Carousel', label: 'Inside Our Store — Slide 4 "Party Wear & Daily Wear"', image_url: '/image assets/imgi_10_1705643989.jpg', alt_text: 'Kids clothing section inside the store' },
+    { key: 'carousel_5', page: 'Homepage', section: 'Shop Carousel', label: 'Inside Our Store — Slide 5 "Gear That Lasts"', image_url: '/image assets/imgi_11_1705737547_5565a58b-27d2-4e7b-b950-f29cdd5531de.jpg', alt_text: 'Baby gear and accessories aisle' },
+    { key: 'collection_large', page: 'Homepage', section: 'Collections', label: 'Shop by Interest — Large card "Strollers, Carriers & Travel Gear"', image_url: '/image assets/imgi_46_RforRabbitStreetSmartStrollerGreyBlack_1_1.jpg', alt_text: 'Strollers and travel gear range' },
+    { key: 'collection_top_right', page: 'Homepage', section: 'Collections', label: 'Shop by Interest — "Toy Vehicles & Play Sets"', image_url: '/image assets/imgi_17_HTE9997-HolaToyAmbulance-1.webp', alt_text: 'Toy vehicles and play sets' },
+    { key: 'collection_bottom_left', page: 'Homepage', section: 'Collections', label: 'Shop by Interest — "Newborn Starter Essentials"', image_url: '/image assets/imgi_64_01_652a2989-83ec-4d10-bd8c-21f50957e002.webp', alt_text: 'Newborn essentials range' },
+    { key: 'collection_bottom_right', page: 'Homepage', section: 'Collections', label: 'Shop by Interest — "Stationery, Art & Craft"', image_url: '/image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp', alt_text: 'Art, craft and stationery range' },
+    { key: 'collection_extra', page: 'Homepage', section: 'Collections', label: 'Shop by Interest — "Learning & Puzzle Toys"', image_url: '/image assets/imgi_87_City3_1024x1024_e7baab53-da12-4fa7-8e59-79081a7c52a4.webp', alt_text: 'Learning and puzzle toys range' },
+    { key: 'collection_banner', page: 'Homepage', section: 'Collections', label: 'Shop by Interest — Wide banner (not shown on site right now)', image_url: '/image assets/imgi_2_b1-400.jpg', alt_text: 'School bags, bottles and back-to-school essentials' },
+    { key: 'promo_left', page: 'Homepage', section: 'Promotions', label: 'Promotions banner (not shown on site right now)', image_url: '/image assets/imgi_199_Toy_car_rc_car.jpg', alt_text: 'Remote control toys offer' },
+    { key: 'location_1', page: 'Homepage', section: 'Locations', label: 'Come See It In Person — "Easy to Find"', image_url: '/image assets/imgi_108_budhigere-shop-image-compressed.jpg', alt_text: 'Store entrance and window display' },
+    { key: 'location_2', page: 'Homepage', section: 'Locations', label: 'Come See It In Person — "Organised Aisles"', image_url: '/image assets/imgi_110_Kadugodi.jpg', alt_text: 'Organised shelves inside the store' },
+    { key: 'location_3', page: 'Homepage', section: 'Locations', label: 'Come See It In Person — "Help On Hand"', image_url: '/image assets/imgi_8_1705662970.jpg', alt_text: 'Staff assisting a customer in store' },
+    { key: 'insta_1', page: 'Homepage', section: 'Instagram', label: 'Instagram Grid — Post 1 (top-left)', image_url: '/image assets/imgi_15_34.webp', alt_text: 'Instagram post' },
+    { key: 'insta_2', page: 'Homepage', section: 'Instagram', label: 'Instagram Grid — Post 2', image_url: '/image assets/imgi_21_HolaEarlyLearningFireEngine1.webp', alt_text: 'Instagram post' },
+    { key: 'insta_3', page: 'Homepage', section: 'Instagram', label: 'Instagram Grid — Post 3', image_url: '/image assets/imgi_76_bluegrey.webp', alt_text: 'Instagram post' },
+    { key: 'insta_4', page: 'Homepage', section: 'Instagram', label: 'Instagram Grid — Post 4', image_url: '/image assets/imgi_95_1032_-_Cataloguing-_Image01.webp', alt_text: 'Instagram post' },
+    { key: 'insta_5', page: 'Homepage', section: 'Instagram', label: 'Instagram Grid — Post 5', image_url: '/image assets/imgi_101_Peek-A-BooISeeYouJungle_1024x1024_0b891654-a445-4325-86bd-315883045819.webp', alt_text: 'Instagram post' },
+    { key: 'insta_6', page: 'Homepage', section: 'Instagram', label: 'Instagram Grid — Post 6 (bottom-right)', image_url: '/image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp', alt_text: 'Instagram post' },
   ];
 
   const insertSlot = db.prepare('INSERT INTO image_slots (slot_key, page, section, label, image_url, alt_text) VALUES (?, ?, ?, ?, ?, ?)');
@@ -173,7 +183,15 @@ if (slotCount.cnt === 0) {
 // Ensure slots added after the initial seed exist in already-created databases.
 // Idempotent: only inserts a slot when its key is missing.
 const ADDED_SLOTS = [
-  { key: 'collection_extra', page: 'Homepage', section: 'Collections', label: 'Collection - Extra Card', image_url: '/image assets/imgi_87_City3_1024x1024_e7baab53-da12-4fa7-8e59-79081a7c52a4.webp', alt_text: 'Learning and puzzle toys range' },
+  { key: 'collection_extra', page: 'Homepage', section: 'Collections', label: 'Shop by Interest — "Learning & Puzzle Toys"', image_url: '/image assets/imgi_87_City3_1024x1024_e7baab53-da12-4fa7-8e59-79081a7c52a4.webp', alt_text: 'Learning and puzzle toys range' },
+  { key: 'product_1', page: 'Homepage', section: 'Featured Products', label: 'Featured Products — Card 1 "Shape Sorting Bus"', image_url: '/image assets/imgi_19_HolaShapeSortingBus1.webp', alt_text: 'Shape sorting bus toy with coloured blocks' },
+  { key: 'product_2', page: 'Homepage', section: 'Featured Products', label: 'Featured Products — Card 2 "Dancing Musical Goose"', image_url: '/image assets/imgi_15_34.webp', alt_text: 'Musical dancing goose toy with lights' },
+  { key: 'product_3', page: 'Homepage', section: 'Featured Products', label: 'Featured Products — Card 3 "4-in-1 Multipurpose Carry Cot"', image_url: '/image assets/imgi_74_PicabooGrand4in1MultipurposeBabyCarryCotCumCarSeat_1.webp', alt_text: 'Multipurpose baby carry cot and carrier' },
+  { key: 'product_4', page: 'Homepage', section: 'Featured Products', label: 'Featured Products — Card 4 "RC Stunt Car"', image_url: '/image assets/imgi_84_Toy_car_rc_car.jpg', alt_text: 'Remote control stunt car toy' },
+  { key: 'product_5', page: 'Homepage', section: 'Featured Products', label: 'Featured Products — Card 5 "India Map Jigsaw Puzzle"', image_url: '/image assets/imgi_89_IndiaMapPuzzle8_1024x1024_eeec2a79-c695-4488-9eb9-9a279a4834ef.webp', alt_text: 'India map jigsaw puzzle for children' },
+  { key: 'product_6', page: 'Homepage', section: 'Featured Products', label: 'Featured Products — Card 6 "DIY Music Machine Kit"', image_url: '/image assets/imgi_95_1032_-_Cataloguing-_Image01.webp', alt_text: 'DIY wooden music machine STEM building kit' },
+  { key: 'product_7', page: 'Homepage', section: 'Featured Products', label: 'Featured Products — Card 7 "DIY Kaleidoscope Kit"', image_url: '/image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp', alt_text: 'DIY kaleidoscope building kit for children' },
+  { key: 'product_8', page: 'Homepage', section: 'Featured Products', label: 'Featured Products — Card 8 "Foil Art Activity Kit"', image_url: '/image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp', alt_text: 'Foil art and craft activity kit' },
 ];
 {
   const existsStmt = db.prepare('SELECT 1 FROM image_slots WHERE slot_key = ?');
@@ -186,6 +204,123 @@ const ADDED_SLOTS = [
     }
   }
   if (added > 0) console.log(`Added ${added} new image slot(s).`);
+}
+
+// Keep admin slot labels in sync with what actually appears on the website,
+// so the person managing images always knows which slot is which.
+// Runs every start; only writes a row when the label has changed.
+const SLOT_LABELS = {
+  hero_main:               'Hero — Big Main Photo (top-left banner)',
+  hero_side_1:             'Hero — Small Photo 1 (top-right, upper)',
+  hero_side_2:             'Hero — Small Photo 2 (top-right, lower)',
+  carousel_1:              'Inside Our Store — Slide 1 "Walk In, Browse Freely"',
+  carousel_2:              'Inside Our Store — Slide 2 "Stocked Floor to Ceiling"',
+  carousel_3:              'Inside Our Store — Slide 3 "See It Before You Buy"',
+  carousel_4:              'Inside Our Store — Slide 4 "Party Wear & Daily Wear"',
+  carousel_5:              'Inside Our Store — Slide 5 "Gear That Lasts"',
+  collection_large:        'Shop by Interest — Large card "Strollers, Carriers & Travel Gear"',
+  collection_top_right:    'Shop by Interest — "Toy Vehicles & Play Sets"',
+  collection_bottom_left:  'Shop by Interest — "Newborn Starter Essentials"',
+  collection_bottom_right: 'Shop by Interest — "Stationery, Art & Craft"',
+  collection_extra:        'Shop by Interest — "Learning & Puzzle Toys"',
+  collection_banner:       'Shop by Interest — Wide banner (not shown on site right now)',
+  product_1:               'Featured Products — Card 1 "Shape Sorting Bus"',
+  product_2:               'Featured Products — Card 2 "Dancing Musical Goose"',
+  product_3:               'Featured Products — Card 3 "4-in-1 Multipurpose Carry Cot"',
+  product_4:               'Featured Products — Card 4 "RC Stunt Car"',
+  product_5:               'Featured Products — Card 5 "India Map Jigsaw Puzzle"',
+  product_6:               'Featured Products — Card 6 "DIY Music Machine Kit"',
+  product_7:               'Featured Products — Card 7 "DIY Kaleidoscope Kit"',
+  product_8:               'Featured Products — Card 8 "Foil Art Activity Kit"',
+  promo_left:              'Promotions banner (not shown on site right now)',
+  location_1:              'Come See It In Person — "Easy to Find"',
+  location_2:              'Come See It In Person — "Organised Aisles"',
+  location_3:              'Come See It In Person — "Help On Hand"',
+  insta_1:                 'Instagram Grid — Post 1 (top-left)',
+  insta_2:                 'Instagram Grid — Post 2',
+  insta_3:                 'Instagram Grid — Post 3',
+  insta_4:                 'Instagram Grid — Post 4',
+  insta_5:                 'Instagram Grid — Post 5',
+  insta_6:                 'Instagram Grid — Post 6 (bottom-right)',
+};
+{
+  const relabel = db.prepare('UPDATE image_slots SET label = ? WHERE slot_key = ? AND label != ?');
+  let changed = 0;
+  for (const key in SLOT_LABELS) {
+    const info = relabel.run(SLOT_LABELS[key], key, SLOT_LABELS[key]);
+    changed += info.changes;
+  }
+  if (changed > 0) console.log(`Renamed ${changed} image slot label(s) to match the website.`);
+}
+
+// ---------------------------------------------------------------------------
+// TEXT SLOTS — editable words on the site (Featured Products cards for now)
+// Same idea as image_slots: each element on the page carries data-text="<key>"
+// and the front-end swaps in whatever content is stored here.
+// Idempotent: only inserts a text slot when its key is missing (never overwrites
+// content the client has already edited).
+// ---------------------------------------------------------------------------
+const TEXT_SLOTS = [
+  // Product 1
+  { key: 'product_1_badge', section: 'Featured Products', label: 'Card 1 — Badge (corner tag)',      content: 'Popular' },
+  { key: 'product_1_brand', section: 'Featured Products', label: 'Card 1 — Category',                content: 'Toys' },
+  { key: 'product_1_name',  section: 'Featured Products', label: 'Card 1 — Product name',            content: 'Shape Sorting Bus' },
+  { key: 'product_1_desc',  section: 'Featured Products', label: 'Card 1 — Description',              content: 'Colour and shape recognition play for toddlers, with chunky easy-grip blocks.' },
+  // Product 2
+  { key: 'product_2_badge', section: 'Featured Products', label: 'Card 2 — Badge (corner tag)',      content: 'New In' },
+  { key: 'product_2_brand', section: 'Featured Products', label: 'Card 2 — Category',                content: 'Toys' },
+  { key: 'product_2_name',  section: 'Featured Products', label: 'Card 2 — Product name',            content: 'Dancing Musical Goose' },
+  { key: 'product_2_desc',  section: 'Featured Products', label: 'Card 2 — Description',              content: 'Music, flashing lights and dance moves that keep little ones entertained.' },
+  // Product 3
+  { key: 'product_3_badge', section: 'Featured Products', label: 'Card 3 — Badge (corner tag)',      content: 'Parent Favourite' },
+  { key: 'product_3_brand', section: 'Featured Products', label: 'Card 3 — Category',                content: 'Baby Carriers' },
+  { key: 'product_3_name',  section: 'Featured Products', label: 'Card 3 — Product name',            content: '4-in-1 Multipurpose Carry Cot' },
+  { key: 'product_3_desc',  section: 'Featured Products', label: 'Card 3 — Description',              content: 'Carry cot, rocker and carrier in one. Padded interior with a secure harness.' },
+  // Product 4
+  { key: 'product_4_badge', section: 'Featured Products', label: 'Card 4 — Badge (corner tag)',      content: 'Age 3+' },
+  { key: 'product_4_brand', section: 'Featured Products', label: 'Card 4 — Category',                content: 'Toys' },
+  { key: 'product_4_name',  section: 'Featured Products', label: 'Card 4 — Product name',            content: 'RC Stunt Car' },
+  { key: 'product_4_desc',  section: 'Featured Products', label: 'Card 4 — Description',              content: 'Full-function remote control with rechargeable battery and grippy tyres.' },
+  // Product 5
+  { key: 'product_5_badge', section: 'Featured Products', label: 'Card 5 — Badge (corner tag)',      content: 'Trending' },
+  { key: 'product_5_brand', section: 'Featured Products', label: 'Card 5 — Category',                content: 'Learning' },
+  { key: 'product_5_name',  section: 'Featured Products', label: 'Card 5 — Product name',            content: 'India Map Jigsaw Puzzle' },
+  { key: 'product_5_desc',  section: 'Featured Products', label: 'Card 5 — Description',              content: 'Learn states and capitals through play. Thick pieces that hold up to daily use.' },
+  // Product 6
+  { key: 'product_6_badge', section: 'Featured Products', label: 'Card 6 — Badge (corner tag)',      content: 'Staff Pick' },
+  { key: 'product_6_brand', section: 'Featured Products', label: 'Card 6 — Category',                content: 'Learning' },
+  { key: 'product_6_name',  section: 'Featured Products', label: 'Card 6 — Product name',            content: 'DIY Music Machine Kit' },
+  { key: 'product_6_desc',  section: 'Featured Products', label: 'Card 6 — Description',              content: 'Build-it-yourself wooden STEM kit. No glue or tools needed, ages 8 and up.' },
+  // Product 7
+  { key: 'product_7_badge', section: 'Featured Products', label: 'Card 7 — Badge (corner tag)',      content: 'Bestselling' },
+  { key: 'product_7_brand', section: 'Featured Products', label: 'Card 7 — Category',                content: 'Learning' },
+  { key: 'product_7_name',  section: 'Featured Products', label: 'Card 7 — Product name',            content: 'DIY Kaleidoscope Kit' },
+  { key: 'product_7_desc',  section: 'Featured Products', label: 'Card 7 — Description',              content: 'Assemble it, then explore colour and reflection. A favourite for ages 6 and up.' },
+  // Product 8
+  { key: 'product_8_badge', section: 'Featured Products', label: 'Card 8 — Badge (corner tag)',      content: 'New Arrival' },
+  { key: 'product_8_brand', section: 'Featured Products', label: 'Card 8 — Category',                content: 'Art & Craft' },
+  { key: 'product_8_name',  section: 'Featured Products', label: 'Card 8 — Product name',            content: 'Foil Art Activity Kit' },
+  { key: 'product_8_desc',  section: 'Featured Products', label: 'Card 8 — Description',              content: 'Peel-and-stick foil sheets for mess-free creative afternoons. Everything included.' },
+];
+{
+  const existsText = db.prepare('SELECT 1 FROM text_slots WHERE slot_key = ?');
+  const insertText = db.prepare('INSERT INTO text_slots (slot_key, page, section, label, content) VALUES (?, ?, ?, ?, ?)');
+  let addedText = 0;
+  for (const t of TEXT_SLOTS) {
+    if (!existsText.get(t.key)) {
+      insertText.run(t.key, 'Homepage', t.section, t.label, t.content);
+      addedText++;
+    }
+  }
+  if (addedText > 0) console.log(`Added ${addedText} new text slot(s).`);
+
+  // Keep the admin labels in sync (labels only — never touches edited content).
+  const relabelText = db.prepare('UPDATE text_slots SET label = ? WHERE slot_key = ? AND label != ?');
+  let renamedText = 0;
+  for (const t of TEXT_SLOTS) {
+    renamedText += relabelText.run(t.label, t.key, t.label).changes;
+  }
+  if (renamedText > 0) console.log(`Renamed ${renamedText} text slot label(s).`);
 }
 
 // ---------------------------------------------------------------------------
@@ -497,6 +632,38 @@ app.put('/api/admin/image-slots/:id', requireAuth, (req, res) => {
     .run(finalUrl, finalAlt, req.params.id);
 
   const slot = db.prepare('SELECT * FROM image_slots WHERE id = ?').get(req.params.id);
+  res.json({ slot });
+});
+
+// ---------------------------------------------------------------------------
+// TEXT SLOTS ROUTES
+// ---------------------------------------------------------------------------
+// Public: get all text slots as a { key: content } map (front-end applies them)
+app.get('/api/text-slots', (req, res) => {
+  const slots = db.prepare('SELECT slot_key, content FROM text_slots').all();
+  const map = {};
+  slots.forEach(s => { map[s.slot_key] = s.content; });
+  res.json({ slots: map });
+});
+
+// Admin: get all text slots with full details
+app.get('/api/admin/text-slots', requireAuth, (req, res) => {
+  const slots = db.prepare('SELECT * FROM text_slots ORDER BY page, section, slot_key').all();
+  res.json({ slots });
+});
+
+// Admin: update a text slot's content
+app.put('/api/admin/text-slots/:id', requireAuth, (req, res) => {
+  const existing = db.prepare('SELECT * FROM text_slots WHERE id = ?').get(req.params.id);
+  if (!existing) return res.status(404).json({ error: 'Text slot not found.' });
+
+  const { content } = req.body;
+  if (content === undefined) return res.status(400).json({ error: 'content is required.' });
+
+  db.prepare("UPDATE text_slots SET content = ?, updated_at = datetime('now') WHERE id = ?")
+    .run(String(content), req.params.id);
+
+  const slot = db.prepare('SELECT * FROM text_slots WHERE id = ?').get(req.params.id);
   res.json({ slot });
 });
 

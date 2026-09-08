@@ -556,6 +556,7 @@
       align-items: center; justify-content: center; gap: 6px;
     }
     .btn-details:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
+    .btn-details svg { width: 16px; height: 16px; flex-shrink: 0; }
 
     /* Empty-state note shown when a filter has no products yet */
     .product-empty {
@@ -1074,6 +1075,7 @@
         <a href="#top" class="active">Home</a>
         <a href="#categories">Categories</a>
         <a href="#about">About</a>
+        <a href="#featured">Products</a>
         <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -1104,6 +1106,7 @@
       <a href="#top" class="active">Home</a>
       <a href="#categories">Categories</a>
       <a href="#about">About</a>
+      <a href="#featured">Products</a>
       <a href="#gallery">Gallery</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -1461,144 +1464,144 @@
         <article class="product-card reveal" data-category="toys" style="transition-delay:.05s">
           <div class="product-img">
             <div class="product-badges">
-              <span class="tag">Popular</span>
+              <span class="tag" data-text="product_1_badge">Popular</span>
             </div>
-            <img src="image assets/imgi_19_HolaShapeSortingBus1.webp" alt="Shape sorting bus toy with coloured blocks" loading="lazy" decoding="async" />
+            <img data-slot="product_1" src="image assets/imgi_19_HolaShapeSortingBus1.webp" alt="Shape sorting bus toy with coloured blocks" loading="lazy" decoding="async" />
             <div class="product-actions">
               <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-brand">Toys</div>
-            <h3 class="product-name">Shape Sorting Bus</h3>
-            <p class="product-desc">Colour and shape recognition play for toddlers, with chunky easy-grip blocks.</p>
-            <a href="#contact" class="btn-details">View Details</a>
+            <div class="product-brand" data-text="product_1_brand">Toys</div>
+            <h3 class="product-name" data-text="product_1_name">Shape Sorting Bus</h3>
+            <p class="product-desc" data-text="product_1_desc">Colour and shape recognition play for toddlers, with chunky easy-grip blocks.</p>
+            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20is%20the%20Shape%20Sorting%20Bus%20available%3F%20Please%20share%20price%20and%20details." target="_blank" rel="noopener" class="btn-details"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Check Availability</a>
           </div>
         </article>
         <!-- Product 2 -->
         <article class="product-card reveal" data-category="toys" style="transition-delay:.1s">
           <div class="product-img">
             <div class="product-badges">
-              <span class="tag tag-amber">New In</span>
+              <span class="tag tag-amber" data-text="product_2_badge">New In</span>
             </div>
-            <img src="image assets/imgi_15_34.webp" alt="Musical dancing goose toy with lights" loading="lazy" decoding="async" />
+            <img data-slot="product_2" src="image assets/imgi_15_34.webp" alt="Musical dancing goose toy with lights" loading="lazy" decoding="async" />
             <div class="product-actions">
               <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-brand">Toys</div>
-            <h3 class="product-name">Dancing Musical Goose</h3>
-            <p class="product-desc">Music, flashing lights and dance moves that keep little ones entertained.</p>
-            <a href="#contact" class="btn-details">View Details</a>
+            <div class="product-brand" data-text="product_2_brand">Toys</div>
+            <h3 class="product-name" data-text="product_2_name">Dancing Musical Goose</h3>
+            <p class="product-desc" data-text="product_2_desc">Music, flashing lights and dance moves that keep little ones entertained.</p>
+            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20is%20the%20Dancing%20Musical%20Goose%20available%3F%20Please%20share%20price%20and%20details." target="_blank" rel="noopener" class="btn-details"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Check Availability</a>
           </div>
         </article>
         <!-- Product 3 -->
         <article class="product-card reveal" data-category="gear" style="transition-delay:.15s">
           <div class="product-img">
             <div class="product-badges">
-              <span class="tag">Parent Favourite</span>
+              <span class="tag" data-text="product_3_badge">Parent Favourite</span>
             </div>
-            <img src="image assets/imgi_74_PicabooGrand4in1MultipurposeBabyCarryCotCumCarSeat_1.webp" alt="Multipurpose baby carry cot and carrier" loading="lazy" decoding="async" />
+            <img data-slot="product_3" src="image assets/imgi_74_PicabooGrand4in1MultipurposeBabyCarryCotCumCarSeat_1.webp" alt="Multipurpose baby carry cot and carrier" loading="lazy" decoding="async" />
             <div class="product-actions">
               <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-brand">Baby Carriers</div>
-            <h3 class="product-name">4-in-1 Multipurpose Carry Cot</h3>
-            <p class="product-desc">Carry cot, rocker and carrier in one. Padded interior with a secure harness.</p>
-            <a href="#contact" class="btn-details">View Details</a>
+            <div class="product-brand" data-text="product_3_brand">Baby Carriers</div>
+            <h3 class="product-name" data-text="product_3_name">4-in-1 Multipurpose Carry Cot</h3>
+            <p class="product-desc" data-text="product_3_desc">Carry cot, rocker and carrier in one. Padded interior with a secure harness.</p>
+            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20is%20the%204-in-1%20Multipurpose%20Carry%20Cot%20available%3F%20Please%20share%20price%20and%20details." target="_blank" rel="noopener" class="btn-details"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Check Availability</a>
           </div>
         </article>
         <!-- Product 4 -->
         <article class="product-card reveal" data-category="toys" style="transition-delay:.2s">
           <div class="product-img">
             <div class="product-badges">
-              <span class="tag tag-soft">Age 3+</span>
+              <span class="tag tag-soft" data-text="product_4_badge">Age 3+</span>
             </div>
-            <img src="image assets/imgi_84_Toy_car_rc_car.jpg" alt="Remote control stunt car toy" loading="lazy" decoding="async" />
+            <img data-slot="product_4" src="image assets/imgi_84_Toy_car_rc_car.jpg" alt="Remote control stunt car toy" loading="lazy" decoding="async" />
             <div class="product-actions">
               <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-brand">Toys</div>
-            <h3 class="product-name">RC Stunt Car</h3>
-            <p class="product-desc">Full-function remote control with rechargeable battery and grippy tyres.</p>
-            <a href="#contact" class="btn-details">View Details</a>
+            <div class="product-brand" data-text="product_4_brand">Toys</div>
+            <h3 class="product-name" data-text="product_4_name">RC Stunt Car</h3>
+            <p class="product-desc" data-text="product_4_desc">Full-function remote control with rechargeable battery and grippy tyres.</p>
+            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20is%20the%20RC%20Stunt%20Car%20available%3F%20Please%20share%20price%20and%20details." target="_blank" rel="noopener" class="btn-details"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Check Availability</a>
           </div>
         </article>
         <!-- Product 5 -->
         <article class="product-card reveal" data-category="learning" style="transition-delay:.25s">
           <div class="product-img">
             <div class="product-badges">
-              <span class="tag">Trending</span>
+              <span class="tag" data-text="product_5_badge">Trending</span>
             </div>
-            <img src="image assets/imgi_89_IndiaMapPuzzle8_1024x1024_eeec2a79-c695-4488-9eb9-9a279a4834ef.webp" alt="India map jigsaw puzzle for children" loading="lazy" decoding="async" />
+            <img data-slot="product_5" src="image assets/imgi_89_IndiaMapPuzzle8_1024x1024_eeec2a79-c695-4488-9eb9-9a279a4834ef.webp" alt="India map jigsaw puzzle for children" loading="lazy" decoding="async" />
             <div class="product-actions">
               <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-brand">Learning</div>
-            <h3 class="product-name">India Map Jigsaw Puzzle</h3>
-            <p class="product-desc">Learn states and capitals through play. Thick pieces that hold up to daily use.</p>
-            <a href="#contact" class="btn-details">View Details</a>
+            <div class="product-brand" data-text="product_5_brand">Learning</div>
+            <h3 class="product-name" data-text="product_5_name">India Map Jigsaw Puzzle</h3>
+            <p class="product-desc" data-text="product_5_desc">Learn states and capitals through play. Thick pieces that hold up to daily use.</p>
+            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20is%20the%20India%20Map%20Jigsaw%20Puzzle%20available%3F%20Please%20share%20price%20and%20details." target="_blank" rel="noopener" class="btn-details"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Check Availability</a>
           </div>
         </article>
         <!-- Product 6 -->
         <article class="product-card reveal" data-category="learning" style="transition-delay:.3s">
           <div class="product-img">
             <div class="product-badges">
-              <span class="tag">Staff Pick</span>
+              <span class="tag" data-text="product_6_badge">Staff Pick</span>
             </div>
-            <img src="image assets/imgi_95_1032_-_Cataloguing-_Image01.webp" alt="DIY wooden music machine STEM building kit" loading="lazy" decoding="async" />
+            <img data-slot="product_6" src="image assets/imgi_95_1032_-_Cataloguing-_Image01.webp" alt="DIY wooden music machine STEM building kit" loading="lazy" decoding="async" />
             <div class="product-actions">
               <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-brand">Learning</div>
-            <h3 class="product-name">DIY Music Machine Kit</h3>
-            <p class="product-desc">Build-it-yourself wooden STEM kit. No glue or tools needed, ages 8 and up.</p>
-            <a href="#contact" class="btn-details">View Details</a>
+            <div class="product-brand" data-text="product_6_brand">Learning</div>
+            <h3 class="product-name" data-text="product_6_name">DIY Music Machine Kit</h3>
+            <p class="product-desc" data-text="product_6_desc">Build-it-yourself wooden STEM kit. No glue or tools needed, ages 8 and up.</p>
+            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20is%20the%20DIY%20Music%20Machine%20Kit%20available%3F%20Please%20share%20price%20and%20details." target="_blank" rel="noopener" class="btn-details"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Check Availability</a>
           </div>
         </article>
         <!-- Product 7 -->
         <article class="product-card reveal" data-category="learning" style="transition-delay:.35s">
           <div class="product-img">
             <div class="product-badges">
-              <span class="tag tag-amber">Bestselling</span>
+              <span class="tag tag-amber" data-text="product_7_badge">Bestselling</span>
             </div>
-            <img src="image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp" alt="DIY kaleidoscope building kit for children" loading="lazy" decoding="async" />
+            <img data-slot="product_7" src="image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp" alt="DIY kaleidoscope building kit for children" loading="lazy" decoding="async" />
             <div class="product-actions">
               <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-brand">Learning</div>
-            <h3 class="product-name">DIY Kaleidoscope Kit</h3>
-            <p class="product-desc">Assemble it, then explore colour and reflection. A favourite for ages 6 and up.</p>
-            <a href="#contact" class="btn-details">View Details</a>
+            <div class="product-brand" data-text="product_7_brand">Learning</div>
+            <h3 class="product-name" data-text="product_7_name">DIY Kaleidoscope Kit</h3>
+            <p class="product-desc" data-text="product_7_desc">Assemble it, then explore colour and reflection. A favourite for ages 6 and up.</p>
+            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20is%20the%20DIY%20Kaleidoscope%20Kit%20available%3F%20Please%20share%20price%20and%20details." target="_blank" rel="noopener" class="btn-details"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Check Availability</a>
           </div>
         </article>
         <!-- Product 8 -->
         <article class="product-card reveal" data-category="craft" style="transition-delay:.4s">
           <div class="product-img">
             <div class="product-badges">
-              <span class="tag">New Arrival</span>
+              <span class="tag" data-text="product_8_badge">New Arrival</span>
             </div>
-            <img src="image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp" alt="Foil art and craft activity kit" loading="lazy" decoding="async" />
+            <img data-slot="product_8" src="image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp" alt="Foil art and craft activity kit" loading="lazy" decoding="async" />
             <div class="product-actions">
               <button class="action-btn" aria-label="Save to wishlist"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
             </div>
           </div>
           <div class="product-body">
-            <div class="product-brand">Art &amp; Craft</div>
-            <h3 class="product-name">Foil Art Activity Kit</h3>
-            <p class="product-desc">Peel-and-stick foil sheets for mess-free creative afternoons. Everything included.</p>
-            <a href="#contact" class="btn-details">View Details</a>
+            <div class="product-brand" data-text="product_8_brand">Art &amp; Craft</div>
+            <h3 class="product-name" data-text="product_8_name">Foil Art Activity Kit</h3>
+            <p class="product-desc" data-text="product_8_desc">Peel-and-stick foil sheets for mess-free creative afternoons. Everything included.</p>
+            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20is%20the%20Foil%20Art%20Activity%20Kit%20available%3F%20Please%20share%20price%20and%20details." target="_blank" rel="noopener" class="btn-details"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg> Check Availability</a>
           </div>
         </article>
       </div>
@@ -2480,6 +2483,25 @@
         });
       })
       .catch(function() { /* Silently fail — keep default images */ });
+  })();
+  </script>
+
+  <!-- CMS Text Slot Loader: fetches admin-managed text and replaces static defaults -->
+  <script>
+  (function() {
+    fetch('/api/text-slots')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data || !data.slots) return;
+        var slots = data.slots;
+        document.querySelectorAll('[data-text]').forEach(function(el) {
+          var key = el.getAttribute('data-text');
+          if (Object.prototype.hasOwnProperty.call(slots, key) && slots[key] != null && slots[key] !== '') {
+            el.textContent = slots[key];
+          }
+        });
+      })
+      .catch(function() { /* Silently fail — keep default text */ });
   })();
   </script>
 </body>
