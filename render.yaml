@@ -1,0 +1,30 @@
+# Render Blueprint for RTBW CMS
+# Provisions the web service only. The database and image storage are both
+# provided by your existing Supabase project (see DEPLOYMENT.md), so
+# DATABASE_URL, SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set manually.
+services:
+  - type: web
+    name: rtbw-cms
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: PG_POOL_MAX
+        value: "5"
+      - key: SUPABASE_BUCKET
+        value: website-images
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false

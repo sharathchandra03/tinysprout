@@ -1,5 +1,15 @@
 node_modules/
+
+# Local secrets — never commit. (.env.example IS committed.)
+.env
+.env.local
+
+# Legacy local storage from the old SQLite/disk version (no longer used).
 data/
 uploads/
-.env
 *.db
+*.db-shm
+*.db-wal
+
+# OS junk
+.DS_Store
