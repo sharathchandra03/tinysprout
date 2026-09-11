@@ -240,6 +240,19 @@ const TEXT_SLOTS = [
   { key: 'product_8_brand', section: 'Featured Products', label: 'Card 8 — Category',           content: 'Art & Craft' },
   { key: 'product_8_name',  section: 'Featured Products', label: 'Card 8 — Product name',       content: 'Foil Art Activity Kit' },
   { key: 'product_8_desc',  section: 'Featured Products', label: 'Card 8 — Description',         content: 'Peel-and-stick foil sheets for mess-free creative afternoons. Everything included.' },
+
+  // Shop by Interest — the 5 image cards in the "Shop by Interest" gallery.
+  // Each card has an eyebrow tag (small label) and a title.
+  { key: 'coll_1_tag',   section: 'Shop by Interest', label: 'Card 1 (large) — Eyebrow tag', content: 'Out & About' },
+  { key: 'coll_1_title', section: 'Shop by Interest', label: 'Card 1 (large) — Title',       content: 'Strollers, Carriers & Travel Gear' },
+  { key: 'coll_2_tag',   section: 'Shop by Interest', label: 'Card 2 — Eyebrow tag',         content: 'Toddler Picks' },
+  { key: 'coll_2_title', section: 'Shop by Interest', label: 'Card 2 — Title',               content: 'Toy Vehicles & Play Sets' },
+  { key: 'coll_3_tag',   section: 'Shop by Interest', label: 'Card 3 — Eyebrow tag',         content: '0–6 Months' },
+  { key: 'coll_3_title', section: 'Shop by Interest', label: 'Card 3 — Title',               content: 'Newborn Starter Essentials' },
+  { key: 'coll_4_tag',   section: 'Shop by Interest', label: 'Card 4 — Eyebrow tag',         content: 'Creative Play' },
+  { key: 'coll_4_title', section: 'Shop by Interest', label: 'Card 4 — Title',               content: 'Stationery, Art & Craft' },
+  { key: 'coll_5_tag',   section: 'Shop by Interest', label: 'Card 5 — Eyebrow tag',         content: 'Kids Favourites' },
+  { key: 'coll_5_title', section: 'Shop by Interest', label: 'Card 5 — Title',               content: 'Learning & Puzzle Toys' },
 ];
 
 async function seed() {

@@ -1369,9 +1369,10 @@
       if (!data) return;
       const container = document.getElementById('textSlotsContainer');
 
-      const sectionOrder = ['Featured Products'];
+      const sectionOrder = ['Featured Products', 'Shop by Interest'];
       const sectionDescriptions = {
-        'Featured Products': 'The words on the 8 product cards in the "Featured Products — Picked Out For You" section.'
+        'Featured Products': 'The 8 product cards in the "Picked Out For You" section. The Category you type here also becomes the filter buttons above the products.',
+        'Shop by Interest': 'The 5 image cards in the "Shop by Interest" section. Edit the small tag and the title on each card.'
       };
 
       // Group slots by section
@@ -1384,30 +1385,95 @@
       // Any section not explicitly ordered still gets shown, after the ordered ones
       const sections = sectionOrder.concat(Object.keys(grouped).filter(s => !sectionOrder.includes(s)));
 
+      // Work out which "card" a slot belongs to, and a friendly field label,
+      // by parsing the slot_key. This lets us group each card's fields into
+      // its own box without changing any slot keys or IDs.
+      //   product_<n>_<field>  ->  card "Product Card <n>", field badge/brand/name/desc
+      //   coll_<n>_<field>     ->  card "Interest Card <n>", field tag/title
+      function cardInfo(slotKey) {
+        let m = slotKey.match(/^product_(\d+)_(\w+)$/);
+        if (m) {
+          const fieldLabels = { badge: 'Badge (corner tag)', brand: 'Category', name: 'Product name', desc: 'Description' };
+          return { cardKey: 'p' + m[1], cardTitle: 'Product Card ' + m[1], order: Number(m[1]),
+                   fieldLabel: fieldLabels[m[2]] || m[2] };
+        }
+        m = slotKey.match(/^coll_(\d+)_(\w+)$/);
+        if (m) {
+          const fieldLabels = { tag: 'Small tag (eyebrow)', title: 'Title' };
+          const suffix = m[1] === '1' ? ' (large)' : '';
+          return { cardKey: 'c' + m[1], cardTitle: 'Interest Card ' + m[1] + suffix, order: Number(m[1]),
+                   fieldLabel: fieldLabels[m[2]] || m[2] };
+        }
+        // Fallback: treat each slot as its own card, using its stored label.
+        return { cardKey: 'x' + slotKey, cardTitle: '', order: 9999, fieldLabel: slotKey };
+      }
+
+      function fieldHtml(s) {
+        const isLong = s.slot_key.endsWith('_desc');
+        const info = cardInfo(s.slot_key);
+        // Each field carries its original value in data-orig so the section
+        // Save button can send only the fields that actually changed.
+        const field = isLong
+          ? `<textarea id="text-input-${s.id}" data-orig="${escHtml(s.content)}" rows="3" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:.88rem;font-family:inherit;resize:vertical;">${escHtml(s.content)}</textarea>`
+          : `<input type="text" id="text-input-${s.id}" data-orig="${escHtml(s.content)}" value="${escHtml(s.content)}" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:.88rem;" />`;
+        return `
+          <div style="${isLong ? 'grid-column:1/-1;' : ''}">
+            <label style="display:block;font-size:.78rem;font-weight:600;color:var(--gray-600);margin-bottom:6px;">${escHtml(info.fieldLabel)}</label>
+            ${field}
+          </div>
+        `;
+      }
+
       let html = '';
+      let sectionIndex = 0;
       sections.forEach(section => {
         const slots = grouped[section];
         if (!slots || slots.length === 0) return;
+
+        // Group this section's slots into cards.
+        const cardsMap = {};
+        const cardOrder = [];
+        slots.forEach(s => {
+          const info = cardInfo(s.slot_key);
+          if (!cardsMap[info.cardKey]) {
+            cardsMap[info.cardKey] = { title: info.cardTitle, order: info.order, fields: [] };
+            cardOrder.push(info.cardKey);
+          }
+          cardsMap[info.cardKey].fields.push(s);
+        });
+        cardOrder.sort((a, b) => cardsMap[a].order - cardsMap[b].order);
+
+        // All the field IDs in this section — the section Save button uses
+        // this list to find and save every changed field at once.
+        const sectionId = 'section-' + sectionIndex++;
+        const idList = slots.map(s => s.id).join(',');
+
         html += `
-          <div style="margin-bottom:40px;">
-            <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--orange-pale);">
-              <h3 style="font-size:1.1rem;font-weight:700;color:var(--gray-900);margin-bottom:4px;">
-                <span style="color:var(--orange);">●</span> ${escHtml(section)}
-              </h3>
-              <p style="font-size:.82rem;color:var(--gray-600);margin:0;">${sectionDescriptions[section] || ''}</p>
+          <div style="margin-bottom:40px;" data-section-id="${sectionId}" data-slot-ids="${idList}">
+            <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--orange-pale);display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;">
+              <div>
+                <h3 style="font-size:1.1rem;font-weight:700;color:var(--gray-900);margin-bottom:4px;">
+                  <span style="color:var(--orange);">●</span> ${escHtml(section)}
+                </h3>
+                <p style="font-size:.82rem;color:var(--gray-600);margin:0;">${sectionDescriptions[section] || ''}</p>
+              </div>
+              <button class="btn btn-primary" onclick="saveSection('${sectionId}')">Save ${escHtml(section)}</button>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              ${slots.map(s => {
-                const isLong = s.slot_key.endsWith('_desc');
-                const field = isLong
-                  ? `<textarea id="text-input-${s.id}" rows="3" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:.88rem;font-family:inherit;resize:vertical;">${escHtml(s.content)}</textarea>`
-                  : `<input type="text" id="text-input-${s.id}" value="${escHtml(s.content)}" style="width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:.88rem;" />`;
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+              ${cardOrder.map(key => {
+                const card = cardsMap[key];
+                // Sort fields into a natural reading order within the card.
+                const fieldRank = { badge: 1, brand: 2, name: 3, desc: 4, tag: 1, title: 2 };
+                card.fields.sort((a, b) => {
+                  const fa = (a.slot_key.match(/_(\w+)$/) || [])[1];
+                  const fb = (b.slot_key.match(/_(\w+)$/) || [])[1];
+                  return (fieldRank[fa] || 99) - (fieldRank[fb] || 99);
+                });
                 return `
-                  <div style="background:var(--white);border:1.5px solid var(--gray-200);border-radius:12px;padding:16px;${isLong ? 'grid-column:1/-1;' : ''}">
-                    <label style="display:block;font-size:.8rem;font-weight:700;color:var(--gray-900);margin-bottom:8px;">${escHtml(s.label)}</label>
-                    ${field}
-                    <div style="margin-top:10px;">
-                      <button class="btn btn-primary btn-sm" onclick="saveTextSlot(${s.id})">Save</button>
+                  <div style="background:var(--white);border:1.5px solid var(--gray-200);border-radius:14px;padding:18px;">
+                    ${card.title ? `<div style="font-size:.9rem;font-weight:800;color:var(--gray-900);margin-bottom:14px;">${escHtml(card.title)}</div>` : ''}
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                      ${card.fields.map(fieldHtml).join('')}
                     </div>
                   </div>
                 `;
@@ -1421,15 +1487,47 @@
     } catch (err) { showToast(err.message, 'error'); }
   }
 
-  async function saveTextSlot(slotId) {
+  // Save every changed field in one section with a single button.
+  async function saveSection(sectionId) {
+    const wrap = document.querySelector(`[data-section-id="${sectionId}"]`);
+    if (!wrap) return;
+
+    const ids = (wrap.getAttribute('data-slot-ids') || '').split(',').filter(Boolean);
+
+    // Only send fields whose value actually changed from what was loaded.
+    const changed = [];
+    ids.forEach(id => {
+      const input = document.getElementById(`text-input-${id}`);
+      if (!input) return;
+      const orig = input.getAttribute('data-orig');
+      if (input.value !== orig) changed.push({ id, input });
+    });
+
+    if (changed.length === 0) {
+      showToast('No changes to save');
+      return;
+    }
+
+    const btn = wrap.querySelector('button');
+    const originalLabel = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
     try {
-      const input = document.getElementById(`text-input-${slotId}`);
-      await api(`/api/admin/text-slots/${slotId}`, {
-        method: 'PUT',
-        body: JSON.stringify({ content: input.value })
-      });
-      showToast('Text saved');
-    } catch (err) { showToast(err.message, 'error'); }
+      // Save each changed field; run them together for speed.
+      await Promise.all(changed.map(c =>
+        api(`/api/admin/text-slots/${c.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({ content: c.input.value })
+        })
+      ));
+      // Mark the new values as the baseline so a second click won't resend.
+      changed.forEach(c => c.input.setAttribute('data-orig', c.input.value));
+      showToast(`Saved ${changed.length} change${changed.length > 1 ? 's' : ''}`);
+    } catch (err) {
+      showToast(err.message || 'Save failed', 'error');
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+    }
   }
 
   // ===== DELETE CONFIRMATION =====

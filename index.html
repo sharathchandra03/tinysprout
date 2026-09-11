@@ -1445,13 +1445,12 @@
         <h2 class="section-title" id="bs-heading">Picked Out <span>For You</span></h2>
         <p class="section-sub">A small sample of what's on our shelves. Ask us about sizes, colours and stock.</p>
       </div>
-      <!-- Tab filter -->
+      <!-- Tab filter — pills are generated automatically from the product
+           categories set in the admin panel (see buildProductFilter()).
+           The single "All" button below is the no-JS fallback; when the
+           script runs it is replaced with the live, in-sync category pills. -->
       <div class="product-tabs" role="tablist" aria-label="Filter products by type">
-        <button class="btn btn-primary btn-sm" role="tab" aria-selected="true"  data-filter="all">All</button>
-        <button class="btn btn-outline btn-sm" role="tab" aria-selected="false" data-filter="toys">Toys</button>
-        <button class="btn btn-outline btn-sm" role="tab" aria-selected="false" data-filter="learning">Learning</button>
-        <button class="btn btn-outline btn-sm" role="tab" aria-selected="false" data-filter="craft">Art &amp; Craft</button>
-        <button class="btn btn-outline btn-sm" role="tab" aria-selected="false" data-filter="gear">Baby Gear</button>
+        <button class="btn btn-primary btn-sm" role="tab" aria-selected="true" data-filter="all">All</button>
       </div>
       <div class="product-grid" id="product-grid">
         <!-- ===== PRODUCT CARD TEMPLATE =====
@@ -1626,8 +1625,8 @@
         <div class="coll-card reveal-left">
           <img data-slot="collection_large" src="image assets/imgi_46_RforRabbitStreetSmartStrollerGreyBlack_1_1.jpg" alt="Strollers and travel gear range" loading="lazy" decoding="async" />
           <div class="coll-overlay">
-            <div class="coll-tag">Out &amp; About</div>
-            <div class="coll-title">Strollers, Carriers &amp; Travel Gear</div>
+            <div class="coll-tag" data-text="coll_1_tag">Out &amp; About</div>
+            <div class="coll-title" data-text="coll_1_title">Strollers, Carriers &amp; Travel Gear</div>
             <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20I%27d%20like%20to%20know%20more%20about%20your%20Strollers%2C%20Carriers%20%26%20Travel%20Gear." target="_blank" rel="noopener" class="coll-link">Enquire on WhatsApp ›</a>
           </div>
         </div>
@@ -1635,8 +1634,8 @@
         <div class="coll-card reveal" style="transition-delay:.1s">
           <img data-slot="collection_top_right" src="image assets/imgi_17_HTE9997-HolaToyAmbulance-1.webp" alt="Toy vehicles and play sets" loading="lazy" decoding="async" />
           <div class="coll-overlay">
-            <div class="coll-tag">Toddler Picks</div>
-            <div class="coll-title">Toy Vehicles &amp; Play Sets</div>
+            <div class="coll-tag" data-text="coll_2_tag">Toddler Picks</div>
+            <div class="coll-title" data-text="coll_2_title">Toy Vehicles &amp; Play Sets</div>
             <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20I%27d%20like%20to%20know%20more%20about%20your%20Toy%20Vehicles%20%26%20Play%20Sets." target="_blank" rel="noopener" class="coll-link">Enquire on WhatsApp ›</a>
           </div>
         </div>
@@ -1644,8 +1643,8 @@
         <div class="coll-card reveal" style="transition-delay:.15s">
           <img data-slot="collection_bottom_left" src="image assets/imgi_64_01_652a2989-83ec-4d10-bd8c-21f50957e002.webp" alt="Newborn essentials range" loading="lazy" decoding="async" />
           <div class="coll-overlay">
-            <div class="coll-tag">0–6 Months</div>
-            <div class="coll-title">Newborn Starter Essentials</div>
+            <div class="coll-tag" data-text="coll_3_tag">0–6 Months</div>
+            <div class="coll-title" data-text="coll_3_title">Newborn Starter Essentials</div>
             <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20I%27d%20like%20to%20know%20more%20about%20your%20Newborn%20Starter%20Essentials." target="_blank" rel="noopener" class="coll-link">Enquire on WhatsApp ›</a>
           </div>
         </div>
@@ -1653,8 +1652,8 @@
         <div class="coll-card reveal" style="transition-delay:.2s">
           <img data-slot="collection_bottom_right" src="image assets/imgi_100_Foilfun_WOA9_1024x1024_24ad9ee3-493c-432f-8c5c-7c3a1c33e63e.webp" alt="Art, craft and stationery range" loading="lazy" decoding="async" />
           <div class="coll-overlay">
-            <div class="coll-tag">Creative Play</div>
-            <div class="coll-title">Stationery, Art &amp; Craft</div>
+            <div class="coll-tag" data-text="coll_4_tag">Creative Play</div>
+            <div class="coll-title" data-text="coll_4_title">Stationery, Art &amp; Craft</div>
             <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20I%27d%20like%20to%20know%20more%20about%20your%20Stationery%2C%20Art%20%26%20Craft%20range." target="_blank" rel="noopener" class="coll-link">Enquire on WhatsApp ›</a>
           </div>
         </div>
@@ -1662,8 +1661,8 @@
         <div class="coll-card reveal" style="transition-delay:.25s">
           <img data-slot="collection_extra" src="image assets/imgi_87_City3_1024x1024_e7baab53-da12-4fa7-8e59-79081a7c52a4.webp" alt="Featured range" loading="lazy" decoding="async" />
           <div class="coll-overlay">
-            <div class="coll-tag">Kids Favourites</div>
-            <div class="coll-title">Learning &amp; Puzzle Toys</div>
+            <div class="coll-tag" data-text="coll_5_tag">Kids Favourites</div>
+            <div class="coll-title" data-text="coll_5_title">Learning &amp; Puzzle Toys</div>
             <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20I%27d%20like%20to%20know%20more%20about%20your%20Learning%20%26%20Puzzle%20Toys." target="_blank" rel="noopener" class="coll-link">Enquire on WhatsApp ›</a>
           </div>
         </div>
@@ -2171,40 +2170,98 @@
       onScroll();
     }
 
-    /* ----- 8. Product filter ----- */
-    function initFilter() {
-      var tabs = document.querySelectorAll('.product-tabs [data-filter]');
+    /* ----- 8. Product filter -----
+       Category pills are generated automatically from each product card's
+       visible category label (the ".product-brand" text, which the admin
+       edits from the Website Text panel). This keeps the pills in sync:
+       whatever categories the admin sets become the pills, and clicking a
+       pill filters by that exact category. "All" is always shown first.
+
+       buildProductFilter() is exposed globally so it can be re-run after the
+       CMS text-slot loader swaps in admin-edited category names. */
+    var _filterActive = 'all';
+
+    function buildProductFilter() {
+      var tabsWrap = document.querySelector('.product-tabs');
       var grid = document.getElementById('product-grid');
-      if (!tabs.length || !grid) return;
+      if (!tabsWrap || !grid) return;
 
       var cards = Array.prototype.slice.call(grid.querySelectorAll('.product-card'));
-      var empty = document.createElement('p');
-      empty.className = 'product-empty';
-      empty.hidden = true;
-      empty.textContent = 'Nothing listed here yet \u2014 ask us and we\u2019ll tell you what\u2019s in stock.';
-      grid.appendChild(empty);
 
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          var filter = tab.dataset.filter;
+      // Ensure a single empty-state message element exists.
+      var empty = grid.querySelector('.product-empty');
+      if (!empty) {
+        empty = document.createElement('p');
+        empty.className = 'product-empty';
+        empty.hidden = true;
+        empty.textContent = 'Nothing listed here yet \u2014 ask us and we\u2019ll tell you what\u2019s in stock.';
+        grid.appendChild(empty);
+      }
 
-          tabs.forEach(function (t) {
-            var on = t === tab;
-            t.classList.toggle('btn-primary', on);
-            t.classList.toggle('btn-outline', !on);
-            t.setAttribute('aria-selected', on ? 'true' : 'false');
-          });
+      // Read the category label for a card from its .product-brand text.
+      function catOf(card) {
+        var el = card.querySelector('.product-brand');
+        return el ? el.textContent.trim() : '';
+      }
+      function norm(s) { return (s || '').trim().toLowerCase(); }
 
-          var shown = 0;
-          cards.forEach(function (card) {
-            var match = filter === 'all' || card.dataset.category === filter;
-            card.hidden = !match;
-            if (match) shown++;
-          });
-          empty.hidden = shown > 0;
-        });
+      // Collect distinct categories in the order cards appear on the page.
+      var cats = [];
+      cards.forEach(function (card) {
+        var c = catOf(card);
+        if (c && cats.map(norm).indexOf(norm(c)) === -1) cats.push(c);
       });
+
+      // If the previously-selected category no longer exists, fall back to All.
+      if (_filterActive !== 'all' && cats.map(norm).indexOf(norm(_filterActive)) === -1) {
+        _filterActive = 'all';
+      }
+
+      // (Re)build the pill buttons: All first, then one per distinct category.
+      var pillDefs = [{ label: 'All', value: 'all' }].concat(
+        cats.map(function (c) { return { label: c, value: c }; })
+      );
+
+      tabsWrap.innerHTML = '';
+      pillDefs.forEach(function (def) {
+        var isOn = norm(def.value) === norm(_filterActive);
+        var btn = document.createElement('button');
+        btn.className = 'btn btn-sm ' + (isOn ? 'btn-primary' : 'btn-outline');
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-selected', isOn ? 'true' : 'false');
+        btn.dataset.filter = def.value;
+        btn.textContent = def.label;
+        btn.addEventListener('click', function () {
+          _filterActive = def.value;
+          applyFilter();
+        });
+        tabsWrap.appendChild(btn);
+      });
+
+      function applyFilter() {
+        var buttons = Array.prototype.slice.call(tabsWrap.querySelectorAll('[data-filter]'));
+        buttons.forEach(function (b) {
+          var on = norm(b.dataset.filter) === norm(_filterActive);
+          b.classList.toggle('btn-primary', on);
+          b.classList.toggle('btn-outline', !on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+
+        var shown = 0;
+        cards.forEach(function (card) {
+          var match = _filterActive === 'all' || norm(catOf(card)) === norm(_filterActive);
+          card.hidden = !match;
+          if (match) shown++;
+        });
+        empty.hidden = shown > 0;
+      }
+
+      applyFilter();
     }
+
+    // Keep the old name working for the init() call below.
+    function initFilter() { buildProductFilter(); }
+    window.buildProductFilter = buildProductFilter;
 
     /* ----- 3. Mobile drawer ----- */
     function initDrawer() {
@@ -2500,6 +2557,11 @@
             el.textContent = slots[key];
           }
         });
+        // Category names may have changed — rebuild the filter pills so they
+        // stay in sync with the admin-edited categories.
+        if (typeof window.buildProductFilter === 'function') {
+          window.buildProductFilter();
+        }
       })
       .catch(function() { /* Silently fail — keep default text */ });
   })();
