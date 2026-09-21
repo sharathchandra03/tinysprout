@@ -92,6 +92,10 @@ app.use(session({
 // Static assets that ship with the repo (these are part of the code, not
 // admin-managed data, so serving them from disk is fine and persistent).
 app.use('/image assets', express.static(path.join(__dirname, 'image assets')));
+// No-space alias for the same folder. Some environments fail to match a
+// static mount whose path contains a space, so this alias guarantees assets
+// referenced as "/image-assets/..." (e.g. the brand logos) always resolve.
+app.use('/image-assets', express.static(path.join(__dirname, 'image assets')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 // ---------------------------------------------------------------------------

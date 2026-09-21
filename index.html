@@ -569,17 +569,17 @@
        FEATURED COLLECTIONS
     ========================================= */
     .collections { padding: 80px 0; background: var(--white); }
+    /* Balanced 2 x 2 grid of interest cards. */
     .collections-grid {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      grid-template-rows: 280px 280px;
-      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 300px;
+      gap: 20px;
     }
     .coll-card {
       border-radius: var(--radius-lg); overflow: hidden;
       position: relative; cursor: pointer;
     }
-    .coll-card:first-child { grid-row: 1 / 3; }
     .coll-card img {
       width: 100%; height: 100%; object-fit: cover;
       transition: transform .5s ease;
@@ -630,26 +630,110 @@
     /* =========================================
        BRAND STRIP
     ========================================= */
-    .brands { padding: 48px 0; background: var(--white); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
-    .brands-label { text-align: center; font-size: .8rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-600); margin-bottom: 32px; }
-    .brands-track-wrap { overflow: hidden; }
-    .brands-track {
-      display: flex; gap: 40px; align-items: center;
-      animation: brandScroll 20s linear infinite;
+    .brands { padding: 80px 0; background: var(--white); }
+    /* ---- Continuous brand marquee (infinite, seamless CSS loop) ----
+       Two identical sequences sit side by side inside an overflow-hidden
+       viewport. The track animates by exactly -50% (one full sequence
+       width), so when it resets the second sequence is already in the
+       first one's place — no visible jump. Pure CSS transform, GPU-friendly. */
+    .brand-marquee {
+      position: relative;
+      overflow: hidden;
+      /* Soft fade on both edges so logos ease in/out instead of hard-clipping. */
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    }
+    .brand-track {
+      display: flex;
       width: max-content;
+      /* gap here is between the two sequences; sequences carry their own gaps */
+      will-change: transform;
+      animation: brandMarquee 45s linear infinite;
     }
-    .brands-track:hover { animation-play-state: paused; }
-    @keyframes brandScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .brand-pill {
-      display: flex; align-items: center; gap: 9px;
-      background: var(--gray-50); border: 1.5px solid var(--gray-200);
-      border-radius: var(--radius-xl);
-      padding: 11px 24px;
-      font-weight: 700; font-size: .88rem; color: var(--gray-900);
-      white-space: nowrap; flex-shrink: 0; transition: var(--transition);
+    .brand-marquee:hover .brand-track { animation-play-state: paused; }
+    /* Keep it paused while a touch is in progress on mobile. */
+    .brand-marquee.is-paused .brand-track { animation-play-state: paused; }
+
+    @keyframes brandMarquee {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
     }
-    .brand-pill:hover { border-color: var(--orange-light); background: var(--orange-pale); }
-    .brand-pill svg { width: 18px; height: 18px; color: var(--orange); flex-shrink: 0; }
+
+    /* Each sequence is an identical flex row of tiles. A right margin equal to
+       the inter-tile gap sits after every sequence, so the seam between the
+       two sequences matches the spacing between any two tiles — the -50%
+       loop is therefore perfectly even with no double gap and no missing gap. */
+    .brand-sequence {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-right: 20px;
+      padding: 6px 0;
+    }
+
+    .brand-tile {
+      position: relative;
+      flex: 0 0 auto;
+      width: 176px;
+      height: 120px;
+      /* Soft warm gradient surface for depth instead of a flat fill. */
+      background:
+        radial-gradient(120% 90% at 50% 0%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(160deg, #FFF7F1 0%, var(--orange-pale) 100%);
+      border: 1.5px solid #FFE0CC;
+      border-radius: var(--radius-md);
+      box-shadow: 0 2px 10px rgba(31,37,48,.05), inset 0 1px 0 rgba(255,255,255,.7);
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 22px;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    /* Thin brand accent bar that grows across the top on hover. */
+    .brand-tile::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--orange), var(--sun));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform var(--transition);
+    }
+    /* Faint decorative corner glow so the box never feels empty. */
+    .brand-tile::after {
+      content: '';
+      position: absolute; right: -30px; bottom: -30px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,102,18,.14), transparent 70%);
+      opacity: 0; transition: opacity var(--transition);
+      pointer-events: none;
+    }
+    .brand-tile:hover {
+      border-color: var(--orange-light);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+    .brand-tile:hover::before { transform: scaleX(1); }
+    .brand-tile:hover::after  { opacity: 1; }
+    /* Real logo image (revealed only once it loads successfully). */
+    .brand-tile img.brand-logo {
+      display: none; position: relative; z-index: 1;
+      width: auto; height: auto;
+      max-width: 110px; max-height: 48px;
+      object-fit: contain;
+    }
+    /* Clean typographic fallback shown when there is no real logo yet —
+       set as a warm gradient wordmark so it reads as intentional branding. */
+    .brand-word {
+      position: relative; z-index: 1;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800; font-size: 1.08rem;
+      letter-spacing: -.015em; line-height: 1.15;
+      text-align: center;
+      background: linear-gradient(135deg, var(--gray-900) 0%, var(--orange-deep) 130%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: var(--orange-deep);
+    }
+    /* When a real logo loads, show it and hide the text wordmark. */
+    .brand-tile.has-logo .brand-word { display: none; }
+    .brand-tile.has-logo img.brand-logo { display: block; }
 
     /* =========================================
        PROMO BANNER
@@ -736,25 +820,6 @@
     #googleReviewsWidget { margin-top: 8px; }
 
     /* =========================================
-       LOCATIONS
-    ========================================= */
-    .locations { padding: 80px 0; background: var(--white); }
-    .locations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .loc-card {
-      border-radius: var(--radius-lg); overflow: hidden;
-      position: relative; height: 280px; cursor: pointer;
-    }
-    .loc-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-    .loc-card:hover img { transform: scale(1.06); }
-    .loc-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(31,37,48,.80) 0%, rgba(31,37,48,.10) 60%, transparent 100%);
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
-    }
-    .loc-name { font-size: 1.1rem; font-weight: 800; color: var(--white); margin-bottom: 4px; }
-    .loc-addr { font-size: .8rem; color: rgba(255,255,255,.85); }
-
-    /* =========================================
        INSTAGRAM GALLERY
     ========================================= */
     .instagram { padding: 80px 0; background: var(--white); }
@@ -763,16 +828,34 @@
       aspect-ratio: 1; border-radius: var(--radius-sm);
       overflow: hidden; cursor: pointer; position: relative;
     }
-    .insta-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
-    .insta-tile:hover img { transform: scale(1.1); }
+    .insta-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+    .insta-tile:hover img { transform: scale(1.08); }
+    /* Branded hover: soft orange gradient veil + Instagram icon + "View post"
+       cue, all easing up gently. No emoji. */
     .insta-hover {
       position: absolute; inset: 0;
-      background: rgba(255,102,18,.62); opacity: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; color: var(--white);
-      transition: var(--transition);
+      background: linear-gradient(160deg, rgba(255,102,18,.30) 0%, rgba(221,80,0,.78) 100%);
+      opacity: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px; color: var(--white);
+      transition: opacity var(--transition);
+    }
+    .insta-hover svg {
+      width: 30px; height: 30px; color: var(--white);
+      transform: translateY(8px) scale(.9);
+      transition: transform var(--transition);
+    }
+    .insta-hover .insta-cue {
+      font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      transform: translateY(8px); opacity: 0;
+      transition: transform var(--transition), opacity var(--transition);
     }
     .insta-tile:hover .insta-hover { opacity: 1; }
+    .insta-tile:hover .insta-hover svg { transform: translateY(0) scale(1); }
+    .insta-tile:hover .insta-hover .insta-cue { transform: translateY(0); opacity: 1; }
+    /* Slight lift + ring on the whole tile for a premium feel. */
+    .insta-tile { transition: transform var(--transition), box-shadow var(--transition); }
+    .insta-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
     .insta-handle {
       text-align: center; margin-top: 28px;
       font-size: 1rem; color: var(--gray-600); font-weight: 700;
@@ -897,11 +980,8 @@
       .hero-images { display: none; }
       .hero-content { padding-bottom: 56px; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
-      .collections-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-      .collections-grid .coll-card { height: 240px; }
-      .collections-grid .coll-card:first-child { grid-column: 1 / -1; grid-row: auto; }
+      .collections-grid { grid-auto-rows: 240px; }
       .testimonials-grid { grid-template-columns: 1fr; }
-      .locations-grid { grid-template-columns: repeat(2, 1fr); }
       .insta-grid { grid-template-columns: repeat(3, 1fr); }
       .contact-grid { grid-template-columns: 1fr; }
       .storyteller { grid-template-columns: 1fr; gap: 32px; }
@@ -919,7 +999,7 @@
       .topbar { font-size: .72rem; padding: 7px 14px; }
       .container { padding: 0 18px; }
       .categories, .bestsellers, .trust, .collections,
-      .promo, .testimonials, .locations, .instagram,
+      .promo, .testimonials, .instagram,
       .contact, .shopcar { padding: 56px 0; }
       .section-head { margin-bottom: 34px; }
       .cat-grid { grid-template-columns: 1fr; }
@@ -927,7 +1007,6 @@
       .promo-inner { grid-template-columns: 1fr; }
       .promo-card-overlay { padding: 30px 26px; }
       .collections-grid { grid-template-columns: 1fr; }
-      .locations-grid { grid-template-columns: 1fr; }
       .insta-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-main { grid-template-columns: 1fr; gap: 32px; }
       .footer-bottom-inner { flex-direction: column; text-align: center; gap: 14px; }
@@ -950,7 +1029,10 @@
       * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
       html { scroll-behavior: auto; }
       .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; }
-      .brands-track { animation: none; }
+      /* Freeze the marquee and show the logos as a clean, static, wrapping row. */
+      .brand-track { animation: none; transform: none; flex-wrap: wrap; justify-content: center; }
+      .brand-sequence { flex-wrap: wrap; justify-content: center; }
+      .brand-sequence[data-seq="1"] { display: none; }   /* one static set is enough */
     }
   </style>
 </head>
@@ -1621,17 +1703,8 @@
         <p class="section-sub">A closer look at the ranges families ask for most.</p>
       </div>
       <div class="collections-grid">
-        <!-- Large card -->
-        <div class="coll-card reveal-left">
-          <img data-slot="collection_large" src="image assets/imgi_46_RforRabbitStreetSmartStrollerGreyBlack_1_1.jpg" alt="Strollers and travel gear range" loading="lazy" decoding="async" />
-          <div class="coll-overlay">
-            <div class="coll-tag" data-text="coll_1_tag">Out &amp; About</div>
-            <div class="coll-title" data-text="coll_1_title">Strollers, Carriers &amp; Travel Gear</div>
-            <a href="https://wa.me/918884876750?text=Hi%20RTBW%2C%20I%27d%20like%20to%20know%20more%20about%20your%20Strollers%2C%20Carriers%20%26%20Travel%20Gear." target="_blank" rel="noopener" class="coll-link">Enquire on WhatsApp ›</a>
-          </div>
-        </div>
-        <!-- Small card top-right -->
-        <div class="coll-card reveal" style="transition-delay:.1s">
+        <!-- Card 1 -->
+        <div class="coll-card reveal" style="transition-delay:.05s">
           <img data-slot="collection_top_right" src="image assets/imgi_17_HTE9997-HolaToyAmbulance-1.webp" alt="Toy vehicles and play sets" loading="lazy" decoding="async" />
           <div class="coll-overlay">
             <div class="coll-tag" data-text="coll_2_tag">Toddler Picks</div>
@@ -1728,42 +1801,26 @@
   </section>
 
   <!-- =============================================
-       SECTION 6 — BRAND STRIP
+       SECTION 6 — BRANDS CAROUSEL
+       Logo tiles are rendered from the BRANDS array in the script at the
+       bottom of this file. To use a brand's real logo, replace its file in
+       "image assets/brands/" (same filename) — no markup change needed.
   ============================================= -->
-  <!-- Scrolling category strip. The list is duplicated once so the
-       CSS marquee loops seamlessly; keep both copies identical. -->
-  <section class="brands" aria-label="Categories we stock">
+  <section class="brands" id="brands" aria-labelledby="brands-heading">
     <div class="container">
-      <p class="brands-label">All of this, in one store</p>
-    </div>
-    <div class="brands-track-wrap">
-      <div class="brands-track" aria-hidden="true">
-        <!-- Set 1 -->
-        <span class="brand-pill"><svg><use href="#i-onesie"/></svg> Newborn Clothes</span>
-        <span class="brand-pill"><svg><use href="#i-dress"/></svg> Party Wear</span>
-        <span class="brand-pill"><svg><use href="#i-tshirt"/></svg> Daily Wear</span>
-        <span class="brand-pill"><svg><use href="#i-toy"/></svg> Toys</span>
-        <span class="brand-pill"><svg><use href="#i-moon"/></svg> Night Suits</span>
-        <span class="brand-pill"><svg><use href="#i-maternity"/></svg> Maternity Wear</span>
-        <span class="brand-pill"><svg><use href="#i-backpack"/></svg> School Bags</span>
-        <span class="brand-pill"><svg><use href="#i-bottle"/></svg> Water Bottles</span>
-        <span class="brand-pill"><svg><use href="#i-pencil"/></svg> Stationery</span>
-        <span class="brand-pill"><svg><use href="#i-carrier"/></svg> Baby Carriers</span>
-        <span class="brand-pill"><svg><use href="#i-tricycle"/></svg> Tricycles</span>
-        <span class="brand-pill"><svg><use href="#i-walker"/></svg> Baby Walkers</span>
-        <!-- Set 2 (duplicate for seamless loop) -->
-        <span class="brand-pill"><svg><use href="#i-onesie"/></svg> Newborn Clothes</span>
-        <span class="brand-pill"><svg><use href="#i-dress"/></svg> Party Wear</span>
-        <span class="brand-pill"><svg><use href="#i-tshirt"/></svg> Daily Wear</span>
-        <span class="brand-pill"><svg><use href="#i-toy"/></svg> Toys</span>
-        <span class="brand-pill"><svg><use href="#i-moon"/></svg> Night Suits</span>
-        <span class="brand-pill"><svg><use href="#i-maternity"/></svg> Maternity Wear</span>
-        <span class="brand-pill"><svg><use href="#i-backpack"/></svg> School Bags</span>
-        <span class="brand-pill"><svg><use href="#i-bottle"/></svg> Water Bottles</span>
-        <span class="brand-pill"><svg><use href="#i-pencil"/></svg> Stationery</span>
-        <span class="brand-pill"><svg><use href="#i-carrier"/></svg> Baby Carriers</span>
-        <span class="brand-pill"><svg><use href="#i-tricycle"/></svg> Tricycles</span>
-        <span class="brand-pill"><svg><use href="#i-walker"/></svg> Baby Walkers</span>
+      <div class="section-head reveal">
+        <span class="section-label">Brands</span>
+        <h2 class="section-title" id="brands-heading">Brands You'll <span>Find Here</span></h2>
+        <p class="section-sub">Shop trusted names across baby care, toys, stationery, fashion and everyday essentials.</p>
+      </div>
+
+      <div class="brand-marquee reveal" id="brandMarquee" role="group" aria-label="Brands we stock">
+        <div class="brand-track" id="brandTrack">
+          <!-- Two identical sequences (built by initBrands()) create the
+               seamless infinite loop. The second is aria-hidden. -->
+          <div class="brand-sequence" data-seq="0"></div>
+          <div class="brand-sequence" data-seq="1" aria-hidden="true"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1853,44 +1910,6 @@
   </section>
 
   <!-- =============================================
-       SECTION 9 — IN-STORE HIGHLIGHTS
-       Uses the .locations component. Swap these images for
-       your own store photos from assets/shop/ when ready.
-  ============================================= -->
-  <section class="locations" aria-labelledby="loc-heading">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="section-label">In Store</span>
-        <h2 class="section-title" id="loc-heading">Come See It <span>In Person</span></h2>
-        <p class="section-sub">Photos help, but sizes and fabrics are easier to judge in the shop.</p>
-      </div>
-      <div class="locations-grid">
-        <div class="loc-card reveal" style="transition-delay:.05s">
-          <img data-slot="location_1" src="image assets/imgi_108_budhigere-shop-image-compressed.jpg" alt="Store entrance and window display" loading="lazy" decoding="async" />
-          <div class="loc-overlay">
-            <div class="loc-name">Easy to Find</div>
-            <div class="loc-addr">Street-level entrance with parking close by.</div>
-          </div>
-        </div>
-        <div class="loc-card reveal" style="transition-delay:.15s">
-          <img data-slot="location_2" src="image assets/imgi_110_Kadugodi.jpg" alt="Organised shelves inside the store" loading="lazy" decoding="async" />
-          <div class="loc-overlay">
-            <div class="loc-name">Organised Aisles</div>
-            <div class="loc-addr">Every category clearly grouped and labelled.</div>
-          </div>
-        </div>
-        <div class="loc-card reveal" style="transition-delay:.25s">
-          <img data-slot="location_3" src="image assets/imgi_8_1705662970.jpg" alt="Staff assisting a customer in store" loading="lazy" decoding="async" />
-          <div class="loc-overlay">
-            <div class="loc-name">Help On Hand</div>
-            <div class="loc-addr">Ask us about age suitability, sizing or care.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =============================================
        SECTION 10 — INSTAGRAM / SOCIAL GALLERY
   ============================================= -->
   <section class="instagram" aria-labelledby="insta-heading">
@@ -1925,27 +1944,27 @@
       <div class="insta-grid" id="instaFallbackGrid">
         <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_1" src="image assets/imgi_15_34.webp" alt="Instagram post" loading="lazy" />
-          <div class="insta-hover" aria-hidden="true">📷</div>
+          <div class="insta-hover" aria-hidden="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg><span class="insta-cue">View post</span></div>
         </a>
         <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_2" src="image assets/imgi_21_HolaEarlyLearningFireEngine1.webp" alt="Instagram post" loading="lazy" />
-          <div class="insta-hover" aria-hidden="true">📷</div>
+          <div class="insta-hover" aria-hidden="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg><span class="insta-cue">View post</span></div>
         </a>
         <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_3" src="image assets/imgi_76_bluegrey.webp" alt="Instagram post" loading="lazy" />
-          <div class="insta-hover" aria-hidden="true">📷</div>
+          <div class="insta-hover" aria-hidden="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg><span class="insta-cue">View post</span></div>
         </a>
         <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_4" src="image assets/imgi_95_1032_-_Cataloguing-_Image01.webp" alt="Instagram post" loading="lazy" />
-          <div class="insta-hover" aria-hidden="true">📷</div>
+          <div class="insta-hover" aria-hidden="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg><span class="insta-cue">View post</span></div>
         </a>
         <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_5" src="image assets/imgi_101_Peek-A-BooISeeYouJungle_1024x1024_0b891654-a445-4325-86bd-315883045819.webp" alt="Instagram post" loading="lazy" />
-          <div class="insta-hover" aria-hidden="true">📷</div>
+          <div class="insta-hover" aria-hidden="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg><span class="insta-cue">View post</span></div>
         </a>
         <a class="insta-tile" href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener" aria-label="View on Instagram">
           <img data-slot="insta_6" src="image assets/imgi_93_1_1_2f2b789c-eb4f-4965-9fb5-4848bf55cf3b.webp" alt="Instagram post" loading="lazy" />
-          <div class="insta-hover" aria-hidden="true">📷</div>
+          <div class="insta-hover" aria-hidden="true"><svg aria-hidden="true"><use href="#i-instagram"/></svg><span class="insta-cue">View post</span></div>
         </a>
       </div>
       <p class="insta-handle">Follow <a href="https://www.instagram.com/_ramdev2016rtbw/" target="_blank" rel="noopener">@_ramdev2016rtbw</a> for new arrivals, offers and store updates</p>
@@ -2503,11 +2522,94 @@
       });
     }
 
+    /* ----- 11. Brands carousel -----
+       Data-driven: tiles are built from BRANDS. Horizontal scroll-snap
+       track with prev/next buttons, native touch/swipe, keyboard support,
+       and gentle autoplay that pauses on hover/focus/interaction and
+       respects prefers-reduced-motion. */
+    var BRANDS = [
+      { name: 'Sebamed',           logo: '/image-assets/brands/sebamed.svg' },
+      { name: 'Cetaphil',          logo: '/image-assets/brands/cetaphil.svg' },
+      { name: 'Chicco',            logo: '/image-assets/brands/chicco.svg' },
+      { name: 'Cello',             logo: '/image-assets/brands/cello.svg' },
+      { name: 'Milton',            logo: '/image-assets/brands/milton.svg' },
+      { name: 'DOMS',              logo: '/image-assets/brands/doms.svg' },
+      { name: 'Mattel',            logo: '/image-assets/brands/mattel.svg' },
+      { name: 'Funskool',          logo: '/image-assets/brands/funskool.svg' },
+      { name: 'Jockey',            logo: '/image-assets/brands/jockey.svg' },
+      { name: 'Ramraj',            logo: '/image-assets/brands/ramraj.svg' },
+      { name: 'Sukaniya',          logo: '/image-assets/brands/sukaniya.svg' },
+      { name: 'Kothari Creations', logo: '/image-assets/brands/kothari-creations.svg' },
+      { name: 'Otto',              logo: '/image-assets/brands/otto.svg' },
+      { name: 'Mee Mee',           logo: '/image-assets/brands/mee-mee.svg' },
+      { name: 'Krakki',            logo: '/image-assets/brands/krakki.svg' },
+      { name: 'Bodycare',          logo: '/image-assets/brands/bodycare.svg' },
+      { name: 'Ollypop',           logo: '/image-assets/brands/ollypop.svg' },
+      { name: 'LEGO',              logo: '/image-assets/brands/lego.svg' },
+      { name: 'Monopoly',          logo: '/image-assets/brands/monopoly.svg' }
+    ];
+
+    function initBrands() {
+      var marquee = document.getElementById('brandMarquee');
+      var track   = document.getElementById('brandTrack');
+      if (!marquee || !track) return;
+
+      var sequences = track.querySelectorAll('.brand-sequence');
+      if (!sequences.length) return;
+
+      // Build a tile for one brand.
+      // If a real logo image is available it is shown; if it is missing or
+      // fails to load, the tile falls back to a clean typographic wordmark
+      // (the brand name), so the marquee always looks intentional.
+      function makeTile(b, hidden) {
+        var tile = document.createElement('div');
+        tile.className = 'brand-tile';
+
+        // Styled text fallback (shown until/unless a real logo loads).
+        var word = document.createElement('span');
+        word.className = 'brand-word';
+        word.textContent = b.name;
+        tile.appendChild(word);
+
+        if (b.logo) {
+          var img = document.createElement('img');
+          img.className = 'brand-logo';
+          img.src = b.logo;
+          img.alt = hidden ? '' : b.name;   // duplicate sequence is decorative
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.width = 110; img.height = 48;  // reserve space -> no layout shift
+          // Only reveal the image once it successfully loads; otherwise keep
+          // the polished text wordmark.
+          img.addEventListener('load', function () { tile.classList.add('has-logo'); });
+          img.addEventListener('error', function () { img.remove(); });
+          tile.appendChild(img);
+        }
+        return tile;
+      }
+
+      // Fill BOTH sequences from the same data. The first is announced to
+      // screen readers; the second is aria-hidden (set in the markup) so the
+      // brand list isn't read out twice.
+      sequences.forEach(function (seq) {
+        var hidden = seq.getAttribute('data-seq') === '1';
+        seq.innerHTML = '';
+        BRANDS.forEach(function (b) { seq.appendChild(makeTile(b, hidden)); });
+      });
+
+      // Touch devices have no hover, so let a tap toggle pause/resume.
+      // The CSS animation keeps its position when paused (no JS timers).
+      marquee.addEventListener('touchstart', function () {
+        marquee.classList.toggle('is-paused');
+      }, { passive: true });
+    }
+
     function init() {
       initReveal();
       initHeaderShadow();
       initDrawer();
       initCarousel();
+      initBrands();
       initFilter();
       initNavHighlight();
       initRipple();
